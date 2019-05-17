@@ -127,7 +127,7 @@
             Tags: <!-- 文章内容页中的 Tags 部分 -->
 
 
-<a class="tag" href="/tags/Web/">#Web</a> <a class="tag" href="/tags/Ajax/">#Ajax</a> <a class="tag" href="/tags/Java/">#Java</a> <a class="tag" href="/tags/Bootstrap/">#Bootstrap</a> <a class="tag" href="/tags/jQuery/">#jQuery</a>
+<a class="tag" href="/tags/Java/">#Java</a> <a class="tag" href="/tags/Web/">#Web</a> <a class="tag" href="/tags/jQuery/">#jQuery</a> <a class="tag" href="/tags/Ajax/">#Ajax</a> <a class="tag" href="/tags/Bootstrap/">#Bootstrap</a>
 
 
           </div>
@@ -153,7 +153,7 @@
 <li><a href="#11-dui-jie-fu-wu-qi-duan">11. 对接服务器端</a><ul>
 <li><a href="#11-1-cong-fu-wu-qi-duan-huo-qu-zhang-ben-shu-ju">11.1 从服务器端获取账本数据</a></li>
 <li><a href="#11-2-jiang-xin-zeng-zhang-dan-bao-cun-dao-fu-wu-qi-duan">11.2 将新增账单保存到服务器端</a></li>
-<li><a href="#11-3-yu-fu-wu-qi-tong-bu-shan-chu-zhang-dan">11.3 与服务器同步删除账单</a></li>
+<li><a href="#11-3-yu-fu-wu-qi-duan-tong-bu-shan-chu-zhang-dan">11.3 与服务器端同步删除账单</a></li>
 </ul>
 </li>
 </ul>
@@ -268,8 +268,7 @@
 </blockquote>
 <p>在项目的<code>WEB-INF</code>文件夹下创建一个名为 lib 的文件夹, 将 <a href="/attachment/web-lighter-libs.zip">web-lighter 及其依赖的第三方 jar 文件</a> 拷贝到此文件夹. 如图:</p>
 <p><img src="/images/20190514-10.png" alt="web-lighter及依赖文件"></p>
-<p>选中所有新拷入的 jar 文件, 右键菜单中选择 <em>Add As Library…</em> , 在弹出的 “Create Library” 窗口中的 Name 输入框中填写库名, 如: web-lighter, 如图:</p>
-<p><img src="/images/20190514-11.png" alt="Create Library"></p>
+<p>选中所有新拷入的 jar 文件, 右键菜单中选择 <em>Add As Library…</em> , 将这些 jar 文件添加到构建路径. </p>
 <blockquote>
 <ul>
 <li><p>以上操作的目的在于将 web-lighter 及其依赖的第三方 jar 放入项目构建路径(Build Path). 若使用其它 IDE, 操作方法与上文所述有一定差异, 但目的一致.</p>
@@ -327,7 +326,7 @@
 <p>怎么看出来数据已经保存到服务器端?</p>
 <p>呵呵, 若数据保存在服务器端, 新增账单后, 刷新浏览器, 新账单数据并不会丢失.</p>
 </blockquote>
-<h2><a href="#11-3-yu-fu-wu-qi-tong-bu-shan-chu-zhang-dan" class="header-anchor"></a><span id="11-3-yu-fu-wu-qi-tong-bu-shan-chu-zhang-dan">11.3   与服务器同步删除账单</span></h2><p>修改 <code>index.js</code> 中的 <code>removeBillData()</code>函数:</p>
+<h2><a href="#11-3-yu-fu-wu-qi-duan-tong-bu-shan-chu-zhang-dan" class="header-anchor"></a><span id="11-3-yu-fu-wu-qi-duan-tong-bu-shan-chu-zhang-dan">11.3   与服务器端同步删除账单</span></h2><p>修改 <code>index.js</code> 中的 <code>removeBillData()</code>函数:</p>
 <p><strong>Code-11.3.1</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除一条账单的数据</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeBillData</span>(<span class="params">bill, callback</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 保存数据到服务器端, 调用的仍然是 Code-11.2.1 中的 saveToServer 函数, 只是参数变了</span></span><br><span class="line">    saveToServer(<span class="string">'remove'</span>, bill, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; </span><br><span class="line">        <span class="comment">// 删除前端账本数据模型中对应的记录, 与服务器端保存一致</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; bills.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (bills[i].id === bill.id) &#123;</span><br><span class="line">                bills.splice(i, <span class="number">1</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 回调刷新界面</span></span><br><span class="line">        callback();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 注意和原先 index.js 中的 removeBillData() 函数 (Code-5.2.1) 对比一下:</p>
@@ -336,7 +335,7 @@
 <hr>
 <p>好了, 就这样, 我们实现了客户端 + 服务器模式的在线记账本.</p>
 <p>现在, 只要不重启服务器端的 Tomcat 无论如何刷新页面(即使关闭浏览器重新开启), 你的账单数据都不会丢失.</p>
-<p>我们来做一下 小结:</p>
+<p>我们来做一下小结:</p>
 <ul>
 <li>客户端 + 服务器模式的在线记账本的工作流程: <ol>
 <li>打开 index.html 页面时, 客户端自动向服务器发起 Ajax 请求 ( getBillsFromServer() ), 取得账本数据, 呈现初始账单列表</li>
@@ -348,19 +347,26 @@
 </li>
 </ul>
 <ul>
-<li>服务器端同样有一个 MVC 模型, 此时相对而言服务器端的账本数据 (bills) 是它的数据模型层, 而与前端接口的那部分 (BillAction) 就是它的 View 层. 服务器端的 View 层通过网络通信和客户端的 Model 层对接, 从而形成一个 MVC 链, 上游的 View 层与下游的 Model 层对接.</li>
-<li>按照 MVC 模式的松耦合架构, 使得本节我们加入了服务器端后, 前端代码并没有较大的改动. 其实前端代码主要改动的是构建数据模型 ( getBillsFromServer() ) 和更新数据模型 ( addBillItemData(), removeBillData()  )的那部分.</li>
+<li><p>本节使用了 web-lighter, 它只是一个服务器端的轻量级封装, 为的是简化开发过程. </p>
+<p>当领悟了整个开发过程后, 建议尝试一下使用原生的 Servlet 来完成 BillAction 的功能, 为的是更加清楚底层的原理. 当然, 也可以使用 Struts 等其它第三方框架来实现.</p>
+</li>
+<li><p>服务器端同样有一个 MVC 模型, 相对而言服务器端的账本数据 (bills) 是它的 Model 层, 而 BillAction 属于服务器端的  Controller 层, 其返回的  ActionResult 更像服务器端的 View. </p>
+<p>服务器端的 View 层通过网络通信和客户端的 Model 层对接, 从而形成一个 MVC 链, 上游的 View 层与下游的 Model 层对接.</p>
+</li>
+<li><p>按照 MVC 模式的松耦合架构, 使得我们即便在前一节的基础上加入了服务器端, 前端代码相较于前一节也没有太大的改动. </p>
+<p>其实前端代码主要变动的只是与前端的 Model 层相关的部分: 构建数据模型 ( getBillsFromServer() ) 和更新数据模型 ( addBillItemData(), removeBillData()  )的那部分.</p>
+</li>
 </ul>
 <blockquote>
 <p>后两点是不是有点看不明白呀~ 细细揣摩一下…</p>
 </blockquote>
 <p>​    </p>
 <p>下一节我们将使用数据库来存储账本数据, 这样就实现了真正意义上的在线记账本. 即使服务器端重启 Tomcat, 你的账本仍然不会丢失.</p>
-<p>准备好的, 就继续看下一节吧…</p>
+<p>准备好了, 就继续看下一节吧…</p>
 
         </div>
         <p class="post-revise-info">
-            Revised on <span class="date">2019/05/17 10:34:55</span> by Bailey
+            Revised on <span class="date">2019/05/17 13:21:24</span> by Bailey
         </p>
         
         <!-- 上一篇/下一篇  -->
