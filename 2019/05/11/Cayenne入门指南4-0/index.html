@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Bailey">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Cayenne 起步 (Version 4.0) [译]"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Bailey&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://baileykm.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Bailey&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Bailey's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-139890203-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+</head>
+
+  <body>
+    <!-- 单篇文章内容页面 -->
+<!-- Page Header -->
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Cayenne 起步 (Version 4.0) [译]</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/baileykm">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:baileiz@163.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div id="article-content" class="col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Bailey</span>
+          
+          <!-- Date -->
+          <span class="date-time info">
+            On <span class="date">2019/05/11</span>
+            <span class="time">13:59:51</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Category <!-- 文章内容页面中的 Categories 部分 -->
+
+
+<a href="/categories/入门教程/">入门教程</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: <!-- 文章内容页中的 Tags 部分 -->
+
+
+<a class="tag" href="/tags/持久层/">#持久层</a> <a class="tag" href="/tags/Cayenne/">#Cayenne</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>Cayenne 是一个 Apache 下的持久层框架项目, 作用与 Hibernate /  mybatis 之类的持久层框架类似.<br> - 本文译自 <a href="https://cayenne.apache.org/docs/4.0/getting-started-guide/" target="_blank" rel="noopener">Cayenne 4.0 版的官方文档 (Cayenne Getting Started Guide)</a><br> - 译文的目的是为初学者快速了解 Cayenne 减少一些语言障碍. 若要深入研究和使用 Cayenne 建议至<a href="https://cayenne.apache.org/docs/4.0/getting-started-guide" target="_blank" rel="noopener">官方网站</a>查阅更多相关文档.</p>
+<a id="more"></a>
+<div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#1-she-zhi-huan-jing">1. 设置环境</a><ul>
+<li><a href="#1-1-an-zhuang-java">1.1 安装 Java</a></li>
+<li><a href="#1-2-an-zhuang-intellij-idea">1.2 安装 IntelliJ IDEA</a></li>
+</ul>
+</li>
+<li><a href="#2-xue-xi-ying-she-ji-chu">2. 学习映射基础</a><ul>
+<li><a href="#2-1-kai-shi-yi-ge-xiang-mu">2.1 开始一个项目</a></li>
+<li><a href="#2-2-kai-shi-dui-xiang-guan-xi-ying-she-orm">2.2 开始对象关系映射 (ORM)</a></li>
+<li><a href="#2-3-chuang-jian-java-lei">2.3 创建 Java 类</a></li>
+</ul>
+</li>
+<li><a href="#3-xue-xi-cayenne-api">3. 学习 Cayenne API</a><ul>
+<li><a href="#3-1-cong-objectcontext-kai-shi">3.1 从 ObjectContext 开始</a></li>
+<li><a href="#3-2-kai-shi-shi-yong-chi-jiu-ceng-dui-xiang">3.2 开始使用持久层对象</a></li>
+<li><a href="#3-3-jian-suo-dui-xiang">3.3 检索对象</a></li>
+<li><a href="#3-3-shan-chu-dui-xiang">3.3 删除对象</a></li>
+</ul>
+</li>
+<li><a href="#4-zhuan-huan-wei-web-ying-yong-cheng-xu">4. 转换为Web应用程序</a><ul>
+<li><a href="#4-1-jiang-tutorial-xiang-mu-zhuan-huan-wei-web-ying-yong-cheng-xu">4.1 将 tutorial 项目转换为Web应用程序</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+</div>
+
+<h1><a href="#1-she-zhi-huan-jing" class="header-anchor"></a><span id="1-she-zhi-huan-jing">1. 设置环境</span></h1><p>本章的目标是安装(或检查你是否已经安装)一个用于创建 Cayenne 应用程序的基本软件环境.</p>
+<h2><a href="#1-1-an-zhuang-java" class="header-anchor"></a><span id="1-1-an-zhuang-java">1.1 安装 Java</span></h2><p>显然, JDK 必须安装. Cayenne 4.0需要 JDK1.7 或更新版本.</p>
+<h2><a href="#1-2-an-zhuang-intellij-idea" class="header-anchor"></a><span id="1-2-an-zhuang-intellij-idea">1.2 安装 IntelliJ IDEA</span></h2><p>下载并安装IntelliJ IDEA Community Edition. 本教程基于版本2016.3, 仍然适用于任何最新的IntelliJ IDEA版本.</p>
+<h1><a href="#2-xue-xi-ying-she-ji-chu" class="header-anchor"></a><span id="2-xue-xi-ying-she-ji-chu">2. 学习映射基础</span></h1><h2><a href="#2-1-kai-shi-yi-ge-xiang-mu" class="header-anchor"></a><span id="2-1-kai-shi-yi-ge-xiang-mu">2.1 开始一个项目</span></h2><p>本章的目标是在 IntelliJ IDEA 中创建一个包含基本 Cayenne 映射的新 Java 项目, 介绍 CayenneModeler 图形化工具, 展示了如何创建初始映射对象：<code>DataDomain</code>，<code>DataNode</code>，<code>DataMap</code>.</p>
+<h4><a href="#zai-intellij-idea-zhong-chuang-jian-yi-ge-xin-xiang-mu" class="header-anchor"></a><span id="zai-intellij-idea-zhong-chuang-jian-yi-ge-xin-xiang-mu">在 IntelliJ IDEA 中创建一个新项目</span></h4><p>在 IntelliJ IDEA 中选择<code>File &gt; New &gt; Project…</code>, 然后选择<code>Maven</code>并点击<code>Next</code>. 在如下截图所示的对话框中填写<code>Group Id</code>和<code>Artifact Id</code>, 点击<code>Next</code>.</p>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/tutorial-idea-project.png" alt=""></p>
+<p>在下一个对话框界面中你可以自定义项目存储路径并点击<code>Finish</code>. 现在你应该有了一个新的空项目.</p>
+<h4><a href="#xia-zai-bing-qi-dong-cayennemodeler" class="header-anchor"></a><span id="xia-zai-bing-qi-dong-cayennemodeler">下载并启动 CayenneModeler</span></h4><p>虽然稍后我们将使用 Maven 引入 Cayenne 运行时所需的 jar 文件到项目中, 这里你仍然需要下载 Cayenne 以使用 CayenneModeler 工具.</p>
+<blockquote>
+<p>如果你已在使用 Maven, 你也可以从 Maven 启动 CayenneModeler. 这里我们将使用较传统的方式.</p>
+</blockquote>
+<p>下载 <a href="http://cayenne.apache.org/download.html" target="_blank" rel="noopener">最新版 CayenneModeler</a>. 将分发包解压缩到文件系统中的某个位置, 然后按照特定于平台的说明启动 CayenneModeler. 在大多数平台上, 只需双击 CayenneModeler 图标即可启动. CaynenneModeler 的欢迎屏幕如下所示：</p>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/modeler-started.png" alt=""></p>
+<h4><a href="#zai-cayennemodeler-zhong-chuang-jian-xin-de-ying-she-xiang-mu" class="header-anchor"></a><span id="zai-cayennemodeler-zhong-chuang-jian-xin-de-ying-she-xiang-mu">在 CayenneModeler 中创建新的映射项目</span></h4><p>单击欢迎屏幕上的 <code>New Project</code>按钮将出现一个包含单个<strong>DataDomain</strong>的新映射项目. DataDomain的含义将在用户指南的其他地方进行说明. 现在, 明白 DataDomain 是映射项目的根就足够了.</p>
+<h4><a href="#chuang-jian-datanode" class="header-anchor"></a><span id="chuang-jian-datanode">创建 DataNode</span></h4><p>下一个你需要创建的项目对象是<strong>DataNode</strong>. DataNode 是应用程序将连接到的单个数据库的描述. Cayenne映射项目可以连接多个数据库, 但现在, 我们只连接一个.  </p>
+<p>选择左侧的 “project”, 单击工具栏上的<code>Create DataNode</code>按钮图标 (或从菜单中选择<code>Project &gt; Create DataNode</code>), 一个新的 DataNode 就出现了. 现在你需要设置 JDBC 连接参数. 对于内存型数据库 Derby 你可以输入如下配置:</p>
+<ul>
+<li>JDBC Driver: org.apache.derby.jdbc.EmbeddedDriver</li>
+<li>DB URL: jdbc:derby:memory:testdb;create=true</li>
+</ul>
+<blockquote>
+<p>这里我们创建了一个内存型数据库. 因此, 当你停止你的应用程序, 所有的数据将丢失. 在大多数实际的项目中, 你应该会连接一个实际将数据存储于磁盘的数据库, 但是对于这个简单的教程而言, 我们将使用内存数据库.    </p>
+</blockquote>
+<blockquote>
+<p>译注: 与传统的数据库 (如: mysql)不同, 内存型数据库可直接将数据加载到内存中来运行, 可理解为一个直接在内存中运行的关系型数据库. 本教程使用 Derby, 并在 DB URL 处配置 <em>create=true</em>, 这样可根据 CayenneModeler 建立的模型来自动生成数据库. </p>
+</blockquote>
+<p>此外, 你需要改变 “Schema Update Strategy”. </p>
+<p>从下拉菜列表中选择<code>org.apache.cayenne.access.dbsync.CreateIfNoSchemaStrategy</code>, 这样 Cayenne 将在应用程序启动时根据 ORM 映射在 Derby 中创建一个新的数据库.</p>
+<blockquote>
+<p>译注: ORM - Object Relational Mapping, 对象关系模型</p>
+</blockquote>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/base-datanode.png" alt=""></p>
+<h4><a href="#chuang-jian-datamap" class="header-anchor"></a><span id="chuang-jian-datamap">创建 DataMap</span></h4><p>现在你需要创建一个 <strong>DataMap</strong>. DataMap 是一个包含了所有映射信息的对象. 点击 “Create DataMap” 按钮 (或选择相应的菜单项). 注意, 新创建的 DataMap 将自动关联到你上一步创建的 DataNode. 若有多个 DataNode, 你可能需要手动选择一个合适的 DataNode. 换句话说, DataDomain 中的一个 DataMap 必须通过映射指向一个数据库描述.</p>
+<p>除了其中的 “Java Package”, 你可以保留 DataMap 中的默认值. </p>
+<p>在 “Java Package” 处输入<code></code>org.example.cayenne.persistent`. 这个名称将应用于所有的持久层类.</p>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/base-datamap.png" alt=""></p>
+<h4><a href="#bao-cun-xiang-mu" class="header-anchor"></a><span id="bao-cun-xiang-mu">保存项目</span></h4><p>在处理实际的映射前, 让我们来保存项目. 点击工具栏上的 “Save” 按钮, 指定存储路径到本节此前创建的<code>tutorial</code> IDEA 项目的<code>src/main/resources</code>子目录, 将项目保存在这里. 现在返回到 IDEA, 你将看到 2 个 Cayenne 的 XML 文件.</p>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/idea-xmlfiles.png" alt=""></p>
+<p>注意: XML 文件的存储路径并非随意. Cayenne 运行时将在应用程序的<code>CLASSPATH</code>中寻找<code>cayenne-*.xml</code>文件. 并且<code>src/main/resources</code>文件夹应是我们项目的 “类文件夹” (如果我们通过命令使用 Maven, 这里同样是 Maven 复制 jar 文件的位置).</p>
+<h2><a href="#2-2-kai-shi-dui-xiang-guan-xi-ying-she-orm" class="header-anchor"></a><span id="2-2-kai-shi-dui-xiang-guan-xi-ying-she-orm">2.2 开始对象关系映射 (ORM)</span></h2><p>本节的目标是学习如何使用 CayenneModeler 创建一个简单的对象关系模型. 我们将为如下的数据库模型创建一个完整的 ORM 模型.</p>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/cayenne-tutorial-model.png" alt=""></p>
+<blockquote>
+<p>在多数情况下, 你已经有一个数据库了. 此时可通过 “Tool &gt; Reengineer Database Schema” 来快速导入. 相对于手工映射, 这将节省你大量时间. 尽管如此, 明白如何手工创建映射也同样重要. 因此, 我们下面将演示”手工”方法.</p>
+</blockquote>
+<blockquote>
+<p>译注: 关于如何使用 CayenneModel 逆向工程创建映射, 即上述的 “Reengineer Database Schema”, 可参看本博客的另一篇文章 <a href="/2018/05/08/CayenneModeler-数据库逆向工程/">“CayenneModeler 数据库逆向工程”</a></p>
+</blockquote>
+<h4><a href="#ying-she-shu-ju-ku-biao-he-lie" class="header-anchor"></a><span id="ying-she-shu-ju-ku-biao-he-lie">映射数据库表和列</span></h4><p>让我们回到 CayenneModeler, 在那里打开刚才新创建的项目, 然后添加 ARTIST 表。 数据库表在 Cayenne 映射中被称作 <strong>DbEntities</strong>（数据库实体, 可以是实际表或数据库视图）.</p>
+<p>在左侧的项目树中选择 “datamap”, 点击 “Create DbEntity” 按钮 (或使用 “Project &gt; Create DbEntity” 菜单). 一个新的 DbEntity 即创建出来了. 在 “DbEntity Name” 字段中填入 “ARTIST”. 然后点击实体工具栏 (entity toolbar) 上的 “Create Attribute” 按钮, 将切换至 “Properties” 标签页并添加一个名为 “unitiledAttr” 的新属性 (这里属性即为数据库中表的列). 让我们将其重命名为 ID, 设置类型为<code>INTEGER</code>并标记为 PK (主键):</p>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/modeler-artistid.png" alt=""></p>
+<p>同样地, 添加 NAME <code>VARCHAR(200)</code> 和 DATA_OF_BIRTH <code>DATE</code> 属性. 重复以上步骤, 创建 PAINTING 和 CALLERY 实体, 以和本节开始部分的对象关系模型图一致.</p>
+<h4><a href="#ying-she-shu-ju-ku-guan-xi" class="header-anchor"></a><span id="ying-she-shu-ju-ku-guan-xi">映射数据库关系</span></h4><p>现在你需要指定 ARTIST, PAINTING, GALLERY 表之间的关系 (Relationship). 开始创建 ARTIST/PAINTING 表之间的一对多关系:</p>
+<ul>
+<li><p>选择左边的 <code>ARTIST</code> DbEntity, 点击 “Properties” 标签页.</p>
+</li>
+<li><p>点击实体工具栏上的 “Create Relationship” 按钮, 将创建出一个名为 “untitledRel” 的关系.</p>
+</li>
+<li><p>选择 “Target” 为 “Painting”</p>
+</li>
+<li><p>点击 “Database Mapping” 按钮, 出现关系配置对话框. 在这里, 你可以为关系指定名称, 也可以指定其反向关系. 名称可以任意命名 (这其实是数据外键约束的名称), 但建议使用有效的 Java 标识符, 因为这将避免在以后的操作中重复输入. 我们将这个关系命名为 “paintings”, 而反向关系命名为 “artist”</p>
+</li>
+<li><p>点击右侧的 “Add” 按钮添加一个 <em>Join</em></p>
+</li>
+<li><p>“Source” 选择 “ID” 列, “target” 选择 “ARTIST_ID” 列.</p>
+</li>
+<li><p>现在, 关系信息将如下图所示:</p>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/modeler-dbrelationship.png" alt=""></p>
+</li>
+<li><p>点击 “Done” 按钮以确认更改并关闭对话框.</p>
+</li>
+<li><p>现在已经创建了两个关系: ARTIST -&gt; PAINTING 及其反向关系 ( PAINTING -&gt; ARTIST) . 你可能注意到 “paintings” 关系应该是 “to-many”, 但是 “To Many” 复选框未被选中. 让我们来调整一下: 选中 “paintings” 关系, 然后点击 PAINTING DbEntity, 取消选中 “artist” 关系的 “To Many” 使得反向关系变成 “to-one”.</p>
+</li>
+<li><p>重复以上步骤创建 PAINTING 到 GALLERY 的 many-to-one 关系, 把这两个关系分别命名为 “gallery” 和 “paintings”.</p>
+</li>
+</ul>
+<h4><a href="#ying-she-java-lei" class="header-anchor"></a><span id="ying-she-java-lei">映射 Java 类</span></h4><p>现在数据库模式的映射已经完成. CayenneModeler 可以根据 DbEntities 来生成所有的 Java 类 (也称作 “ObjEntities”, 对象实体). 目前, 无法通过一次点击就生成整个 DataMap 的 Java 类. 因此, 我们将分别对每个表执行此操作.</p>
+<ul>
+<li>选择 “ARTIST” DbEnity, 点击实体工具栏或主工具栏上的 “Create ObjEntity” 按钮. 一个名叫 “Artist” 的 ObjEntity 即被创建出来, 其 Java class 字段将设置为 “org.example.cayenne.persistent.Artist”. CayenneModeler 会将数据库中的名称转换为 Java 友好的名称 (例如, 如果单击 “属性” 选项卡, 你将看到 “DATE_OF_BIRTH” 列已转换为 “dateOfBirth” Java 类属性).</li>
+<li>选择 “GALLERY” DbEntity 并再次点击 “Create ObjEntity” 按钮, 你将看到 “Gallery” ObjEntity 被创建出来了.</li>
+<li>最后, 针对 “PAINTING” 执行相似的操作.</li>
+</ul>
+<p>现在, 你需要同步关系. 在还没有相关的 “Painting” 实体之前, Artist 和 Gallery 实体就已经被创建了, 所以他们之间的关系还没有设置.</p>
+<ul>
+<li>点击 “Artist” ObjEntity, 点击工具栏上的 “Sync ObjEntity with DbEntity” 按钮, 你将看到 “paintings” 关系出现了.</li>
+<li>对 “Gallery” 实体做同样的操作.</li>
+</ul>
+<p>除非你想要自定义 Java 类和属性名称 (你可以轻松搞定), 否则映射操作已经完成了.</p>
+<h2><a href="#2-3-chuang-jian-java-lei" class="header-anchor"></a><span id="2-3-chuang-jian-java-lei">2.3 创建 Java 类</span></h2><p>这里我们将从上一节中创建的模型生成 Java 类. CayenneModeler 也可用于生成数据库模式, 但由于我们在创建 DataNode 之前指定了 “CreateIfNoSchemaStrategy”，因此我们将跳过创建数据库模式步骤.  若有需要, 可通过 “Tools &gt;Create Database Schema” 来实现.</p>
+<h4><a href="#chuang-jian-java-lei" class="header-anchor"></a><span id="chuang-jian-java-lei">创建 Java 类</span></h4><ul>
+<li>选择 “Tools &gt; Generate Classes” 菜单</li>
+<li>“Type” 选中 “Standard Persistent Objects” (若未选中)</li>
+<li>“Output Directory” 选择你 IDEA 项目下的 “src/main/java” 文件夹 ( 这和我们此前选择的 <code>cayenne-*.xml</code>位置相关).</li>
+<li>点击 “Classes” 选项卡, 选中 “Check All Classes” 复选框 ( 若已选中, 此复选框提示将变为 “Uncheck all Classes”).</li>
+<li>点击 “Generate”.</li>
+</ul>
+<p>现在回到 IDEA, 你应该看到每一个被映射的实体生成了一对类文件. 你可能还会看到 IDEA 中新生成的 Java 类旁边有一堆红色的波浪线. 这是因为我们的项目还没有将 Cayenne 加到 Maven 依赖. 让我们来将 “cayenne-server” 和 “cayenne-java8” <em>artifacts</em> 添加到 <code>pom.xml</code>文件的最后. 同样, 我们应该告诉 Maven 编译插件, 我们的项目需要 Java 8. 修改后的 POM 应像下面的样子:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.example.cayenne<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tutorial<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cayenne.version</span>&gt;</span>4.0.1<span class="tag">&lt;/<span class="name">cayenne.version</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.cayenne<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>cayenne-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;cayenne.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--  For java.time.* types you need to use this dependency--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.cayenne<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>cayenne-java8<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;cayenne.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-simple<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.25<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>(1) 第 8 行: 指定你实际使用的 Cayenne 版本号</p>
+<p>(2) 第 9 行: 告诉 Maven 支持 Java 8</p>
+</blockquote>
+<p>你的计算机必须连接到 Internet. 一旦你编辑了<code>pom.xml</code>, IDEA 将下载所需的 Cayenne jar 文件并将其添加到项目构建路径. 此时, 所有的错误将消失了. </p>
+<p>在 “控制台输出” 教程中, 我们使用 slf4j-simple 这个 logger 实现. 由于 Apache Cayenne 使用 SLF4J logger, 你可以通过桥接的方式使用你自己的 logger (例如: log4j 或 commons-logging).</p>
+<blockquote>
+<p>译注:  SLF4J 可理解为抽象的日志工具 ( logger ), 相对而言, slf4j-simple, log4j, commons-logging 等是更具体日志系统实现. 因 Cayenne 使用 SLF4J API 来输出日志, 所以在实际项目中你可以通过配置灵活地桥接不同的具体日志工具 (如: log4j) 来输出 Cayenne 日志. </p>
+</blockquote>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/idea-generated-classes.png" alt=""></p>
+<p>现在让我们来检视一下实体类. 每一个实体生成了一个父类 (superclass, 如: <code>_Artist</code>) 和一个子类 (subclass, 如: <code>Artist</code>). </p>
+<p>你<strong>不应该</strong>编辑那些以 “_” (下划线) 开头的父类, 因为它们将在后续重新运行生成命令时被覆盖. </p>
+<p>所有的自定义逻辑应被放在<code>org.example.cayenne.persistent</code>包里的子类中 - 它们在生成类文件时不会被覆盖.</p>
+<blockquote>
+<p>类生成提示:</p>
+<p>通常你会从 CayenneModeler 开始生成类文件. 但是在后续的项目开发阶段, 通常会由 Ant cgen task 或 Maven cgen mojo 自动完成. 所有的这些方法都是可互相替代的, 但是使用 Ant 和 Maven 的方法可确保你不会忘记在映射发生变化时重新生成类文件, 因为他们被集成在了 build 阶段 </p>
+</blockquote>
+<h1><a href="#3-xue-xi-cayenne-api" class="header-anchor"></a><span id="3-xue-xi-cayenne-api">3. 学习 Cayenne API</span></h1><h2><a href="#3-1-cong-objectcontext-kai-shi" class="header-anchor"></a><span id="3-1-cong-objectcontext-kai-shi">3.1 从 ObjectContext 开始</span></h2><p>本节我们将写一个简单的 Main 类, 运行我们的程序, 以简要介绍 Cayenne ObjectContext.</p>
+<h4><a href="#chuang-jian-main-lei" class="header-anchor"></a><span id="chuang-jian-main-lei">创建 Main 类</span></h4><ul>
+<li>在 IDEA 中创建一个名为 “Main” 的类, 将其置于 “org.example.cayenne” 包.</li>
+<li>创建一个标准的 “main” 方法, 以使其成为一个可运行的类:</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example.cayenne;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>要访问数据库, 你要做的第一件事情是创建一个<code>ServerRuntime</code>对象 ( 它是 Cayenne 栈的一个基本封装 ) , 并使用它获得一个<code>ObjectContext</code>的实例.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example.cayenne;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.cayenne.ObjectContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.cayenne.configuration.server.ServerRuntime;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ServerRuntime cayenneRuntime = ServerRuntime.builder()</span><br><span class="line">                        .addConfig(<span class="string">"cayenne-project.xml"</span>)</span><br><span class="line">                        .build();</span><br><span class="line">        ObjectContext context = cayenneRuntime.newContext();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 Cayenne 中<code>ObjectContext</code>是一个独立的 “会话 (session)”, 它提供了所有和数据打交道的 API. </p>
+<p>ObjectContext 拥有执行查询和管理持久层对象的方法. 我们将在后面的章节讨论它们. </p>
+<p>当程序中的第一个 ObjectContext 被创建时, Cayenne 将加载 XML 映射文件并创建一个共享的访问栈, 它将在此后被其他 ObjectContext 重用.</p>
+<h4><a href="#yun-xing-cheng-xu" class="header-anchor"></a><span id="yun-xing-cheng-xu">运行程序</span></h4><p>让我们看看运行程序时会发生什么. 但在此之前我们需要添加其它的依赖到<code>pom.xml</code>: Apache Derby, 我们的嵌入式数据库引擎. 把下面的 XML 片段添加到<code>&lt;dependencies&gt;…&lt;/dependencies&gt;</code>部分 ( 那里已经有我们此前针对 Cayenne 的配置了 ).</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.derby<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>derby<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">version</span>&gt;</span>10.13.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>现在我们已经可以运行程序了. 在 IDEA 中右键点击 “Main” 类, 选择 “Run ‘Main.main()’”.</p>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/idea-file-run-menu.png" alt=""></p>
+<p>在控制台中你将看到类似现在这样的输出, 这意味着 Cayenne 已经被启动了.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">INFO: Loading XML configuration resource from file:/.../cayenne-project.xml</span><br><span class="line">INFO: Loading XML DataMap resource from file:/.../datamap.map.xml</span><br><span class="line">INFO: loading user name and password.</span><br><span class="line">INFO: Connecting to <span class="string">'jdbc:derby:memory:testdb;create=true'</span> as <span class="string">'null'</span></span><br><span class="line">INFO: +++ Connecting: SUCCESS.</span><br><span class="line">INFO: setting DataNode <span class="string">'datanode'</span> as default, used by all unlinked DataMaps&lt;/screen&gt;</span><br></pre></td></tr></table></figure>
+<h4><a href="#ru-he-pei-zhi-cayenne-ri-zhi" class="header-anchor"></a><span id="ru-he-pei-zhi-cayenne-ri-zhi">如何配置 Cayenne 日志</span></h4><p>按照 “日志” 一章中的说明调整日志的输出的详细程度.</p>
+<blockquote>
+<p>译注: 这里所说的 “日志”一章并不在此教程中.</p>
+</blockquote>
+<h2><a href="#3-2-kai-shi-shi-yong-chi-jiu-ceng-dui-xiang" class="header-anchor"></a><span id="3-2-kai-shi-shi-yong-chi-jiu-ceng-dui-xiang">3.2 开始使用持久层对象</span></h2><p>本章我们将学习持久层对象, 如何自定义他们, 以及如何创建并将他们保存到数据库.</p>
+<h4><a href="#jian-shi-he-zi-ding-yi-chi-jiu-ceng-dui-xiang" class="header-anchor"></a><span id="jian-shi-he-zi-ding-yi-chi-jiu-ceng-dui-xiang">检视和自定义持久层对象</span></h4><p>Cayenne 中的持久层类实现了 DataObject 接口. 如果你检视本教程前面生成的任何类 (如: <code>org.example.cayenne.persistent.Artist</code>), 你将看到它继承了一个名称以下划线开头的类 (<code>org.example.cayenne.persistent.auto._Artist</code>), 而<code>_Artist</code> 又继承了 <code>org.apache.cayenne.CayenneDataObject</code>.</p>
+<p>将每个持久化类拆分为用户可自定义的子类（<code>Xyz</code>）和 自动生成的父类（<code>_Xyz</code>）是一种很有用的技术, 可以避免在从建模工具中刷新类文件时覆盖自定义代码.</p>
+<p>例如, 让我们在 Artist 类中添加一个实用的方法, 用于设置 Artist 的出生日期, 并为日期提供字符串参数. 即使映射模型稍后有变更, 它也将会被保留：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Artist</span> <span class="keyword">extends</span> <span class="title">_Artist</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">final</span> String DEFAULT_DATE_FORMAT = <span class="string">"yyyyMMdd"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Sets date of birth using a string in format yyyyMMdd.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDateOfBirthString</span><span class="params">(String yearMonthDay)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (yearMonthDay == <span class="keyword">null</span>) &#123;</span><br><span class="line">			setDateOfBirth(<span class="keyword">null</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">			LocalDate date;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				DateTimeFormatter formatter = DateTimeFormatter</span><br><span class="line">						.ofPattern(DEFAULT_DATE_FORMAT);</span><br><span class="line">				date = LocalDate.parse(yearMonthDay, formatter);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (DateTimeParseException e) &#123;</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</span><br><span class="line">						<span class="string">"A date argument must be in format '"</span></span><br><span class="line">								+ DEFAULT_DATE_FORMAT + <span class="string">"': "</span> + yearMonthDay);</span><br><span class="line">			&#125;</span><br><span class="line">			setDateOfBirth(date);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><a href="#chuang-jian-xin-dui-xiang" class="header-anchor"></a><span id="chuang-jian-xin-dui-xiang">创建新对象</span></h4><p>现在我们将创建一些对象并将它们保存到数据库中. 使用 “newObject” 方法创建一个对象并将其注册到<code>ObjectContext</code>. </p>
+<p>对象<strong>必须</strong>被注册到<code>DataContext</code>才能被持久化, 并允许设置与其他对象的关系. </p>
+<p>将此代码添加到Main 类的 “main” 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Artist picasso = context.newObject(Artist.class);</span><br><span class="line">picasso.setName(<span class="string">"Pablo Picasso"</span>);</span><br><span class="line">picasso.setDateOfBirthString(<span class="string">"18811025"</span>);</span><br></pre></td></tr></table></figure>
+<p>请注意，此时 “picasso” 对象仅存储在内存中, 还未保存在数据库中. 让我们继续添加大都会博物馆 (Gallery) 对象和一些毕加索的画作 (Paintings)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Gallery metropolitan = context.newObject(Gallery.class);</span><br><span class="line">metropolitan.setName(<span class="string">"Metropolitan Museum of Art"</span>);</span><br><span class="line"></span><br><span class="line">Painting girl = context.newObject(Painting.class);</span><br><span class="line">girl.setName(<span class="string">"Girl Reading at a Table"</span>);</span><br><span class="line"></span><br><span class="line">Painting stein = context.newObject(Painting.class);</span><br><span class="line">stein.setName(<span class="string">"Gertrude Stein"</span>);</span><br></pre></td></tr></table></figure>
+<p>现在我们可以将这些对象联系起来, 建立关系. 注意, 以下每个语句都将自动地建立双向的关系 (如: <code>picasso.addToPaintings(girl)</code>与<code>girl.setToArtist(picasso)</code>有相同的效果). </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">picasso.addToPaintings(girl);</span><br><span class="line">picasso.addToPaintings(stein);</span><br><span class="line"></span><br><span class="line">girl.setGallery(metropolitan);</span><br><span class="line">stein.setGallery(metropolitan);</span><br></pre></td></tr></table></figure>
+<p>现在, 让我们调用 1 个方法来同时保存 5 个新对象:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">context.commitChanges();</span><br></pre></td></tr></table></figure>
+<p>现在你可以按前一节介绍的方法来运行程序. 新的输出将显示一些实际的数据库操作:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">INFO: --- transaction started.</span><br><span class="line">INFO: No schema detected, will create mapped tables</span><br><span class="line">INFO: CREATE TABLE GALLERY (ID INTEGER NOT NULL, NAME VARCHAR (200), PRIMARY KEY (ID))</span><br><span class="line">INFO: CREATE TABLE ARTIST (DATE_OF_BIRTH DATE, ID INTEGER NOT NULL, NAME VARCHAR (200), PRIMARY KEY (ID))</span><br><span class="line">INFO: CREATE TABLE PAINTING (ARTIST_ID INTEGER, GALLERY_ID INTEGER, ID INTEGER NOT NULL,</span><br><span class="line">      NAME VARCHAR (200), PRIMARY KEY (ID))</span><br><span class="line">INFO: ALTER TABLE PAINTING ADD FOREIGN KEY (ARTIST_ID) REFERENCES ARTIST (ID)</span><br><span class="line">INFO: ALTER TABLE PAINTING ADD FOREIGN KEY (GALLERY_ID) REFERENCES GALLERY (ID)</span><br><span class="line">INFO: CREATE TABLE AUTO_PK_SUPPORT (</span><br><span class="line">      TABLE_NAME CHAR(100) NOT NULL,  NEXT_ID BIGINT NOT NULL,  PRIMARY KEY(TABLE_NAME))</span><br><span class="line">INFO: DELETE FROM AUTO_PK_SUPPORT WHERE TABLE_NAME IN (<span class="string">'ARTIST'</span>, <span class="string">'GALLERY'</span>, <span class="string">'PAINTING'</span>)</span><br><span class="line">INFO: INSERT INTO AUTO_PK_SUPPORT (TABLE_NAME, NEXT_ID) VALUES (<span class="string">'ARTIST'</span>, 200)</span><br><span class="line">INFO: INSERT INTO AUTO_PK_SUPPORT (TABLE_NAME, NEXT_ID) VALUES (<span class="string">'GALLERY'</span>, 200)</span><br><span class="line">INFO: INSERT INTO AUTO_PK_SUPPORT (TABLE_NAME, NEXT_ID) VALUES (<span class="string">'PAINTING'</span>, 200)</span><br><span class="line">INFO: SELECT NEXT_ID FROM AUTO_PK_SUPPORT WHERE TABLE_NAME = ? FOR UPDATE [<span class="built_in">bind</span>: 1:<span class="string">'ARTIST'</span>]</span><br><span class="line">INFO: SELECT NEXT_ID FROM AUTO_PK_SUPPORT WHERE TABLE_NAME = ? FOR UPDATE [<span class="built_in">bind</span>: 1:<span class="string">'GALLERY'</span>]</span><br><span class="line">INFO: SELECT NEXT_ID FROM AUTO_PK_SUPPORT WHERE TABLE_NAME = ? FOR UPDATE [<span class="built_in">bind</span>: 1:<span class="string">'PAINTING'</span>]</span><br><span class="line">INFO: INSERT INTO GALLERY (ID, NAME) VALUES (?, ?)</span><br><span class="line">INFO: [batch <span class="built_in">bind</span>: 1-&gt;ID:200, 2-&gt;NAME:<span class="string">'Metropolitan Museum of Art'</span>]</span><br><span class="line">INFO: === updated 1 row.</span><br><span class="line">INFO: INSERT INTO ARTIST (DATE_OF_BIRTH, ID, NAME) VALUES (?, ?, ?)</span><br><span class="line">INFO: [batch <span class="built_in">bind</span>: 1-&gt;DATE_OF_BIRTH:<span class="string">'1881-10-25 00:00:00.0'</span>, 2-&gt;ID:200, 3-&gt;NAME:<span class="string">'Pablo Picasso'</span>]</span><br><span class="line">INFO: === updated 1 row.</span><br><span class="line">INFO: INSERT INTO PAINTING (ARTIST_ID, GALLERY_ID, ID, NAME) VALUES (?, ?, ?, ?)</span><br><span class="line">INFO: [batch <span class="built_in">bind</span>: 1-&gt;ARTIST_ID:200, 2-&gt;GALLERY_ID:200, 3-&gt;ID:200, 4-&gt;NAME:<span class="string">'Gertrude Stein'</span>]</span><br><span class="line">INFO: [batch <span class="built_in">bind</span>: 1-&gt;ARTIST_ID:200, 2-&gt;GALLERY_ID:200, 3-&gt;ID:201, 4-&gt;NAME:<span class="string">'Girl Reading at a Table'</span>]</span><br><span class="line">INFO: === updated 2 rows.</span><br><span class="line">INFO: +++ transaction committed.</span><br></pre></td></tr></table></figure>
+<p>Cayenne 首先创建了所需的表 (记住, 我们使用了 “CreateIfNoSchemaStrategy”). 然后, 它执行了许多 insert 语句, 即时生成了主键. 仅仅几行代码就完成了这些操作, 还不赖.</p>
+<h2><a href="#3-3-jian-suo-dui-xiang" class="header-anchor"></a><span id="3-3-jian-suo-dui-xiang">3.3 检索对象</span></h2><p>本节展示如何使用<code>ObjectSelect</code>从数据库中检索对象.</p>
+<h4><a href="#objectselect-jie-shao" class="header-anchor"></a><span id="objectselect-jie-shao">ObjectSelect 介绍</span></h4><p>前面已经展示了如何持久化新对象. Cayenne 查询用来访问已存储的对象. 用于检索对象的主要查询类是<code>ObjectSelect</code>.它可以使用 CayenneModeler 进行映射或使用 API 创建. 本节我们将使用后一种方法. 虽然数据库中没有太多数据, 但我们仍然可以演示主要的方法, 如下:</p>
+<ul>
+<li><p>检索所有的画作 (paintings), 代码及输出日志如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Painting&gt; paintings1 = ObjectSelect.query(Painting.class).select(context);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INFO: SELECT t0.GALLERY_ID, t0.ARTIST_ID, t0.NAME, t0.ID FROM PAINTING t0</span><br><span class="line">INFO: === returned 2 rows. - took 18 ms.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检索名字以 “gi” 开头的作品, 忽略大小写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Painting&gt; paintings2 = ObjectSelect.query(Painting.class)</span><br><span class="line">        .where(Painting.NAME.likeIgnoreCase(<span class="string">"gi%"</span>)).select(context);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INFO: SELECT t0.GALLERY_ID, t0.NAME, t0.ARTIST_ID, t0.ID FROM PAINTING t0 WHERE UPPER(t0.NAME) LIKE UPPER(?)</span><br><span class="line">  [bind: 1-&gt;NAME:&apos;gi%&apos;] - prepared in 6 ms.</span><br><span class="line">INFO: === returned 1 row. - took 18 ms.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检索所有出生成于 100 年前的画家的作品:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Painting&gt; paintings3 = ObjectSelect.query(Painting.class)</span><br><span class="line">        .where(Painting.ARTIST.dot(Artist.DATE_OF_BIRTH).lt(LocalDate.of(<span class="number">1900</span>,<span class="number">1</span>,<span class="number">1</span>)))</span><br><span class="line">        .select(context);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INFO: SELECT t0.GALLERY_ID, t0.NAME, t0.ARTIST_ID, t0.ID FROM PAINTING t0 JOIN ARTIST t1 ON (t0.ARTIST_ID = t1.ID)</span><br><span class="line">  WHERE t1.DATE_OF_BIRTH &lt; ? [bind: 1-&gt;DATE_OF_BIRTH:&apos;1911-01-01 00:00:00.493&apos;] - prepared in 7 ms.</span><br><span class="line">INFO: === returned 2 rows. - took 25 ms.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2><a href="#3-3-shan-chu-dui-xiang" class="header-anchor"></a><span id="3-3-shan-chu-dui-xiang">3.3 删除对象</span></h2><p>本节介绍如何建模关系删除规则, 以及如何删除单个对象和对象集. 还将演示使用 Cayenne 类来执行查询.</p>
+<h4><a href="#she-zhi-shan-chu-gui-ze" class="header-anchor"></a><span id="she-zhi-shan-chu-gui-ze">设置删除规则</span></h4><p>在我们讨论对象删除的 API 之前, 让我们回到 CayenneModeler 进行一些删除规则设置. </p>
+<p>这样做是可选 (并非必须) 的, 但可以简化已删除对象相关联的对象的处理. </p>
+<p>在 CayenneModeler 中转到 “Artist” ObjEntity, “Relationships” 选项卡, 为 “paintings” 关系选择 “Cascade” 删除规则:</p>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/modeler-deleterule.png" alt=""></p>
+<p>重复这个步骤设置其它关系:</p>
+<ul>
+<li>针对 Gallery, 设置 “paintings” 关系为 “Nullify”, 因为可存在未在任何画廊展出的画作.</li>
+<li>对于 Painting, 设置其两个关系规则均为 “Nullify”.</li>
+</ul>
+<p>现在, 保存映射文件.</p>
+<h4><a href="#shan-chu-dui-xiang" class="header-anchor"></a><span id="shan-chu-dui-xiang">删除对象</span></h4><p>虽然可限定一个或多个 ID, 通过 SQL 删除对象. 但在 Cayenne (或一般的ORM) 中, 更常见的做法是先获取对象, 然后通过 context 删除它. 让我们使用工具类找到一位艺术家:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Artist picasso = ObjectSelect.query(Artist.class)</span><br><span class="line">            .where(Artist.NAME.eq(<span class="string">"Pablo Picasso"</span>)).selectOne(context);</span><br></pre></td></tr></table></figure>
+<p>现在删除这个艺术家:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (picasso != <span class="keyword">null</span>) &#123;</span><br><span class="line">    context.deleteObject(picasso);</span><br><span class="line">    context.commitChanges();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为我们为 Artist.paintings 关系设置了 “Cascade” (级联) 删除规则, Cayenne 将自动删除所有此艺术家的作品. </p>
+<p>因此, 当运行些程序时将看到如下输出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">INFO: SELECT t0.DATE_OF_BIRTH, t0.NAME, t0.ID FROM ARTIST t0</span><br><span class="line">  WHERE t0.NAME = ? [bind: 1-&gt;NAME:&apos;Pablo Picasso&apos;] - prepared in 6 ms.</span><br><span class="line">INFO: === returned 1 row. - took 18 ms.</span><br><span class="line">INFO: +++ transaction committed.</span><br><span class="line">INFO: --- transaction started.</span><br><span class="line">INFO: DELETE FROM PAINTING WHERE ID = ?</span><br><span class="line">INFO: [batch bind: 1-&gt;ID:200]</span><br><span class="line">INFO: [batch bind: 1-&gt;ID:201]</span><br><span class="line">INFO: === updated 2 rows.</span><br><span class="line">INFO: DELETE FROM ARTIST WHERE ID = ?</span><br><span class="line">INFO: [batch bind: 1-&gt;ID:200]</span><br><span class="line">INFO: === updated 1 row.</span><br><span class="line">INFO: +++ transaction committed.</span><br></pre></td></tr></table></figure>
+<h1><a href="#4-zhuan-huan-wei-web-ying-yong-cheng-xu" class="header-anchor"></a><span id="4-zhuan-huan-wei-web-ying-yong-cheng-xu">4. 转换为Web应用程序</span></h1><p>本章介绍如何在Web应用程序中使用Cayenne.</p>
+<h2><a href="#4-1-jiang-tutorial-xiang-mu-zhuan-huan-wei-web-ying-yong-cheng-xu" class="header-anchor"></a><span id="4-1-jiang-tutorial-xiang-mu-zhuan-huan-wei-web-ying-yong-cheng-xu">4.1 将 tutorial 项目转换为Web应用程序</span></h2><p>此部分教程的 Web 部分是在 JSP 中完成的, 而 JSP 是 Java Web 技术中最常见的实现方法. 本教程在 UI 方面尽可能地简单, 主要专注于 Cayenne 集成, 而不是界面.</p>
+<p>一个典型的 Cayenne Web 应用程序像下面这样工作：</p>
+<ul>
+<li><p>在应用程序上下文启动时, 使用一个特定的 Servlet 过滤器加载 Cayenne 的配置</p>
+</li>
+<li><p>用户请求被过滤器拦截, 并将 DataContext 绑定到请求线程, 因此应用程序可以从任何地方轻松访问它.</p>
+</li>
+<li><p>同一个 DataContext 实例在单个用户会话 ( Session ) 中被重用; 不同的会话使用不同的 DataContexts ( 以及不同的对象集). </p>
+<p><em>根据具体情况, 可以使用不同作用域的上下文 (Context). 本教程中我们将使用会话作用域上下文 ( session-scoped context)</em> .</p>
+</li>
+</ul>
+<p>让我们将我们此前创建的 tutorial 项目转换为一个 Web 应用程序:</p>
+<ul>
+<li>在 IDEA 中的 “tutorial” 项目文件夹下创建一个新的文件夹 <code>src/main/webapp/WEB-INF</code>.</li>
+<li>在 <code>WEB-INF</code> 下创建一个新文件 <code>web.xml</code> ( 一个标准的Web应用程序描述文件 ):</li>
+</ul>
+<p><strong>web.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE web-app</span></span><br><span class="line"><span class="meta">   PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"</span></span><br><span class="line"><span class="meta">  "http://java.sun.com/dtd/web-app_2_3.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">display-name</span>&gt;</span>Cayenne Tutorial<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- This filter bootstraps ServerRuntime and then provides each request thread</span></span><br><span class="line"><span class="comment">         with a session-bound DataContext. Note that the name of the filter is important,</span></span><br><span class="line"><span class="comment">         as it points it to the right named configuration file.</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>cayenne-project<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.apache.cayenne.configuration.web.CayenneFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>cayenne-project<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建艺术家浏览页面 <code>src/main/webapp/index.jsp</code>, 包含如下内容:</li>
+</ul>
+<p><strong>webapp/index.jsp</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span> contentType=<span class="string">"text/html"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"org.example.cayenne.persistent.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"org.apache.cayenne.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"org.apache.cayenne.query.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"org.apache.cayenne.exp.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"java.util.*"</span> %&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">    ObjectContext context = BaseContext.getThreadObjectContext();</span><br><span class="line">    List&lt;Artist&gt; artists = ObjectSelect.query(Artist.class)</span><br><span class="line">                .orderBy(Artist.NAME.asc())</span><br><span class="line">                .select(context);</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;Main&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;h2&gt;Artists:&lt;/h2&gt;</span><br><span class="line"></span><br><span class="line">        &lt;% <span class="keyword">if</span>(artists.isEmpty()) &#123;%&gt;</span><br><span class="line">        &lt;p&gt;No artists found&lt;/p&gt;</span><br><span class="line">        &lt;% &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">for</span>(Artist a : artists) &#123;</span><br><span class="line">        %&gt;</span><br><span class="line">        &lt;p&gt;&lt;a href="detail.jsp?id=&lt;%=Cayenne.intPKForObject(a)%&gt;"&gt; &lt;%=a.getName()%&gt; &lt;/a&gt;&lt;/p&gt;</span><br><span class="line">        &lt;%</span><br><span class="line">               &#125;</span><br><span class="line">           &#125; %&gt;</span><br><span class="line">        &lt;hr&gt;</span><br><span class="line">        &lt;p&gt;&lt;a href="detail.jsp"&gt;Create new artist...&lt;/a&gt;&lt;/p&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建艺术家编辑页面 <code>src/main/webapp/detail.jsp</code>, 包含如下内容:</li>
+</ul>
+<p><strong>webapp/detail.jsp</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span> contentType=<span class="string">"text/html"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"org.example.cayenne.persistent.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"org.apache.cayenne.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"org.apache.cayenne.query.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"java.util.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"java.text.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"java.time.format.DateTimeFormatter"</span> %&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">    ObjectContext context = BaseContext.getThreadObjectContext();</span><br><span class="line">    String id = request.getParameter(<span class="string">"id"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// find artist for id</span></span><br><span class="line">    Artist artist = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span>(id != <span class="keyword">null</span> &amp;amp;&amp;amp; id.trim().length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        artist = SelectById.query(Artist.class, Integer.parseInt(id)).selectOne(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="string">"POST"</span>.equals(request.getMethod())) &#123;</span><br><span class="line">        <span class="comment">// if no id is saved in the hidden field, we are dealing with</span></span><br><span class="line">        <span class="comment">// create new artist request</span></span><br><span class="line">        <span class="keyword">if</span>(artist == <span class="keyword">null</span>) &#123;</span><br><span class="line">            artist = context.newObject(Artist.class);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// note that in a real application we would so dome validation ...</span></span><br><span class="line">        <span class="comment">// here we just hope the input is correct</span></span><br><span class="line">        artist.setName(request.getParameter(<span class="string">"name"</span>));</span><br><span class="line">        artist.setDateOfBirthString(request.getParameter(<span class="string">"dateOfBirth"</span>));</span><br><span class="line"></span><br><span class="line">        context.commitChanges();</span><br><span class="line"></span><br><span class="line">        response.sendRedirect(<span class="string">"index.jsp"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(artist == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// create transient artist for the form response rendering</span></span><br><span class="line">        artist = <span class="keyword">new</span> Artist();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    String name = artist.getName() == <span class="keyword">null</span> ? <span class="string">""</span> : artist.getName();</span><br><span class="line"></span><br><span class="line">    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(<span class="string">"yyyyMMdd"</span>);</span><br><span class="line">    String dob = artist.getDateOfBirth() == <span class="keyword">null</span></span><br><span class="line">                        ? <span class="string">""</span> :artist.getDateOfBirth().format(formatter);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;Artist Details&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;h2&gt;Artists Details&lt;/h2&gt;</span><br><span class="line">        &lt;form name=<span class="string">"EditArtist"</span> action=<span class="string">"detail.jsp"</span> method=<span class="string">"POST"</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">"hidden"</span> name=<span class="string">"id"</span> value=<span class="string">"&lt;%= id != null ? id : "</span><span class="string">" %&gt;"</span> /&gt;</span><br><span class="line">            &lt;table border=<span class="string">"0"</span>&gt;</span><br><span class="line">                &lt;tr&gt;</span><br><span class="line">                    &lt;td&gt;Name:&lt;/td&gt;</span><br><span class="line">                    &lt;td&gt;&lt;input type="text" name="name" value="&lt;%= name %&gt;"/&gt;&lt;/td&gt;</span><br><span class="line">                &lt;/tr&gt;</span><br><span class="line">                &lt;tr&gt;</span><br><span class="line">                    &lt;td&gt;<span class="function">Date of <span class="title">Birth</span> <span class="params">(yyyyMMdd)</span>:&lt;/td&gt;</span></span><br><span class="line">                    &lt;td&gt;&lt;input type="text" name="dateOfBirth" value="&lt;%= dob %&gt;"/&gt;&lt;/td&gt;</span><br><span class="line">                &lt;/tr&gt;</span><br><span class="line">                &lt;tr&gt;</span><br><span class="line">                    &lt;td&gt;&lt;/td&gt;</span><br><span class="line">                    &lt;td align="right"&gt;&lt;input type="submit" value="Save" /&gt;&lt;/td&gt;</span><br><span class="line">                &lt;/tr&gt;</span><br><span class="line">            &lt;/table&gt;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h4><a href="#yun-xing-web-ying-yong-cheng-xu" class="header-anchor"></a><span id="yun-xing-web-ying-yong-cheng-xu">运行 Web 应用程序</span></h4><p>我们需要为应用程序提供 javax servlet-api.</p>
+<p><strong>pom.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>为运行这个 web 应用程序, 我们将使用 “maven-jetty-plugin”. </p>
+<blockquote>
+<p>译注: jetty 是一个 Web 应用程序容器, 作用类似 Tomcat.</p>
+</blockquote>
+<p>为激活他, 让我们添加如下代码片段到 <code>pom.xml</code> 文件,  跟在”dependencies” 节的后面, 然后保存 POM:</p>
+<p><strong>pom.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.eclipse.jetty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jetty-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>9.3.14.v20161028<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>转到 “Select Run/Debug Configuration” 菜单, 然后 “Edit Configuration…”</li>
+</ul>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/idea-edit-configurations.png" alt="idea edit configurations"></p>
+<ul>
+<li>点击 <code>+</code> 按钮并选择 “Maven”. 按如下截图输入 “Name” 和 “Command line”:</li>
+</ul>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/idea-run-configuration.png" alt="idea run configuration"></p>
+<ul>
+<li><p>点击 “Apply” 和 “Run”. 在首次运行时, 可能需要花费几分钟为 Jetty 插件下载所有的依赖, 最终你将看到如下日志输出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building tutorial 0.0.1-SNAPSHOT</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">...</span><br><span class="line">[INFO] Configuring Jetty for project: tutorial</span><br><span class="line">[INFO] webAppSourceDirectory not set. Trying src/main/webapp</span><br><span class="line">[INFO] Reload Mechanic: automatic</span><br><span class="line">[INFO] Classes = /.../tutorial/target/classes</span><br><span class="line">[INFO] Logging initialized @1617ms</span><br><span class="line">[INFO] Context path = /</span><br><span class="line">[INFO] Tmp directory = /.../tutorial/target/tmp</span><br><span class="line">[INFO] Web defaults = org/eclipse/jetty/webapp/webdefault.xml</span><br><span class="line">[INFO] Web overrides =  none</span><br><span class="line">[INFO] web.xml file = file:/.../tutorial/src/main/webapp/WEB-INF/web.xml</span><br><span class="line">[INFO] Webapp directory = /.../tutorial/src/main/webapp</span><br><span class="line">[INFO] jetty-9.3.0.v20150612</span><br><span class="line">[INFO] Started o.e.j.m.p.JettyWebAppContext@6872f9c8&#123;/,file:/.../tutorial/src/main/webapp/,AVAILABLE&#125;&#123;file:/.../tutorial/src/main/webapp/&#125;</span><br><span class="line">[INFO] Started ServerConnector@723875bc&#123;HTTP/1.1,[http/1.1]&#125;&#123;0.0.0.0:8080&#125;</span><br><span class="line">[INFO] Started @2367ms</span><br><span class="line">[INFO] Started Jetty Server&lt;/screen&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这样 Jetty 容器就成功启动了.</p>
+</li>
+<li><p>现在, 打开 <a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a> . 你应该在浏览器中看到 “No artists found message” 页面, 并在 IDEA 的控制台中看到如下输出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">INFO: Loading XML configuration resource from file:/.../tutorial/target/classes/cayenne-project.xml</span><br><span class="line">INFO: loading user name and password.</span><br><span class="line">INFO: Connecting to &apos;jdbc:derby:memory:testdb;create=true&apos; as &apos;null&apos;</span><br><span class="line">INFO: +++ Connecting: SUCCESS.</span><br><span class="line">INFO: setting DataNode &apos;datanode&apos; as default, used by all unlinked DataMaps</span><br><span class="line">INFO: Detected and installed adapter: org.apache.cayenne.dba.derby.DerbyAdapter</span><br><span class="line">INFO: --- transaction started.</span><br><span class="line">INFO: No schema detected, will create mapped tables</span><br><span class="line">INFO: CREATE TABLE GALLERY (ID INTEGER NOT NULL, NAME VARCHAR (200), PRIMARY KEY (ID))</span><br><span class="line">INFO: CREATE TABLE ARTIST (DATE_OF_BIRTH DATE, ID INTEGER NOT NULL, NAME VARCHAR (200), PRIMARY KEY (ID))</span><br><span class="line">INFO: CREATE TABLE PAINTING (ARTIST_ID INTEGER, GALLERY_ID INTEGER, ID INTEGER NOT NULL,</span><br><span class="line">      NAME VARCHAR (200), PRIMARY KEY (ID))</span><br><span class="line">INFO: ALTER TABLE PAINTING ADD FOREIGN KEY (ARTIST_ID) REFERENCES ARTIST (ID)</span><br><span class="line">INFO: ALTER TABLE PAINTING ADD FOREIGN KEY (GALLERY_ID) REFERENCES GALLERY (ID)</span><br><span class="line">INFO: CREATE TABLE AUTO_PK_SUPPORT (</span><br><span class="line">      TABLE_NAME CHAR(100) NOT NULL,  NEXT_ID BIGINT NOT NULL,  PRIMARY KEY(TABLE_NAME))</span><br><span class="line">...</span><br><span class="line">INFO: SELECT t0.DATE_OF_BIRTH, t0.NAME, t0.ID FROM ARTIST t0 ORDER BY t0.NAME</span><br><span class="line">INFO: === returned 0 rows. - took 17 ms.</span><br><span class="line">INFO: +++ transaction committed.&lt;/screen&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>你可以点击 “Create new artist” 链接以来创建一个艺术家. 点击已存在的艺术家的名字可以编辑他:</p>
+</li>
+</ul>
+<p><img src="https://cayenne.apache.org/docs/4.0/getting-started-guide/images/chrome-webapp.png" alt="chrome webapp"></p>
+<p>你已完成本教程!</p>
+
+        </div>
+        <p class="post-revise-info">
+            Revised on <span class="date">2019/05/12 00:43:38</span> by Bailey
+        </p>
+        
+        <!-- 上一篇/下一篇  -->
+        <hr/>
+        <ul class="post-paginator">
+            <li class="next">
+                
+                    <div class="nextSlogan">Next Post</div>
+                    <a href= "/2019/05/14/实例教程-在线账本-1/" title= "实例教程 - 在线账本 (一)">
+                        实例教程 - 在线账本 (一)
+                    </a>
+                
+            </li>
+            <li class="previous">
+                
+                    <div class="prevSlogan">Previous Post</div>
+                    <a href= "/2019/05/01/使用GitHub+Hexo搭建个人网站/" title= "使用 GitHub + Hexo 搭建个人博客">
+                        使用 GitHub + Hexo 搭建个人博客
+                    </a>
+                
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  var toc = document.querySelector(".toc");
+  // 若有侧边目录, 则设置目录效果
+  if (toc) {
+    toc.onmouseover = function(){
+      toc.classList.remove("toc-shrink");
+    };
+    toc.onmouseout = function(){
+      toc.classList.add("toc-shrink");
+    };
+
+    // 延迟 5 秒后自动隐藏
+    window.setTimeout(function(){
+      toc.classList.add("toc-shrink");
+    }, 5000);
+
+    // 目录跟随滚动效果
+    var setTocPosition = function() {
+      //变量t是滚动条滚动时，距离顶部的距离
+      var t = document.documentElement.scrollTop||document.body.scrollTop;
+    
+      //当滚动到距离顶部200px时，返回顶部的锚点显示
+      if(t < 300){
+        toc.style.top = (300 - t) + 'px';
+      } else{          //恢复正常
+        toc.style.top = "20px";
+      }
+    }
+
+    window.onscroll = function(){
+        setTocPosition();
+    }
+    setTocPosition();
+  }
+</script>
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a> 
+        <p class="copyright text-muted">
+          Copyright By <a href="mailto:baileiz@163.com">Bailey.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<!-- <script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script> -->
+
+  </body>
+</html>
+

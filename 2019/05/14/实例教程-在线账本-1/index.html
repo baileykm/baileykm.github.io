@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Bailey">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="实例教程 - 在线账本 (一)"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Bailey&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://baileykm.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Bailey&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Bailey's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-139890203-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+</head>
+
+  <body>
+    <!-- 单篇文章内容页面 -->
+<!-- Page Header -->
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">实例教程 - 在线账本 (一)</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/baileykm">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:baileiz@163.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div id="article-content" class="col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Bailey</span>
+          
+          <!-- Date -->
+          <span class="date-time info">
+            On <span class="date">2019/05/14</span>
+            <span class="time">22:20:08</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Category <!-- 文章内容页面中的 Categories 部分 -->
+
+
+<a href="/categories/入门教程/">入门教程</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: <!-- 文章内容页中的 Tags 部分 -->
+
+
+<a class="tag" href="/tags/Web/">#Web</a> <a class="tag" href="/tags/Ajax/">#Ajax</a> <a class="tag" href="/tags/Java/">#Java</a> <a class="tag" href="/tags/Bootstrap/">#Bootstrap</a> <a class="tag" href="/tags/jQuery/">#jQuery</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>本系列教程将带领大家完成一个 B/S 架构的”在线账本”, 希望通过这个实例教程能帮助大家打通 “任督二脉”, 把所学知识融汇贯通.</p>
+<p>此为系列教程的第一部分: <em>纯前端代码实现的记账本</em>. </p>
+<p>只要你有一点 HMTL, CSS, Javascript 的基础就可以跟上我们的脚步. 当然, 了解一点点 Bootstrap 和 jQuery 将会更轻松.</p>
+<a id="more"></a>
+<div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#1-xian-kan-xiao-guo">1. 先看效果</a></li>
+<li><a href="#2-gou-jian-qian-duan-jing-tai-ye-mian">2. 构建前端静态页面</a></li>
+<li><a href="#3-qian-duan-luo-ji-shi-xian">3. 前端逻辑实现</a><ul>
+<li><a href="#3-1-mvc-mo-shi">3.1 MVC 模式</a></li>
+<li><a href="#3-2-she-ji-zhang-ben-shu-ju-mo-xing">3.2 设计账本数据模型</a></li>
+<li><a href="#3-3-zhan-shi-zhang-dan-lie-biao">3.3 展示账单列表</a></li>
+</ul>
+</li>
+<li><a href="#4-xin-zeng-zhang-dan">4. 新增账单</a><ul>
+<li><a href="#4-1-xian-shi-yin-cang-xin-zhang-dan-bian-ji-mian-ban">4.1 显示/隐藏”新账单编辑面板”</a></li>
+<li><a href="#4-2-shi-xian-xin-zeng-zhang-dan-gong-neng">4.2 实现”新增账单”功能</a></li>
+</ul>
+</li>
+<li><a href="#5-shan-chu-zhang-dan">5. 删除账单</a><ul>
+<li><a href="#5-1-jian-ting-zhang-dan-xiang-shuang-ji-shi-jian">5.1 监听账单项双击事件</a></li>
+<li><a href="#5-2-shi-xian-shan-chu-zhang-dan-gong-neng">5.2 实现”删除账单”功能</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+</div>
+
+<blockquote>
+<p>本教程假设你已熟悉 HTML, CSS, 对 Javascript, Java 有一定基础, 对数据库管理系统 (MySQL) 有所了解. </p>
+<p>倘若以上假设不成立… 也不要紧, 跟着来, 遇到不明白的问下度娘, 或给我写信.</p>
+</blockquote>
+<p>​    </p>
+<h1><a href="#1-xian-kan-xiao-guo" class="header-anchor"></a><span id="1-xian-kan-xiao-guo">1. 先看效果</span></h1><p><img src="/images/20190514-1.gif" alt="在线记账本最终实现效果"></p>
+<p>怎么样, 还行吧 ?! 有没有兴趣继续跟着学?</p>
+<blockquote>
+<p>本系列教程 (一) 至 (三) 节的运行效果相似, 均如上面的动图, 只是使用到的技术逐渐加深:</p>
+<ol>
+<li><a href="../实例教程-在线账本-1/">纯前端代码实现的记账本</a></li>
+<li><a href="../实例教程-在线账本-2/">客户端 (前端) + 服务器端 (后端) 模式的在线记账本</a></li>
+<li><a href="../实例教程-在线账本-3/">真正的在线记账本: 客户端 + 服务器 + 数据库</a></li>
+</ol>
+</blockquote>
+<p>​    </p>
+<h1><a href="#2-gou-jian-qian-duan-jing-tai-ye-mian" class="header-anchor"></a><span id="2-gou-jian-qian-duan-jing-tai-ye-mian">2. 构建前端静态页面</span></h1><p>本节内容虽然听上去有些 low, 只是一个纯前端实现, 但它是第 (二)、(三) 节那些更 “高大上” 的东西的基础. </p>
+<p>前端页面的构建主要涉及的技术有: HTML, CSS, Javascript. </p>
+<p>当然, 为了视觉效果上漂亮些, 我们加入了 <code>bootstrap</code>, 同时为了让我们的 Javascript 代码写的轻松些, 我们还用到了 <code>jQuery</code>, <code>jquery-confirm</code>,  <code>moment.js</code>.</p>
+<p>相对而言, 大多数同学对 HTML 和 CSS 的掌握还算不错. 请先试着自己完成如下图所示界面的制作:</p>
+<p><img src="/images/20190514-2.png" alt="前端静态页面效果图-1"></p>
+<p>本教程重点不在 HTML 和 CSS 代码的编写, 下面将直接给出代码, 只作简要解释. </p>
+<p>若想偷懒, 直接复制或是<a href="/attachment/online-account-book-client.zip">下载</a> 便是, 但<code>index.html</code> 和 <code>index.css</code>中的代码请仔细研读并弄懂.</p>
+<blockquote>
+<p>下载到的压缩包里是不是少了 index.js 文件 ?  </p>
+<p>哈哈~ 我故意删掉的! 防止你直接解压运行一下, 看个开心就了事~</p>
+<p>本节的重点是前端业务逻辑的实现 ( index.js ), 千万别想着在这个环节上偷懒, 否则就失去本教程的意义了!</p>
+</blockquote>
+<p><strong>Code-2.1 index.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>在线记账本<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Bootstrap --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/bootstrap.css"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- jquery-confirm 的样式 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/jquery-confirm.3.3.min.css"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 自定义样式 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/index.css"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- jQuery --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>  <span class="attr">src</span>=<span class="string">"js/jquery-1.11.1.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- jQuery Confirm, jQuery插件, 用于弹出消息框 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>  <span class="attr">src</span>=<span class="string">"js/jquery-confirm.3.3.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>  <span class="attr">src</span>=<span class="string">"js/jquery-confirm-bailey.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Bootstrap --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/bootstrap.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Moment, 处理时间/日期的第三方库 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/moment.2.24.0.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/moment.locale.2.24.0.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 本页面自定义 javascript 代码 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"records"</span> <span class="attr">class</span>=<span class="string">"panel panel-primary"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"panel-heading"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">"panel-title"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"icon glyphicon glyphicon-list"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>记账本<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">id</span>=<span class="string">"btn-add-bill"</span> <span class="attr">title</span>=<span class="string">"打开/关闭记账面板"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"icon glyphicon glyphicon-menu-right"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"panel-body"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"bill-items"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"record"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"date-time"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"date"</span> <span class="attr">data-field</span>=<span class="string">"date"</span>&gt;</span>05/13<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"time"</span> <span class="attr">data-field</span>=<span class="string">"time"</span>&gt;</span>12:49:36<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">h4</span> <span class="attr">class</span>=<span class="string">"media-heading io in"</span> <span class="attr">data-field</span>=<span class="string">"amount"</span>&gt;</span>+ 800.00<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"memo"</span> <span class="attr">data-field</span>=<span class="string">"memo"</span>&gt;</span>老爸发生活费啦<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"panel-footer"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"progress"</span> <span class="attr">src</span>=<span class="string">"img/spinner.gif"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h4</span> <span class="attr">id</span>=<span class="string">"balance"</span> <span class="attr">style</span>=<span class="string">"color: green;"</span>&gt;</span></span><br><span class="line">                    结余: <span class="tag">&lt;<span class="name">span</span>&gt;</span>+ 800<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"panel-bill-editor"</span> <span class="attr">class</span>=<span class="string">"panel panel-info"</span> <span class="attr">style</span>=<span class="string">"display: none;"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"panel-heading"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">"panel-title"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"icon glyphicon glyphicon-pencil"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>账单<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"panel-body"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-group"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">label</span>&gt;</span>金额<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"nb-amount"</span> <span class="attr">type</span>=<span class="string">"number"</span> <span class="attr">max</span>=<span class="string">"100000"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">placeholder</span>=<span class="string">"收入/支出金额"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-group"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">label</span>&gt;</span>备注<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"nb-memo"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">maxlength</span>=<span class="string">"50"</span> <span class="attr">class</span>=<span class="string">"form-control"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"panel-footer"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"btn-confirm-add"</span> <span class="attr">class</span>=<span class="string">"btn btn-sm btn-info"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"icon glyphicon glyphicon-floppy-save"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>记一笔<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>对以上代码作简要解释:</p>
+<ul>
+<li><code>head</code> 部分: 引入各种 CSS 和 javascript<ul>
+<li>第 8 行 和 第 23 行引入<code>bootstrap</code>,  加入bootstrap 预定义样式和 boostrap 组件代码.  若对 bootstrap 知之甚少, 强烈建议课外自学. ( 现在别忙着去看 )</li>
+<li>第 10 行 和 第19 行引入了一个名为<code>jquery-confirm</code>的 jQuery 插件, 用于弹出漂亮的消息框.</li>
+<li>第 16 行引入 <code>jQuery</code> 库, 这里我们使用的是 1.11.1 版本. 若你使用别的版本, 请注意兼容性问题.</li>
+<li>第 13 行 和 第 30 行 引入的是针对 index.html 页面写的样式表和 javascript 脚本.</li>
+</ul>
+</li>
+<li>body 部分: 页面主体部分的 HTML 代码<ul>
+<li>页面主体部分分作左、右两个部分: 左侧为账本记录列表 ( 35 ~ 60 行, <code>div#records</code>), 展示已登记的账单列表; 右侧为单条账单的编辑界面 ( 62 ~ 79 行, <code>div#panel-bill-editor</code>), 注意此面板初始时为隐藏状态.</li>
+<li>注意其中的第 42 ~ 51 行 ( <code>&lt;li class=&quot;record&quot;&gt; ... &lt;/li&gt;</code>), 这是账单列表中的一条信息.</li>
+</ul>
+</li>
+</ul>
+<p>​    </p>
+<p>篇幅所限, <code>index.css</code> 的代码就不直接附在本文中了. 若有需要参考, 可直接<a href="/attachment/online-account-book-client.zip">下载前端部分代码</a>.</p>
+<p>​    </p>
+<h1><a href="#3-qian-duan-luo-ji-shi-xian" class="header-anchor"></a><span id="3-qian-duan-luo-ji-shi-xian">3. 前端逻辑实现</span></h1><p>这一部分我们将编写<code>index.js</code>中的代码, 实现前端逻辑. 完成后你将得到一个 “纯前端代码实现的记账本”. ( 即: 没有服务器端, 也没有数据库 )</p>
+<blockquote>
+<p>本部分代码均放置于 index.js </p>
+</blockquote>
+<p>深吸一口气~ </p>
+<p>我们开始吧…</p>
+<h2><a href="#3-1-mvc-mo-shi" class="header-anchor"></a><span id="3-1-mvc-mo-shi">3.1 MVC 模式</span></h2><p>首先, 我们要强调一个重要的软件设计模式: <strong>MVC</strong>. </p>
+<p>MVC 模式是一种软件设计典范，用一种业务逻辑、数据、界面显示分离的方法组织代码. </p>
+<p>可以毫不夸张地说, MVC 模型指引着我们各种软件设计的大方向, </p>
+<p>根据 MVC 模式思想, 我们可以把大到一个软件系统, 小到一个功能模块分解为 M (Model)、V (View) 和 C (Controller) 三个部分(层). 其中:</p>
+<ul>
+<li>Model - 数据模型层: 使用合适的数据结构存储着软件(模块)中的数据.</li>
+<li>View - 视图层: 粗浅来说, 它是用户看到的界面呈现. 更准确来说, 是软件(模块)中更靠近”用户”的那一层 (不一定是可视化的界面). View 是 Model 的表现.</li>
+<li>Controller - 控制层: 实现了 Model 到 View 的映射 ( 根据 Model 来呈现 View ), 以及 View 到 Model 的反馈 ( 根据 View 层的变化来更新 Model ). 也就是说, Controller 实现了 Model 和 View 之间的双向映射 (同步).</li>
+</ul>
+<p>盗个图来说, 大概就是这样:</p>
+<p><img src="/images/20190514-3.jpg" alt="MVC模式"></p>
+<h2><a href="#3-2-she-ji-zhang-ben-shu-ju-mo-xing" class="header-anchor"></a><span id="3-2-she-ji-zhang-ben-shu-ju-mo-xing">3.2  设计账本数据模型</span></h2><p>扯了半天 MVC, 你现在应该知道 Model 算是三兄弟中的老大了吧~</p>
+<p>所以, 我们可以先从数据模型 (Model) 设计开始, 代码如下:</p>
+<p><strong>Code-3.2.1</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 账本数据模型</span></span><br><span class="line"><span class="keyword">var</span> bills = [&#123;</span><br><span class="line">    id: <span class="number">0</span>,                    <span class="comment">// 账单ID</span></span><br><span class="line">    time: <span class="keyword">new</span> <span class="built_in">Date</span>(),         <span class="comment">// 记账时间</span></span><br><span class="line">    amount: <span class="number">80000</span>,            <span class="comment">// 金额, 单位:分</span></span><br><span class="line">    memo: <span class="string">'老爸发生活费了'</span>      <span class="comment">// 备注</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">    id: <span class="number">1</span>,</span><br><span class="line">    time: <span class="keyword">new</span> <span class="built_in">Date</span>(),</span><br><span class="line">    amount: <span class="number">-1470</span>,</span><br><span class="line">    memo: <span class="string">'食堂打的饭, 味道还真是一般'</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">    id: <span class="number">2</span>,</span><br><span class="line">    time: <span class="keyword">new</span> <span class="built_in">Date</span>(),</span><br><span class="line">    amount: <span class="number">-1890</span>,</span><br><span class="line">    memo: <span class="string">'买本《小王子》, 补个童年'</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">    id: <span class="number">3</span>,</span><br><span class="line">    time: <span class="keyword">new</span> <span class="built_in">Date</span>(),</span><br><span class="line">    amount: <span class="number">-1200</span>,</span><br><span class="line">    memo: <span class="string">'今晚吃饺子'</span></span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>我们使用一个数组来存储账本数据, 其中每一个数组元素为一条账单记录. 上面的代码是测试时初始的模拟数据.</p>
+</li>
+<li><p>第 3 ~ 6 行的注释说明了一条账单数据中各属性的含意</p>
+</li>
+<li><p>注意: 金额的单位为”分”, 即 <code>amount: 80000</code> 代表金额为 800.00 元. 使用 “分” 为单位可令金额数值表达为整型, 避免了计算过程中的精度问题. </p>
+<blockquote>
+<p>不明白? 试试 <code>alert( 1 - 0.7 );</code>会出现什么…</p>
+</blockquote>
+</li>
+</ul>
+<h2><a href="#3-3-zhan-shi-zhang-dan-lie-biao" class="header-anchor"></a><span id="3-3-zhan-shi-zhang-dan-lie-biao">3.3 展示账单列表</span></h2><p>接下来, 我们来实现账单列表的展示, 即最终运行效果图中左侧列表的显示. </p>
+<p>在 3.2 节我们已经完成数据模型的设计, 这里将实现 Model → View 的映射.</p>
+<p>先考虑<strong>一条</strong>账单数据的展示. </p>
+<p>对于单条账单, 其数据模型大概是如下的样子:</p>
+<p><strong>Code-3.3.1</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    id: 0,                    // 账单ID</span><br><span class="line">    time: new Date(),         // 记账时间</span><br><span class="line">    amount: 80000,            // 金额, 单位:分</span><br><span class="line">    memo: '老爸发生活费了'      // 备注</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意前文 index.html ( Code-2.1 ) 代码中第 42 ~ 51 行:</p>
+<p><strong>Code-3.3.2</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"record"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"date-time"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"date"</span> <span class="attr">data-field</span>=<span class="string">"date"</span>&gt;</span>05/13<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"time"</span> <span class="attr">data-field</span>=<span class="string">"time"</span>&gt;</span>12:49:36<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h4</span> <span class="attr">class</span>=<span class="string">"media-heading io in"</span> <span class="attr">data-field</span>=<span class="string">"amount"</span>&gt;</span>+ 800.00<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"memo"</span> <span class="attr">data-field</span>=<span class="string">"memo"</span>&gt;</span>老爸发生活费啦<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>有没有看出什么门道 ? 对了, 上面两块代码 ( <code>Code-3.3.1</code> 和 <code>Code-3.3.2</code> ) 其实是对应的.</p>
+<p>只是 Code-3.3.1 是 javascript 代码, 是所谓的数据模型. 而 Code-3.3.2 是 HTML 代码, 相对而言, 可称其为 View 层代码.</p>
+<p>那现在我们的任务应该很明确了, 就是要根据 Code-3.3.1 所示的一坨数据 ( javascript对象 ) 形成 Code-3.3.2 所示的<code>&lt;li&gt;….&lt;/li&gt;</code> 的 DOM ( 文档对象模型 ).</p>
+<blockquote>
+<p>注意: <strong>不是</strong>生成 Code-3.3.2 所示的 HTML代码, 而是形成这块代码对应的 <strong>DOM</strong></p>
+<p>DOM 其实是浏览器世界的 Model 层, 也就是说, 后续我们将操纵 DOM, 浏览器发现 DOM 变化后将自动刷新网页界面. ( 我们不是直接操纵网页上的元素, 而是操纵它们的 DOM, 从而间接改变网页的内容 )</p>
+</blockquote>
+<p><strong>Code-3.3.3</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一条账单的 HTML 模板</span></span><br><span class="line"><span class="comment">// 对应 Code-3.3.2, 只是把其中类似 "05/13" 这样的信息删除了, 因为这些信息应是变量值, 而不是"硬编码"</span></span><br><span class="line"><span class="comment">// 注意, 变量 billItemTemplete 的值是一个字符串</span></span><br><span class="line"><span class="keyword">var</span> billItemTemplete = <span class="string">'&lt;li class="record"&gt;'</span> +</span><br><span class="line">    <span class="string">'&lt;div class="date-time"&gt;'</span> +</span><br><span class="line">    <span class="string">'&lt;h2 class="date" data-field="date"&gt;&lt;/h2&gt;'</span> +</span><br><span class="line">    <span class="string">'&lt;p class="time" data-field="time"&gt;&lt;/p&gt;'</span> +</span><br><span class="line">    <span class="string">'&lt;/div&gt;'</span> +</span><br><span class="line">    <span class="string">'&lt;div class="content"&gt;'</span> +</span><br><span class="line">    <span class="string">'&lt;h4 class="media-heading io" data-field="amount"&gt;&lt;/h4&gt;'</span> +</span><br><span class="line">    <span class="string">'&lt;p class="memo" data-field="memo"&gt;&lt;/p&gt;'</span> +</span><br><span class="line">    <span class="string">'&lt;/div&gt;'</span> +</span><br><span class="line">    <span class="string">'&lt;/li&gt;'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一条账单的 DOM</span></span><br><span class="line"><span class="comment">// 参数 bill 是一条账单的数据, 即 Code-3.3.1 所示的一坨数据</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createBillItemDom</span>(<span class="params">bill</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 借助 jQuery 直接使用账单模板形成 DOM</span></span><br><span class="line">    <span class="comment">// $item 为一条账单的 DOM</span></span><br><span class="line">    <span class="keyword">var</span> $item = $(billItemTemplete);      </span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 将账单时间构建成 moment 对象, 以便后续格式化输出</span></span><br><span class="line">    <span class="comment">// moment() 来自第三方库 moment.js</span></span><br><span class="line">  	<span class="keyword">var</span> dt = moment(bill.time);</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 遍历所有含有 data-field 属性的元素</span></span><br><span class="line">    <span class="comment">// 并使用数据模型 (bill) 中的值替换此元素的内容(innerText)</span></span><br><span class="line">    $item.find(<span class="string">'[data-field]'</span>).each(<span class="function"><span class="keyword">function</span> (<span class="params">i, ele</span>) </span>&#123;</span><br><span class="line">      	<span class="comment">// 针对每一个含有"data-field"属性的元素, 此匿名函数将被执行一次 </span></span><br><span class="line">        <span class="comment">// 其中参数 i 为顺序号, ele 为当前遍历到的元素</span></span><br><span class="line">      </span><br><span class="line">      	<span class="comment">// 将 ele 这个普通的 DOM 元素封装成 jQuery 对象, 以便处理.</span></span><br><span class="line">        <span class="keyword">var</span> $ele = $(ele);</span><br><span class="line">      </span><br><span class="line">      	<span class="comment">// 读取当前元素的 data-field 属性值</span></span><br><span class="line">        <span class="keyword">var</span> field = $ele.attr(<span class="string">'data-field'</span>);</span><br><span class="line">      </span><br><span class="line">      	<span class="comment">// 根据 data-field 属性值不同, 分别作不同的处理</span></span><br><span class="line">        <span class="keyword">switch</span> (field) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'date'</span>:    <span class="comment">// 若 data-field = date, 填入使用 moment.js 格式化后的 "月/日"</span></span><br><span class="line">                $ele.text(dt.format(<span class="string">'MM/DD'</span>));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'time'</span>:    <span class="comment">// 若 data-field = date, 填入使用 moment.js 格式化后的 "时:分:秒"</span></span><br><span class="line">                $ele.text(dt.format(<span class="string">'HH:mm:ss'</span>));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'amount'</span>:  <span class="comment">// 金额字段</span></span><br><span class="line">                $ele.text(bill.amount);</span><br><span class="line">                <span class="comment">// 若金额大于 0, 则给当前元素(金额字段)添加样式类 "in" (显示为绿色)</span></span><br><span class="line">                <span class="keyword">if</span> (bill.amount &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    $ele.addClass(<span class="string">'in'</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:        <span class="comment">// 对于其余元素(如: memo), 直接使用 bill 中的相应属性值填充</span></span><br><span class="line">                $ele.text(bill[field]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回构建好的 DOM</span></span><br><span class="line">    <span class="keyword">return</span> $item;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>妈呀, 看上去好复杂… 虽然代码中已经写满了注释, 但还是进一步解释一下:</p>
+<ul>
+<li><p>第 20 行 <code>var $item = $(billItemTemplete);</code> , 这里借助 jQuery 来构建 DOM 模型.</p>
+<blockquote>
+<p>若要动态创建一个<code>&lt;p&gt;&lt;/p&gt;</code> 的 DOM, 使用纯原生方法可以这样写: <code>document.createElement(&quot;p&quot;);</code>, 但若使用 jQuery, 则可以写成: <code>$(&quot;&lt;p&gt;&quot;)</code>, 是不是很简单?</p>
+<p>而如果我们要构建如 Code-3.3.2 那样一大块相对复杂的元素, 使用原生方法就太麻烦了… 此时借助 jQuery 显然就简单多了 ( 参见第 4 ~ 13 行和第 20 行代码 )</p>
+</blockquote>
+</li>
+<li><p>第 24 行 <code>var dt = moment(bill.time);</code> , 使用账单时间 ( bill.time ) 构建一个 <em>moment</em> 对象, 第 41, 44 行分别用其格式化输出账单的<em>日期</em>和<em>时间</em>部分. </p>
+<blockquote>
+<p>moment.js 是一个很不错的专门处理日期时间型数据的工具包.</p>
+<p>建议抽空自学: <a href="http://momentjs.com/" target="_blank" rel="noopener">moment.js 官方网站</a> /  <a href="http://momentjs.cn/" target="_blank" rel="noopener">moment.js 中文网站</a></p>
+<p>现在, 暂时不要跑去看 moment.js 文档, 这里你知道我们使用它来格式化输出日期时间就行了, 以后再慢慢去看, 现在请继续…</p>
+</blockquote>
+</li>
+<li><p>第 28 ~ 56 行或许是上面这段代码中最难理解的部分, 我们慢慢来…</p>
+<ul>
+<li><p>注意到 HTML 模板中, 凡是需要使用变量值填充的元素, 我们都添加了一个<code>data-field</code>属性, 这样便于我们找到这些元素. 并且, 我们将此元素应对应的数据字段名藏在了 <em>data-field</em> 属性值那里, 例如:</p>
+<p><code>&lt;p class=&quot;memo&quot; data-field=&quot;memo&quot;&gt;&lt;/p&gt;</code></p>
+<p>表示此 <code>&lt;p&gt;</code>元素的内容对应的数据字段名为 memo</p>
+</li>
+<li><p>这样我们就可以使用 jQuery 的 <code>.find()</code>函数找到所有含有 data-field 属性的元素</p>
+<p>如: <code>$item.find(&quot;[data-field]&quot;)</code> 即可找到 $item 元素中所有含 data-field 属性的子元素</p>
+</li>
+</ul>
+<ul>
+<li><p>对于找到的所有含有 data-field 属性的子元素<em>集合</em>, 使用<code>.each()</code>函数即可轻松遍历.</p>
+<p>如: <code>$item.find(&quot;[data-field]&quot;).each(function(i, element){ ...})</code> </p>
+<p>注意 <code>each()</code>形参表中的匿名函数<code>function(i, ele){...}</code>, 此函数在遍历到每一个元素时将被自动回调一次, 参数 <code>i</code> 和 <code>element</code> 分别为<em>顺序号</em>(这是遍历到的第几个元素) 和<em>当前遍历到的元素</em>. 第 25 ~ 55 行的代码都是放在这个匿名函数里的.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>第 36 行读取当前遍历到的元素的 <em>data-field</em> 属性中藏着的数据字段名信息, 并在第 39 ~ 55 行 分别进行了处理. 这段代码就不详细解释了, 参看一下注释.</li>
+</ul>
+<p>​    </p>
+<p>终于讲完了… </p>
+<p>如果看 Code-3.3.3 的代码让你一脸迷惑, 千万不要丧失信心. 这段代码算是本节中最难理解的部分了, 挺过这一关, 你将轻松面对后面的内容. </p>
+<blockquote>
+<p>放慢脚步, 结合注释和说明多思考, 你一定能理解!</p>
+<p>代码里出现大量了jQuery 的东西, 抽空读一下本博客另一篇文章: <a href="/2013/05/01/jQuery%20入门精要/">jQuery入门精要</a>, 或许会有帮助.</p>
+</blockquote>
+<p>​    </p>
+<p>接下来, 如果要生成整个账本数据 (bills数组) 的 DOM 元素, 那不就是一个循环吗?</p>
+<p>看现在这段代码</p>
+<p><strong>Code-3.3.4</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 显示账本中所有账单</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">showBillItems</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 账单列表的容器, Code-2.1 中 41 行的那个 &lt;ul&gt;</span></span><br><span class="line">    <span class="keyword">var</span> $billItems = $(<span class="string">'#bill-items'</span>);</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 清空账单列表</span></span><br><span class="line">    $billItems.empty();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历整个 bills 数组, 构建每一个账单的 DOM 模型, 并将其"装入" 账单列表容器</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; bills.length; i++) &#123;</span><br><span class="line">        $billItems.append(createBillItemDom(bills[i]));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Code-3.3.4 中的<code>showBillItems()</code>函数实现了整个账本中所有账单的展示.</p>
+<p>接下来的 Code-3.3.5 实现 “结余” 的展示:</p>
+<p><strong>Code-3.3.5</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 显示结余</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">refreshBalance</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 计算 "结余"</span></span><br><span class="line">    <span class="keyword">var</span> balance = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; bills.length; i++) &#123;</span><br><span class="line">        balance += bills[i].amount;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 刷新界面</span></span><br><span class="line">    <span class="keyword">var</span> $balance = $(<span class="string">"#balance"</span>);</span><br><span class="line">    $balance.css(<span class="string">'color'</span>, (balance &gt; <span class="number">0</span>) ? <span class="string">'green'</span> : <span class="string">'#ce4844'</span>);</span><br><span class="line">    $balance.find(<span class="string">'span'</span>).text(balance);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还记得吗? 我们的金额的单位是 “分”, 这给用户看到了, 会显得很别扭, 于是补充如下一个函数, 用于格式化最终显示时的金额:</p>
+<p><strong>Code-3.3.6</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 格式化金额显示</span></span><br><span class="line"><span class="comment">// 参数说明</span></span><br><span class="line"><span class="comment">// money  - 金额, 单位 "分"</span></span><br><span class="line"><span class="comment">// signed - 是否强制显示正负号, 例如: 账单列表中, 收入800要显示为 "+ 800", 而结余处则正数无须显示"+"</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatMoney</span>(<span class="params">money, signed</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 换算成 "元"</span></span><br><span class="line">    <span class="keyword">var</span> m = money / <span class="number">100.0</span>;</span><br><span class="line">    <span class="comment">// 在数据前添加 "+ / -" </span></span><br><span class="line">    <span class="keyword">return</span> (m &gt; <span class="number">0</span> ? (signed ? <span class="string">'+ '</span> : <span class="string">''</span>) : ((m === <span class="number">0</span>) ? <span class="string">''</span> : <span class="string">'- '</span>)) + <span class="built_in">Math</span>.abs(m);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有了<code>formatMoney()</code>这个函数, 金额值显示出来就人性化多了…</p>
+<p>当然, 我们需要把显示金额的地方都调整一下:</p>
+<ul>
+<li>修改 Code-3.3.3 中的第 47 行为: <code>$ele.text(formatMoney(bill.amount, true));</code></li>
+<li>修改 Code-3.3.5 中的第 12 行为: <code>$balance.find(&#39;span&#39;).text(formatMoney(balance, false));</code></li>
+</ul>
+<p>Code-3.3.6 中第 9 行的那个语句看着点有复杂, 可以展开为:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rt;</span><br><span class="line"><span class="keyword">if</span> (m &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (signed) &#123;             <span class="comment">// signed == true</span></span><br><span class="line">    rt = <span class="string">'+ '</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    rt = <span class="string">''</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (m == <span class="number">0</span>) &#123;</span><br><span class="line">    rt = <span class="string">''</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    rt = <span class="string">'- '</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  rt += <span class="built_in">Math</span>.abs(m);        <span class="comment">// Math.abs(m) 为求 m 的绝对值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> rt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>最后帮你一次, 以后要自己学会分析, 并习惯 Code-3.3.6 中第 9 行 的写法. 好处嘛, (1) 很简洁 (2) 显示自己很牛!</p>
+</blockquote>
+<p>​    </p>
+<p>最后我们把上面这些代码(函数)组装起来, 借助 jQuery 在页面加载就绪时自动展示账单列表:</p>
+<p><strong>Code-3.3.7</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 显示账单列表</span></span><br><span class="line">    showBillItems();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 显示结余</span></span><br><span class="line">    refreshBalance();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>看不懂 $(document).ready(function(){ …. }); 是什么鬼的看另一篇文章: <a href="/2013/05/01/jQuery%20入门精要/">jQuery入门精要</a></p>
+</blockquote>
+<p>快在浏览器中打开 index.html 看一下效果吧~</p>
+<p>​    </p>
+<p><strong>小结:</strong> </p>
+<ol>
+<li><p>本节我们实现了 “根据一条账单的数据, 构建对应的 DOM 元素” ( 数据 → 视图 )</p>
+</li>
+<li><p>本文开篇效果演示的动图中有两个细节还未实现:</p>
+<p>(a) 金额始终显示小数点后 2 位, 即: 即使是 800 元, 也会显示为 + 800.00 (账单列表), 或 800.00 (结余)</p>
+<p>(b) 结余数值在有变化时, 会快速显示数值变化过程. 例如: 结余从 600.00 变成 800.00 时, 会快速显示 620.00, 640.00, 660.00…. 直至 800.00 停止</p>
+<p>这些花哨的效果只是为了挑逗你的兴趣, 与业务逻辑关系不大, 因此本文就不详述了. 你若有兴趣, 自己想办法完成吧.</p>
+</li>
+</ol>
+<p>​    </p>
+<h1><a href="#4-xin-zeng-zhang-dan" class="header-anchor"></a><span id="4-xin-zeng-zhang-dan">4.  新增账单</span></h1><p>本节将实现新增账单, 即 “记一笔”功能. </p>
+<h2><a href="#4-1-xian-shi-yin-cang-xin-zhang-dan-bian-ji-mian-ban" class="header-anchor"></a><span id="4-1-xian-shi-yin-cang-xin-zhang-dan-bian-ji-mian-ban">4.1 显示/隐藏”新账单编辑面板”</span></h2><p>最终完成的作品中, 右侧的 “账单编辑面板” 初始时是隐藏的, 当点击了 <em>&gt;</em> 图标才显示出来, 而点击 <em>&lt;</em> 图标则隐藏.</p>
+<p>实现这个效果不难, 并不涉及数据模型的变化, 只是纯粹的界面效果. </p>
+<p><strong>Code-4.1.1</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 打开/关闭账单编辑面板</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggleBillEditor</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 显示/隐藏"账单编辑面板"</span></span><br><span class="line">    $(<span class="string">"#panel-bill-editor"</span>).toggle(<span class="string">'fast'</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 切换展开(&gt;) 和 关闭(&lt;) 图标</span></span><br><span class="line">    <span class="keyword">var</span> $btnIcon = $(<span class="keyword">this</span>).find(<span class="string">'i'</span>);</span><br><span class="line">    $btnIcon.toggleClass(<span class="string">'glyphicon-menu-left'</span>);</span><br><span class="line">    $btnIcon.toggleClass(<span class="string">'glyphicon-menu-right'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此外, 修改 Code-3.3.7 的代码如下(Code-4.1.2), 即添加其中的第 9 行代码.</p>
+<p>监听 打开/关闭”账单编辑面板”按钮 (图标) 的点击事件, 触发 Code-4.1.1 中的 <code>toggleBillEditor()</code>函数.</p>
+<p><strong>Code-4.1.2</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 显示账单列表</span></span><br><span class="line">    showBillItems();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 显示结余</span></span><br><span class="line">    refreshBalance();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册 打开/关闭"账单编辑面板"按钮 的点击事件监听</span></span><br><span class="line">    $(<span class="string">'#btn-add-bill'</span>).click(toggleBillEditor);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>Code-4.1.1 中出现了两个 jQuery 函数: toggle() 和 toggleClass(), 如果不明白其含意, 参看 <a href="/2013/05/01/jQuery%20入门精要/">jQuery入门精要</a> 中”复合事件”一节</li>
+<li>打开/关闭”账单编辑面板”按钮中上图标并非使用图片标签 ( &lt;img&gt; ) 实现, 而是使用 “glyphicon 字体”, 即这个图标本质上是一个字符, 而非图片, 只是这个字符使用 glyphicon 字体显示出来就是<em>&gt;</em>/<em>&lt;</em>图标的样子. 使用字体呈现图标有诸多好处, 具体内容请查阅其它资料.</li>
+</ul>
+</blockquote>
+<h2><a href="#4-2-shi-xian-xin-zeng-zhang-dan-gong-neng" class="header-anchor"></a><span id="4-2-shi-xian-xin-zeng-zhang-dan-gong-neng">4.2  实现”新增账单”功能</span></h2><h4><a href="#4-2-1-jian-ting-ji-yi-bi-an-niu-dian-ji-shi-jian" class="header-anchor"></a><span id="4-2-1-jian-ting-ji-yi-bi-an-niu-dian-ji-shi-jian">4.2.1 监听”记一笔”按钮点击事件</span></h4><p>在 Code-4.1.2 的基础上添加对 “记一笔” 按钮点击事件的监听, 以触发后续的 “新增账单” 逻辑. 即增加如下代码中的第 12 行.</p>
+<p><strong>Code-4.2.1</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 显示账单列表</span></span><br><span class="line">    showBillItems();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 显示结余</span></span><br><span class="line">    refreshBalance();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册 打开/关闭"账单编辑面板"按钮 的点击事件监听</span></span><br><span class="line">    $(<span class="string">'#btn-add-bill'</span>).click(toggleBillEditor);</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 注册 "记一笔" 按钮点击事件监听</span></span><br><span class="line">    $(<span class="string">'#btn-confirm-add'</span>).click(addBillItem);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>至于上述代码中第 12 行涉及的 <code>addBillItem</code> 函数, 我们将在 4.2.3 节实现. 继续往下看就知道了…</p>
+<h4><a href="#4-2-2-geng-xin-zhang-ben-shu-ju-mo-xing" class="header-anchor"></a><span id="4-2-2-geng-xin-zhang-ben-shu-ju-mo-xing">4.2.2 更新账本数据模型</span></h4><p>现在假设用户已经填写了新账单的信息(金额和备注), 点击了”记一笔”按钮. 接下来程序应该干什么呢 ?</p>
+<p>还记得 MVC 吗? 又来了…</p>
+<p>我们应该先考虑用户的这一系列的操作会对数据模型 (Model, 数据层) 产生什么影响, 因此我们先来实现更新数据模型的逻辑:</p>
+<p><strong>Code-4.2.2</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新增一条账单的数据到账本数据模型</span></span><br><span class="line"><span class="comment">// 参数说明:</span></span><br><span class="line"><span class="comment">// bill - 新账单的数据, 一个对象, 形如 Code-3.3.1 中展示的那样一坨</span></span><br><span class="line"><span class="comment">// callback - 数据模型更新成功后的回调函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addBillItemData</span>(<span class="params">bill, callback</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将新账单数据插入账本数据模型(账单数组)的开头</span></span><br><span class="line">    <span class="comment">// array.push() 是在数组尾部新增元素, array.unshift() 则是在开头插入新元素</span></span><br><span class="line">    bills.unshift(bill);</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 回调</span></span><br><span class="line">    callback(bill);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码看似简单, 就定义了一个函数, 函数中就 2 行代码, 但似乎有点不容易看懂. 解释一下…</p>
+<ul>
+<li><p>假设已经有了新账单的数据 (bill, 一个对象), 我们将<code>bill</code>作为输入参数传递给函数 addBillItemData() , 在上面代码的第 8 行将新账单数据 <code>bill</code> 插入到了账单数组<code>bills</code>的开头. (bills 数组为账本数据, 参看 Code-3.2.1)</p>
+</li>
+<li><p>函数 addBillItemData() 的第 2 个参数<code>callback</code>很特别, 它是一个函数, 由调用方传入. </p>
+<p>在完成了数据模型的更新后, 我们在第 11 行执行这个函数, 并将 bill 作为参数传入, 以触发后续的逻辑 (如: 刷新界面, 参看 Code-4.2.3 第 24~36 行). </p>
+<p>像 callback 这样意义的函数, 我们一般称作<strong>回调函数</strong>.</p>
+</li>
+</ul>
+<h4><a href="#4-2-3-shi-xian-xin-zeng-zhang-dan" class="header-anchor"></a><span id="4-2-3-shi-xian-xin-zeng-zhang-dan">4.2.3 实现新增账单</span></h4><p>看完 4.2.2 节估计你是似懂非懂, 到底那个 callback 函数是什么鬼 ? 看完下面的代码 (Code-4.2.3) 你就明白了.</p>
+<p>在 Code-4.2.1 中的第 12 行我们注册了 “记一笔” 按钮的点击事件监听, 当用户点击 “记一笔” 按钮时, 将执行如下的<code>addBillItem()</code>函数.</p>
+<ul>
+<li><p>第 2 ~ 22 行主要是取得用户输入的账单信息, 并作校验, 将账单信息构建成一个 bill 对象 (第 17 ~ 22 行)</p>
+</li>
+<li><p>第 25 ~ 37 行就是传说中的那个回调函数 callback() . 可以看到, 这个函数只是在更新数据模型后更新界面:</p>
+<p>(a) 构建新账单的 DOM, 并将其插入到界面上账单列表的开头</p>
+<p>(b) 清空金额和备注输入框</p>
+<p>(c) 刷新”结余”显示</p>
+</li>
+<li><p>第 40 行, 调用上一节 ( 4.2.2 节 ) 中定义的那个<code>addBillItemData()</code>函数, 并将账单数据 (bill) 和 更新数据模型成功后的回调入口 (callback 函数) 作为参数传入.</p>
+</li>
+</ul>
+<p><strong>Code-4.2.3</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addBillItem</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 找到金额和备注输入框</span></span><br><span class="line">    <span class="keyword">var</span> $fAmount = $(<span class="string">'#nb-amount'</span>);</span><br><span class="line">    <span class="keyword">var</span> $fMemo = $(<span class="string">'#nb-memo'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取得用户输入的金额值, 并做验证</span></span><br><span class="line">    <span class="keyword">var</span> amount = <span class="built_in">parseFloat</span>($fAmount.val());</span><br><span class="line">    <span class="keyword">if</span> (!amount) &#123;</span><br><span class="line">      	<span class="comment">// $.fail() 将弹出一个漂亮的消息框, 作用和 alert('金额不对哦~') 相同, 只是更漂亮</span></span><br><span class="line">        <span class="comment">// $.fail() 借助了 jquery-confirm.3.3.min.js 提供的功能</span></span><br><span class="line">        <span class="comment">// 并在 jquery-confirm-bailey.js 做了扩展, 可参看附件中的代码</span></span><br><span class="line">        $.fail(<span class="string">'金额不对哦~'</span>);    </span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新增账单的数据</span></span><br><span class="line">    <span class="keyword">var</span> bill = &#123;</span><br><span class="line">        id: <span class="built_in">Math</span>.random(),                  <span class="comment">// 取一个随机数作为账单ID (不太科学, 姑且先用)</span></span><br><span class="line">        time: <span class="keyword">new</span> <span class="built_in">Date</span>(),                   <span class="comment">// 取当前系统时间</span></span><br><span class="line">        amount: <span class="built_in">Math</span>.round(amount * <span class="number">100</span>),   <span class="comment">// 用户输入的金额乘以100后取整. 由"元"换算成"分"</span></span><br><span class="line">        memo: $fMemo.val()</span><br><span class="line">    &#125;;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 数据模型更新成功后的回调函数, 实现界面刷新</span></span><br><span class="line">    <span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span> (<span class="params">bill</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 创建新账单项的DOM</span></span><br><span class="line">        <span class="keyword">var</span> $billItemDom = createBillItemDom(bill);</span><br><span class="line">        <span class="comment">// 插入到账单列表(#bill-items) 的第 1 项之前</span></span><br><span class="line">        $(<span class="string">'#bill-items'</span>).prepend($billItemDom);</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// 清空账单编辑面板中的"金额"和"备注"输入框</span></span><br><span class="line">        $fAmount.val(<span class="string">''</span>);</span><br><span class="line">        $fMemo.val(<span class="string">''</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 刷新结余显示</span></span><br><span class="line">        refreshBalance();</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加账单数据模型, 成功后回调, 刷新界面</span></span><br><span class="line">    addBillItemData(bill, callback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好了, 有点晕, 是吧~ </p>
+<p>我帮你捋一下理路:</p>
+<ul>
+<li>首先, 我们在 4.2.1 节注册了”记一笔”按钮的点击事件监听, 当此按钮被点击时, 触发4.2.3 节的 addBillItem() 函数</li>
+<li>然后, 在 4.2.3 节的 addBillItem() 函数中获得用户输入的账单数据, 在进行了必要的输入验证后, 组装出了新账单数据对象 (bill)</li>
+<li>接着, 在 Code-4.2.3 中第 40 行调用 4.2.2 节中定义的 addBillItemData() 函数, 完成账本数据的更新(更新数据模型)</li>
+<li>最后, 在账本数据模型更新成功后<em>回调</em>刷新界面 ( Code-4.2.2 中第 11 行 回调 Code-4.2.3 中第 25 ~ 37 行定义的函数)</li>
+</ul>
+<p>停下来, 想一想… </p>
+<p>​    </p>
+<p>现在, 在浏览器中打开 index.html, 你应该可以实现新增账单了, 赶快试试吧~</p>
+<p>​    </p>
+<h1><a href="#5-shan-chu-zhang-dan" class="header-anchor"></a><span id="5-shan-chu-zhang-dan">5.  删除账单</span></h1><p>本节将实现删除账单功能.</p>
+<p>相对而言, 有了第 4 节的基础, 实现删除账单功能就简单得多了.</p>
+<p>本例中, 将监听账单列表中的账单项的”双击”事件, 以触发删除账单逻辑. 即: 当用户双击已有的账单项时, 将删除此账单. </p>
+<h2><a href="#5-1-jian-ting-zhang-dan-xiang-shuang-ji-shi-jian" class="header-anchor"></a><span id="5-1-jian-ting-zhang-dan-xiang-shuang-ji-shi-jian">5.1 监听账单项双击事件</span></h2><p>修改一下 Code-3.3.3 中的代码, 在第 57 行位置插入如下第 5 ~ 8 代码, 以注册账单项双击事件监听. </p>
+<p>修改后的代码大概如下:</p>
+<p><strong>Code-5.1.1</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createBillItemDom</span>(<span class="params">bill</span>) </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// ............ 前面的代码参见 Code-3.3.3, 此处省略 ...........</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 注册账单项的双击事件监听</span></span><br><span class="line">    $item.dblclick(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        removeBillItem($item, bill);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回构建好的DOM</span></span><br><span class="line">    <span class="keyword">return</span> $item;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中, 第 7 行的<code>removeBillItem()</code>函数定义见下节.</p>
+<h2><a href="#5-2-shi-xian-shan-chu-zhang-dan-gong-neng" class="header-anchor"></a><span id="5-2-shi-xian-shan-chu-zhang-dan-gong-neng">5.2  实现”删除账单”功能</span></h2><p>“删除账单” 逻辑的实现与”新增账单”类似. 同样采用先更新数据模型, 再刷新界面的逻辑.</p>
+<p>有了前面第 4 节 “新增账单” 的基础, 自己研究一下以下代码吧 ~</p>
+<p><strong>Code-5.2.1</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从账本中删除账单数据 (更新账本数据模型), 成功后回调刷新界面</span></span><br><span class="line"><span class="comment">// 参数说明:</span></span><br><span class="line"><span class="comment">// bill - 待删除的账单数据</span></span><br><span class="line"><span class="comment">// callback - 删除成功(账本数据模型更新成功)后的回调函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeBillData</span>(<span class="params">bill, callback</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 删除账本数据模型(账单数组)中的账单记录</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; bills.length; i++) &#123;</span><br><span class="line">        <span class="comment">// 若遍历到的账单正是需要删除的账单(ID 相同), 则从账本(bills数组)中删除</span></span><br><span class="line">        <span class="keyword">if</span> (bills[i].id === bill.id) &#123;</span><br><span class="line">          	<span class="comment">// 从数组 bills 中移除从第 i 个元素开始的 1 个元素 (即当前遍历到的账单)</span></span><br><span class="line">            bills.splice(i, <span class="number">1</span>);   </span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 回调刷新界面</span></span><br><span class="line">    callback();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除一条账单</span></span><br><span class="line"><span class="comment">// 此函数所需的两个参数 $item 和 bill 在 Code-5.1.1 第 7 行传入</span></span><br><span class="line"><span class="comment">// $item 为用户双击的账单项的DOM</span></span><br><span class="line"><span class="comment">// bill 双击的那个账单项对应的数据对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeBillItem</span>(<span class="params">$item, bill</span>) </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// $.question() 将弹出一个漂亮的提示框</span></span><br><span class="line">    <span class="comment">// $.question() 借助了 jquery-confirm.3.3.min.js 提供的功能</span></span><br><span class="line">    <span class="comment">// 并在 jquery-confirm-bailey.js 做了扩展, 可参看附件中的代码</span></span><br><span class="line">    $.question(<span class="string">'确定要删除此账单?'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 删除数据模型中的账单, 成功后回调刷新界面</span></span><br><span class="line">        removeBillData(bill, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 从 DOM 中移除当前账单项, 即从界面上移除当前账单</span></span><br><span class="line">            $item.remove();</span><br><span class="line">            <span class="comment">// 刷新"结余"显示</span></span><br><span class="line">            refreshBalance();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p>好了, 现在你可以进行双击账单项删除已有账单的操作了, 赶快在浏览器中打开 index.html 试一下吧~</p>
+<p>现在, 在浏览器中打开 index.html, 你应该可以实现新增账单了, 赶快试试吧~</p>
+<p>​    </p>
+<hr>
+<p>​    </p>
+<p>意不意外? 开不开心?</p>
+<p>你居然已经完成了一个记账本程序, 它可以实现新增账单(记账)和删除账单的操作.</p>
+<p>但是…… 还有些问题需要完善……</p>
+<ul>
+<li><p>修改账单数据的功能未实现, 这留给你自己来完成吧! </p>
+<p>给个小提示, 可以这样来玩: </p>
+<ol>
+<li>让用户点击选择一条已有的账单, 然后在”账单详情面板”中显示出这条账单的信息, 即: 把用户选中的账单的金额和备注信息填充在相应的输入框中, 等待用户修改</li>
+<li>用户点击”保存”按钮后, 执行更新账单数据操作. 记得先更新数据模型, 再刷新界面哦~</li>
+</ol>
+</li>
+<li><p>目前的记账本在用户刷新页面, 或者关闭浏览器后数据将丢失! 杯具啦~~</p>
+<p>因为我们只是把数据保存在前端 javascript 的变量里 ( bills 数组 ), 当然会如此… </p>
+</li>
+</ul>
+<p>​    </p>
+<p>本系列教程的 <a href="../实例教程-在线账本-2/">第 (二) 部分</a>, 我们将在目前记账本的基础上进一步完善, 加入服务器端, 将数据保存在服务器端.</p>
+<p>实现一个真正意义上的 “<strong>在线</strong>记账本”, 敬请期待!</p>
+
+        </div>
+        <p class="post-revise-info">
+            Revised on <span class="date">2019/05/17 06:45:27</span> by Bailey
+        </p>
+        
+        <!-- 上一篇/下一篇  -->
+        <hr/>
+        <ul class="post-paginator">
+            <li class="next">
+                
+                    <div class="nextSlogan">Next Post</div>
+                    <a href= "/2019/05/14/实例教程-在线账本-2/" title= "实例教程 - 在线账本 (二)">
+                        实例教程 - 在线账本 (二)
+                    </a>
+                
+            </li>
+            <li class="previous">
+                
+                    <div class="prevSlogan">Previous Post</div>
+                    <a href= "/2019/05/11/Cayenne入门指南4-0/" title= "Cayenne 起步 (Version 4.0) [译]">
+                        Cayenne 起步 (Version 4.0) [译]
+                    </a>
+                
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  var toc = document.querySelector(".toc");
+  // 若有侧边目录, 则设置目录效果
+  if (toc) {
+    toc.onmouseover = function(){
+      toc.classList.remove("toc-shrink");
+    };
+    toc.onmouseout = function(){
+      toc.classList.add("toc-shrink");
+    };
+
+    // 延迟 5 秒后自动隐藏
+    window.setTimeout(function(){
+      toc.classList.add("toc-shrink");
+    }, 5000);
+
+    // 目录跟随滚动效果
+    var setTocPosition = function() {
+      //变量t是滚动条滚动时，距离顶部的距离
+      var t = document.documentElement.scrollTop||document.body.scrollTop;
+    
+      //当滚动到距离顶部200px时，返回顶部的锚点显示
+      if(t < 300){
+        toc.style.top = (300 - t) + 'px';
+      } else{          //恢复正常
+        toc.style.top = "20px";
+      }
+    }
+
+    window.onscroll = function(){
+        setTocPosition();
+    }
+    setTocPosition();
+  }
+</script>
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a> 
+        <p class="copyright text-muted">
+          Copyright By <a href="mailto:baileiz@163.com">Bailey.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<!-- <script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script> -->
+
+  </body>
+</html>
+

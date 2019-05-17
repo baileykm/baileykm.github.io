@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Bailey">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="持久层框架 Cayenne 推介"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Bailey&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://baileykm.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Bailey&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Bailey's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-139890203-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+</head>
+
+  <body>
+    <!-- 单篇文章内容页面 -->
+<!-- Page Header -->
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">持久层框架 Cayenne 推介</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/baileykm">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:baileiz@163.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div id="article-content" class="col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Bailey</span>
+          
+          <!-- Date -->
+          <span class="date-time info">
+            On <span class="date">2018/04/21</span>
+            <span class="time">09:02:47</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Category <!-- 文章内容页面中的 Categories 部分 -->
+
+
+<a href="/categories/入门教程/">入门教程</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: <!-- 文章内容页中的 Tags 部分 -->
+
+
+<a class="tag" href="/tags/持久层/">#持久层</a> <a class="tag" href="/tags/Cayenne/">#Cayenne</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>说起持久层框架, Hibernate 和 mybatis (早期版本名为 ibatis) 应该不少人都听过或使用过, 虽然无从考证上述两个持久层框架的市场份额, 但在国内应算是较为流行的两个框架. 本文推荐另一系出名门  ( The Apache Software Foundation ) 的持久层框架 Cayenne, 经过本人在几个项目中的试用, 个人觉得不错.</p>
+<a id="more"></a>
+<p>大名鼎鼎的 Hibernate 可能是很多人接触的第一个持久层框架. 它与Struts、 Spring 组成的SSH组合对于程序猿而言就如偶像团体SHE对于追星族般如雷贯耳. 介绍Hibernate的书籍和资料几乎已经到了泛滥成灾的地步. 本人也曾在多个项目中使用过Hibernate, 其强大的功能确实为程序开发带来了不少便利. 找一本入门的书或网上下载一个入门教程, 跟随教程的步骤相信运行起一个简单的例程估计不是什么大问题, 但随着项目复杂度的增加, 配置和使用也同样变得复杂, 偶尔可能还需要应用一些性能优化方面的”技巧”. 面对如此庞大的框架, 不经意间抛出的运行时异常着实让人无从下手.<br>另一持久层框架:mybatis 同样也拥有不少粉丝, 本人也一度是其拥趸者. 相对于Hibernate, 其拥有另一种风格的配置和使用方式, 但面对那密密麻麻的XML配置文件, 以及事必躬亲的查询配置, 本人开始犯懒了…… 当然, 一些配套的工具或插件可以帮我们干不少繁重的工作, 也许还有一些优秀的辅助工具本人未尝见识, 不敢枉加评论.<br>说了这么多, 并无贬低上述两个持久层框架的意思, 无论什么工具总有其优缺点, 《人月神话》中有句话叫做“没有银弹”, 这里只是想向大家介绍一个我认为被国人雪藏的优秀持久层框架: Cayenne. (至少就相关的文档和教程而言, 相对前两个框架要少得多)<br>, 初步使用后有些体会, 仅供参考.</p>
+<h1><a href="#guan-yu-pei-zhi" class="header-anchor"></a><span id="guan-yu-pei-zhi">关于配置</span></h1><p>配置文件与Hibernate和mybatis类似, 使用XML文件(Hibernate也支持注解方式配置), 里面虽然也是令人头大的密密麻麻的映射关系说明, 但官方提供了可视化的建模工具CayenneModeler, 可自动生成XML配置文件和Java持久层的实体类. 此工具支持数据库反向工程(根据已有的数据库提取表/视图结构和外键关系, 自动生成映射文件), 同样也支持在建模工具中直接创建数据模型后将表和关系生成到数据库中. 这个工具还是比较强大的, 至少在目前本人实践的几个小项目中很少出现需要手动去修改XML文档的情况.</p>
+<h1><a href="#guan-yu-cha-xun" class="header-anchor"></a><span id="guan-yu-cha-xun">关于查询</span></h1><p>Cayenne提供了多种查询方式: </p>
+<p><strong> SelectQuery </strong><br>最常用的方式, 例如: 要查询满足条件的Artist集合</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SelectQuery query = <span class="keyword">new</span> SelectQuery(Artist.class, qual);</span><br><span class="line">List artists = ctxt.performQuery(query);</span><br></pre></td></tr></table></figure>
+<p>其中条件由参数qual (Expression类型) 带入, qual 则可由Cayenne提供的ExpressionFactory来生成.<br>ExpressionFactory提供很多静态方法来生成Expression, 例如: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Expression.fromString(<span class="string">"artistName = $aname"</span>);  		<span class="comment">// 根据字符串来生成带参数的查询条件</span></span><br><span class="line">ExpressionFactory.matchExp(<span class="string">"artistNae"</span>, <span class="string">"Picasso"</span>)  	<span class="comment">// artistName = "Picasso"</span></span><br></pre></td></tr></table></figure>
+<p>当然, 如果你有很多个Expression 组成的List, 现在需要将它们使用And连接起来, 那可以这样:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expression qual = ExpressionFactory.joinExp(Expression.AND, list);</span><br></pre></td></tr></table></figure>
+<p>总之, ExpressionFactory 还是相当强大的, 这有点类似mybatis的Criterion, 但似乎更胜一筹. 本人比较懒, 就不再一一列举了, 请各位看官方文档. </p>
+<p><strong> SQLTemplate Query  </strong><br>这种方式可以支持设定目标数据库方言(SQL Dialect), 也就是使用目标数据库原生的SQL语法来查询. 例如:<br>SQLTemplate rawSelect = new SQLTemplate(Artist.class, “select * from ARTIST”);<br>注意, 大写的ARTIST是数据库中的表名, 而非Java类名. 如果我们要使用数据库提供的一些函数, 那这种方式再合适不过了.<br>当然, 它还可以相对灵活地配置从数据库查来的数据怎么转化成Java实体对象.</p>
+<p><strong> EJBQLQuery </strong><br>使用EJBQL 语法的查询. 呵呵, 什么是EJBQL语法? 看例子……<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EJBQLQuery query = <span class="keyword">new</span> EJBQLQuery(<span class="string">"select p from Painting p WHERE p.estimatedPrice &gt; 3000"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>呵呵, 是不是很像标准的SQL, 只是注意 from 后面的Painting是Java实体类名. 严格的定义请参阅 JPA 吧……</p>
+<p><strong>  NamedQuery  </strong> 顾名思义, 命名查询, 先定义好查询语句, 取个名字, 然后在程序中调用.<br><strong>  ObjectIdQuery  </strong>        根据实体的ID查<br><strong>  RelationshipQuery  </strong>   根据关联实体查<br><strong>  ProcedureQuery  </strong>     不用说了吧, 面向存储过程查</p>
+<p>呵呵, 越来越懒了…… 总之查询方式很灵活. 对于大多数的情况, 其实第1种方式已经足够了. </p>
+<h1><a href="#qi-ta" class="header-anchor"></a><span id="qi-ta">其他</span></h1><ul>
+<li><p>一般而言在Cayenne里, 查询总会有一个称为 Root 的东东. 回头看一下前面的代码, 例如: 通过 new SelectQuery(Artist.class, qual); 来构造SelectQuery时, 参数Artist.class就告诉Cayenne把查询结果封装成Artist类型的实体对象集合. 然后, 我们就可以拎着一个Java 实体对象, 通过它 getter 方法方便地得到与之关联的主表和从表数据, 如果关联表的数据尚未提取到内存Cayenne会自动从数据库中获取. 如果你担心所谓的 “N+1”查询问题, 那可在执行查询之前使用addPrefetch方法设定预提取的主表或从表.</p>
+</li>
+<li><p>对于分页、提取前N行数据、Distinct这样的查询要求, Cayenne也提供了现成方法, 执行查询之前调用一下就行, 它会根据目标数据库自行处理. </p>
+</li>
+<li><p>数据缓存支持. 这对查询性能改善不小, Hibernate当然也有这个东东. 这里多说一句, 要维持缓存中的数据与数据库中数据的一致性, 以及保持缓存中同一行数据的唯一性是一个不小的问题. 特别是后者, 如果一个持久层框架不能很好地保证同ID的实体对象在缓存中的唯一性, 那当我们引入MVC后, 再把持久层框架提供的实体对象用作Module你就去哭吧…… PS: 之前使用Hibernate的时候遇到过Hibernate抛出异常提示存在多个同ID实体, 然后…… 就没有然后的情况, 当然我只能说肯定是我代码的问题了, 不然要被Hibernate粉丝的口水淹死, 但这种运行时异常确实难Debug.</p>
+</li>
+<li><p>可配置拦截器和监听器.<br>不晓得什么是拦截器和监听器?<br>OK, 科普一下…… 它们是设计模式里的东东, 这里的拦截器可以简单理解为当Cayenne要向数据库发指令之前你可以把指令截获, 然后做一些判断或处理, 如果你愿意还可以阻止指令的执行. 监听器那就是根据你的配置, Cayenne在向数据库发指令之前或之后会调用你指定的监听函数, 当然监听器不会干扰Cayenne的工作, 人家只是干活之前或之后知会你一声, 并不是要征求你的意见 (这一点不像拦截器).<br>好了, 科普完了. 那支持这两个东东有什么好处呢? 我们可以干些底层一点的事情, 举个例子: 我们要记录下是谁在什么时候修改了员工信息, 如果有监听机制,我们只需要监听员工这个实体类的Update事件, 然后调用写日志功能就行, 代码只需要写一个地方; 但如果没有监听机制, 那就得在所有可能修改员工信息的地方调用写日志的函数. 再比如…… MVC模型下作为Module层的东东向Control层发通知. 另外, 写在Cayenne监听器里也是个不错的选择.</p>
+</li>
+</ul>
+<hr>
+<p>好吧, 码字真的很累, 头上开始冒小星星了…</p>
+<p>还有一些其它的优点, 各位自己玩吧~ </p>
+<p>相对Hibernate和mybatis而言, Cayenne的中文资料要少得多, 百度一下Cayenne这个单词, 大多出来的结果都是关于卡宴车的介绍, 本人愚见, 由此多少可以看出这个框架在国内程序猿中的普及程度并不是很高. </p>
+<p>如果能有个小项目具体实践一下, 相信你会有自已的看法. 谁用谁知道, 呵呵~</p>
+<blockquote>
+<p>提供2个学习材料: </p>
+<p>[1] <a href="http://cayenne.apache.org" target="_blank" rel="noopener">Cayenne官方网站</a>, 里面有Tutorial, Guide 等最权威的文档.</p>
+<p>[2] <a href="https://baileykm.github.io/2018/04/21/Cayenne%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/">Cayenne入门指南</a>, 本人翻译自<a href="https://cayenne.apache.org/docs/3.1/getting-started-guide/" target="_blank" rel="noopener">Cayenne官方入门教程(Cayenne Getting Started Guide)</a></p>
+</blockquote>
+
+        </div>
+        <p class="post-revise-info">
+            Revised on <span class="date">2019/05/10 22:24:59</span> by Bailey
+        </p>
+        
+        <!-- 上一篇/下一篇  -->
+        <hr/>
+        <ul class="post-paginator">
+            <li class="next">
+                
+                    <div class="nextSlogan">Next Post</div>
+                    <a href= "/2018/05/08/CayenneModeler-数据库逆向工程/" title= "CayenneModeler 数据库逆向工程">
+                        CayenneModeler 数据库逆向工程
+                    </a>
+                
+            </li>
+            <li class="previous">
+                
+                    <div class="prevSlogan">Previous Post</div>
+                    <a href= "/2018/04/21/Cayenne入门指南/" title= "Cayenne 起步 (Version 3.1) [译]">
+                        Cayenne 起步 (Version 3.1) [译]
+                    </a>
+                
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  var toc = document.querySelector(".toc");
+  // 若有侧边目录, 则设置目录效果
+  if (toc) {
+    toc.onmouseover = function(){
+      toc.classList.remove("toc-shrink");
+    };
+    toc.onmouseout = function(){
+      toc.classList.add("toc-shrink");
+    };
+
+    // 延迟 5 秒后自动隐藏
+    window.setTimeout(function(){
+      toc.classList.add("toc-shrink");
+    }, 5000);
+
+    // 目录跟随滚动效果
+    var setTocPosition = function() {
+      //变量t是滚动条滚动时，距离顶部的距离
+      var t = document.documentElement.scrollTop||document.body.scrollTop;
+    
+      //当滚动到距离顶部200px时，返回顶部的锚点显示
+      if(t < 300){
+        toc.style.top = (300 - t) + 'px';
+      } else{          //恢复正常
+        toc.style.top = "20px";
+      }
+    }
+
+    window.onscroll = function(){
+        setTocPosition();
+    }
+    setTocPosition();
+  }
+</script>
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a> 
+        <p class="copyright text-muted">
+          Copyright By <a href="mailto:baileiz@163.com">Bailey.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<!-- <script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script> -->
+
+  </body>
+</html>
+

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Bailey">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Java入门精要 (四)"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Bailey&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://baileykm.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Bailey&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Bailey's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-139890203-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+</head>
+
+  <body>
+    <!-- 单篇文章内容页面 -->
+<!-- Page Header -->
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Java入门精要 (四)</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/baileykm">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:baileiz@163.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div id="article-content" class="col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Bailey</span>
+          
+          <!-- Date -->
+          <span class="date-time info">
+            On <span class="date">2014/03/26</span>
+            <span class="time">01:47:22</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Category <!-- 文章内容页面中的 Categories 部分 -->
+
+
+<a href="/categories/入门教程/">入门教程</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: <!-- 文章内容页中的 Tags 部分 -->
+
+
+<a class="tag" href="/tags/Java/">#Java</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>学习完前 3 节后是否感觉似乎学会了一些东西，但是又感觉脑袋里充满了浆糊？</p>
+<p>这一节我们来整理一下思路, 算是前一阶段的小结, 为开启新的征程做好准备.</p>
+<a id="more"></a>
+<p>一下吃太多了，消化不良了, 呵呵~ </p>
+<p>两个办法可以让自己好受点：</p>
+<p>（1） 暂时停下脚步，再看一遍前 3 节，自己做一下小结，一个字…… 悟！</p>
+<p>（2） 实践，自己做几个小例子，实践一下前面讲过的内容</p>
+<p>​    </p>
+<p>BUT！ 多年的实践证明，说了也等于白说，能停下来悟道的人不多……</p>
+<p>​    </p>
+<p>所以，作为一个好人，下面我还是带你站高一点，宏观地看看目前学过的这些东西，也许会有帮助。</p>
+<p>OK， 走起~</p>
+<p>​    </p>
+<p>事实上，那些让人晕头转向的语法规定一直致力于通过引入一些机制, 让程序员少干点活, 并引导程序员保持相对清晰的头脑, 干活更有条理. </p>
+<p>相对术语化地说, 即是:</p>
+<ul>
+<li><p>尽可能地实现”<strong>代码重用</strong>“, 而又不失灵活性.</p>
+</li>
+<li><p>提供一些”<strong>开/闭机制</strong>“, 让程序员得以在“封闭”与“开放”之间寻找一个最佳的平衡. </p>
+</li>
+<li>更高层次来说, 便于实现更加稳固且便于扩展的程序架构.</li>
+</ul>
+<p>​    </p>
+<p>我们来回顾一下前两节学过的一些东西……    </p>
+<p><strong>“类” 和 “对象”</strong> 概念的提出实现了<em>数据</em>和<em>功能</em>封装，将其聚合为一个相对独立的单元，而<strong>“继承”</strong>机制的引入最直接地实现了代码重用. 并且, 在继承过程中<em>父类为子类指明了发展的方向</em>.     </p>
+<p><strong>“重载”</strong>实现了一个类内部的”变异”, 而<strong>“覆盖”</strong> 则体现了继承过程中子类代对父代的”革新”, 这些都为程序员提供了扩展的途径.</p>
+<p>​    </p>
+<p>虽然, 封闭的”最高境界”是封得密不透风, 但若真如此就没有意义了. 因此, <code>public</code>, <code>protected</code>, <code>private</code> 修饰符在不同的范围内提供了开放的可能性, 并把控制权交给了程序员, 即: <em>可控的开/闭</em>.</p>
+<p><code>static</code> 修饰符的引入在一个方面实现了对象之间的数据<em>共享</em>. 同时将数据和功能从对象层面提到了类层面, 或者说把数据和功能从相对 “动态” 的对象中提到相对 “静态” 的类中.  </p>
+<p><code>final</code> 修饰符又封堵了变化可能性, 给程序员一机会做到适时地封闭.</p>
+<p>​    </p>
+<p>最后, 为那些之前只接触这 C 语言这类”面向过程”的程序设计语言的同学洗个脑……</p>
+<p>在使用C这样面向过程的程序设计语言编程时, 我们的工作大致可以分2步:</p>
+<p> (1) 功能封装: 定义实现各种功能的函数(过程);</p>
+<p> (2) 通过函数间的相互调用, 让程序运行起来……</p>
+<p>而使用 Java 这样的面向对象的程序设计语言编程时, 我们首先站在对象的视角去定义类</p>
+<p>然后…… 在运行时, 让类实例化成对象, 然后…… 调用对象的方法 ( 函数 ) 以完成所需的工作, 然后…… 然后就没有然后了……</p>
+<p>对照之前的实例, 想想是不是这个过程: </p>
+<p>首先把自己当做一头猪 ( 小花 (对象) ), 思考做为一头猪应该有些什么数据和功能, 然后定义猪类, 然后……通过 <code>new Pig()</code> 把猪类变成小花 ( 具体的对象 ), 然后…… 调用小花的 eat() 方法让它吃东西, 然后…… 就没有然后了……</p>
+<p>​    </p>
+<p>最后的最后做个节目预告, 下一节我们将学习 “接口” 和 “抽象类”, 本节就先到这里, 给一点消化的时间……</p>
+<p>​    </p>
+<hr>
+<p>​    </p>
+<p>后面的教程中我们还要继续延伸这个”猪”的例子, 为了保证你的代码与我的例子没太大出入, 现将到目前为止的代码附上……</p>
+<p><strong>文件结构:</strong></p>
+<p><img src="data:img/jpg;base64,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%0A"></p>
+<p><strong>Pig.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bailey.study.animal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">class</span> <span class="title">Pig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">public</span> String sex;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Pig</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>(name, <span class="string">"未知"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Pig</span><span class="params">(String name, String sex)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.name = name;</span><br><span class="line">      <span class="keyword">this</span>.sex = sex;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(String food)</span> </span>&#123;</span><br><span class="line">      System.out.println(name + <span class="string">"吃了"</span> + food);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(String food, <span class="keyword">boolean</span> isHot)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (isHot) &#123;</span><br><span class="line">        System.out.println(<span class="string">"等呀等... 终于凉了..."</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      eat(food);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>SmallPig.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bailey.study.animal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SmallPig</span> <span class="keyword">extends</span> <span class="title">Pig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SmallPig</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>(name, <span class="string">"未知"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SmallPig</span><span class="params">(String name, String sex)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(name, sex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(String food)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!<span class="string">"奶"</span>.equals(food)) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"小猪只能吃奶!"</span>); <span class="comment">// 不是"奶", 抛出异常</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">super</span>.eat(food);                                <span class="comment">// 调用父类eat方法</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">(String toy)</span> </span>&#123;</span><br><span class="line">      System.out.println(name + <span class="string">"玩了会"</span> + toy);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>HelloJava.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bailey.study.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloJava</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        <p class="post-revise-info">
+            Revised on <span class="date">2019/05/11 04:29:43</span> by Bailey
+        </p>
+        
+        <!-- 上一篇/下一篇  -->
+        <hr/>
+        <ul class="post-paginator">
+            <li class="next">
+                
+                    <div class="nextSlogan">Next Post</div>
+                    <a href= "/2014/03/26/Java入门精要-5/" title= "Java入门精要 (五)">
+                        Java入门精要 (五)
+                    </a>
+                
+            </li>
+            <li class="previous">
+                
+                    <div class="prevSlogan">Previous Post</div>
+                    <a href= "/2014/03/12/Java入门精要-3/" title= "Java入门精要 (三)">
+                        Java入门精要 (三)
+                    </a>
+                
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  var toc = document.querySelector(".toc");
+  // 若有侧边目录, 则设置目录效果
+  if (toc) {
+    toc.onmouseover = function(){
+      toc.classList.remove("toc-shrink");
+    };
+    toc.onmouseout = function(){
+      toc.classList.add("toc-shrink");
+    };
+
+    // 延迟 5 秒后自动隐藏
+    window.setTimeout(function(){
+      toc.classList.add("toc-shrink");
+    }, 5000);
+
+    // 目录跟随滚动效果
+    var setTocPosition = function() {
+      //变量t是滚动条滚动时，距离顶部的距离
+      var t = document.documentElement.scrollTop||document.body.scrollTop;
+    
+      //当滚动到距离顶部200px时，返回顶部的锚点显示
+      if(t < 300){
+        toc.style.top = (300 - t) + 'px';
+      } else{          //恢复正常
+        toc.style.top = "20px";
+      }
+    }
+
+    window.onscroll = function(){
+        setTocPosition();
+    }
+    setTocPosition();
+  }
+</script>
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a> 
+        <p class="copyright text-muted">
+          Copyright By <a href="mailto:baileiz@163.com">Bailey.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<!-- <script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script> -->
+
+  </body>
+</html>
+

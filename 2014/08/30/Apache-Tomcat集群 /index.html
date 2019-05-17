@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Bailey">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Apache + Tomcat 集群配置"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Bailey&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://baileykm.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Bailey&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Bailey's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-139890203-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+</head>
+
+  <body>
+    <!-- 单篇文章内容页面 -->
+<!-- Page Header -->
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Apache + Tomcat 集群配置</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/baileykm">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:baileiz@163.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div id="article-content" class="col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Bailey</span>
+          
+          <!-- Date -->
+          <span class="date-time info">
+            On <span class="date">2014/08/30</span>
+            <span class="time">01:47:22</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Category <!-- 文章内容页面中的 Categories 部分 -->
+
+
+<a href="/categories/杂项/">杂项</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: <!-- 文章内容页中的 Tags 部分 -->
+
+
+<a class="tag" href="/tags/集群/">#集群</a> <a class="tag" href="/tags/Apache/">#Apache</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>本文首先介绍集群与负载均衡的简单概念, 然后以 Apache + Tomcat 为例简介如何进行集群配置.</p>
+<a id="more"></a>
+<div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#apache-pei-zhi">Apache 配置</a></li>
+<li><a href="#tomcat-pei-zhi">Tomcat 配置</a></li>
+<li><a href="#session-tong-bu">Session 同步</a></li>
+</ul>
+<!-- tocstop -->
+</div>
+
+<p>先讲一个故事：</p>
+<p>从前, 有一个小公司，就一个员工，自然地他包揽的所有工作，包括接听客户电话，然后进行处理。</p>
+<p>后来……，公司业务扩大了，又新增了几名员工。但是，公司电话就只有一部电话，于是老板选出了一位员工 A 专门负责接电话，而其它员工负责业务处理。在这种情况下，我们可以姑且称除 A 以外的其它员工组成了业务处理“<strong>集群</strong>”，而员工 A 就要负责把客户的要求转发给合适的员工来处理。</p>
+<p>这就带来一个问题，A 按什么原则来转发客户要求呢？</p>
+<p>一个基本的想法是，谁闲着就给谁干，谁能力强就让他多干点，别让某些人累死，而另一些是闲死，最终的目的当然是让客户要求能够得到最高效的处理。而员工 A 就可以称为 “<strong>负载均衡</strong>” 调度员。</p>
+<p>​    </p>
+<p>现在, 应该大概知道到什么是<em>集群</em>和<em>负载均衡</em>了吧~</p>
+<p>​    </p>
+<p>对于网站而言，情形与之类似。</p>
+<p>最初的阶段, 我们可能直接用一个 Tomcat 就既干了监听客户端请求和处理请求两项工作，后来… 访问量大了，于是我们雇一位专门的接线员（ Apache ），启动更多的 Tomcat 形成集群系统，由 Apache 来接收并转发请求给合适的 Tomcat 来处理, 待业务处理完成再反馈给 Apache, 最后由 Apache 封装后再返回给客户端。</p>
+<p>​    </p>
+<p>这样做的好处至少有两点：</p>
+<p>（1）业务处理能力提高了（我们可以在一台服务器上启动多个 Tomcat 进程，也可以把多个 Tomcat 部署到多台服务器上, 实现分布式部署）</p>
+<p>（2）系统更稳定了：万一哪个 Tomcat 挂了，Apache 就让别的 Tomcat 来处理请求就行了</p>
+<blockquote>
+<p>Tomcat 主要的工作就是处理客户端请求，而 Apache 主要负责接收并转发请求，这其实才是他们真正应有的分工</p>
+<p>当然, 如果客户端请求的只是一些静态资源 (如: 图片), 对于这样一些粗浅的工作, Apache 就直接干了, 就不到再劳烦 Tomcat 了,  这样也有利于减轻 Tomcat 的压力.</p>
+</blockquote>
+<p>Apache 也可以用 IIS、nginx 或者别的软件替代，使用 IIS 和 nginx 的配置集群不在本文讨论范围内, 感兴趣的话请查阅别的资料。( 本人近年更偏爱 nginx )</p>
+<p>等一下…… IIS 的角色不应该更像 Tomcat 吗？ </p>
+<p>NO！ IIS 之所以可以 “处理请求” 那是因为它调用了后端的一个 COM+ 组件。当然，如果你要认为那个处理请求的COM+ 组件是IIS的一部分也行，那 IIS 就成“杂种”了，微软的很多软件都是如此，比如 Access，哎 ~</p>
+<p>​     </p>
+<p>开始实战 ~</p>
+<p>​    </p>
+<h1><a href="#apache-pei-zhi" class="header-anchor"></a><span id="apache-pei-zhi">Apache 配置</span></h1><p>先安装一个 Apache（接线员），不同版本的 Apache 可能配置不同，这里我们使用的是 2.2.25 版本。</p>
+<blockquote>
+<p>假设 Apache 安装于 <em>D:\Apache2.2\conf</em></p>
+</blockquote>
+<blockquote>
+<p>安装之前注意让其它软件把 80 端口让出来，这里要特别注意一下，如果你已经安装了IIS，它默认是占据了80 端口的，这就需要配置一下，叫 IIS 把80端口交出来（怎么配置，问度娘）</p>
+<p>80 端口是 HTTP 协议的默认端口, 也就是说当我们访问<code>http://xxxx</code>时其实等同于访问<code>http://xxxx:80</code></p>
+</blockquote>
+<p>​    </p>
+<p>Apache 安装完成后，我们来配置请求转发和负载均衡。</p>
+<p>常用的方法有2种：代理方式（ Proxy ）或 使用 JK ， 下面仅介绍代理方式，使用JK的方式也不复杂，读者可自行查阅其它资料。</p>
+<p>（1）打开文件 <em>D:\Apache2.2\conf\httpd.conf</em> ，这是 Apache 最重要的配置文件。在文件最后添加如下代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">LoadModule proxy_module modules/mod_proxy.so</span><br><span class="line">LoadModule proxy_ajp_module modules/mod_proxy_ajp.so</span><br><span class="line">LoadModule proxy_balancer_module modules/mod_proxy_balancer.so</span><br><span class="line">LoadModule proxy_connect_module modules/mod_proxy_connect.so</span><br><span class="line">LoadModule proxy_ftp_module modules/mod_proxy_ftp.so</span><br><span class="line">LoadModule proxy_http_module modules/mod_proxy_http.so</span><br><span class="line"></span><br><span class="line">ProxyRequests Off    </span><br><span class="line">&lt;proxy balancer://cluster&gt; </span><br><span class="line">	BalancerMember ajp://127.0.0.1:9091 loadfactor=1 route=tomcat1</span><br><span class="line">	BalancerMember ajp://127.0.0.1:9092 loadfactor=1 route=tomcat2</span><br><span class="line">&lt;/proxy&gt;</span><br><span class="line"></span><br><span class="line">Include conf/extra/httpd-vhosts.conf</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li><p>1 ~ 6 行的那些代码用来启动一些所需的 Apache 模块 </p>
+</li>
+<li><p>8 ~ 12 行使用代理 ( proxy ) 方式进行负载均衡配置。</p>
+<p>可以看到，我们的集群里有两个干活的（BalancerMember），它们都在本机上，名称分别叫<em>tomcat1</em>和<em>tomcat2</em>，按 1:1 的权重 (loadfactor) 分配给它工作，两个 tomcat 分别从<em>9091</em>和<em>9092</em>端口接收请求 ( 监听 9091 和 9092 端口 )。 </p>
+<blockquote>
+<p>如果 Tomcat 部署在别的机器上，那把<em>127.0.0.1</em>换成对应服务器的IP地址就可以了。</p>
+<p>若要改变工作分配的权重，调整 <code>loadfactor</code> 后面的值就可以了。</p>
+<p>当然，如果 Tomcat 们不在同一台机器上，可以使用相同的端口。</p>
+</blockquote>
+</li>
+<li><p>第 14 行引入了一个配置文件，在这个配置文件中将告诉 Apache, 应该将什么样的请求转给上述配置的代理.</p>
+</li>
+</ul>
+<p>​    </p>
+<p>（2）打开文件 <em>D:\Apache2.2\conf\extra\httpd-vhosts.conf</em> ，添加如下代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ServerAdmin webmaster@mysite.com</span><br><span class="line">    ServerName mysite.com</span><br><span class="line">    ProxyPass / balancer://cluster/ stickysession=jsessionid nofailover=On</span><br><span class="line">    ProxyPassReverse / balancer://cluster/</span><br><span class="line">    ErrorLog <span class="string">"|bin/rotatelogs.exe -l logs/cluster-error-%Y-%m-%d.log 86400"</span></span><br><span class="line">    CustomLog <span class="string">"|bin/rotatelogs.exe -l logs/cluster-access-%Y-%m-%d.log 86400"</span> common</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li><p>第 3 行的 “mysite.com” 应替换成你网站网址中紧跟在 http:// 之后的那一段. </p>
+<p>例如：若网站首页是 <code>http://127.0.0.1/index.html</code>，则第 3 行的<em>mysite.com</em>应替换为<em>127.0.0.1</em>，而如果你的网站域名是 <code>www.mysite.com</code> 则应是上述代码中的写法。</p>
+<p>这一部分说明了什么样的请求使用本转发规则.</p>
+</li>
+<li><p>第 4 ~ 5 行说明了满足上述转发规则的情况下，把请求转发给我们在 <em>httpd.conf</em> 文件中配置的代理来处理。</p>
+</li>
+<li><p>也许你已经注意到配置中的<em>VirtualHost</em>了，是的，这里是通过在 Apache 中创建虚拟主机来转发请求的。（不明白? 呵呵，没关系，当我没说就行了, 关键是前面 2 点）</p>
+</li>
+</ul>
+<p>​     </p>
+<p>OK， 至此，Apache 的配置就完成了，它已经可以把客户端请求把 1:1 的比例转发到本机的 9091 和 9092 端口了，后面就是要配置 2 个Tomcat，让他们分别监听 9091 和 9092 端口, 然后把它们同时启动起来。</p>
+<p>​    </p>
+<h1><a href="#tomcat-pei-zhi" class="header-anchor"></a><span id="tomcat-pei-zhi">Tomcat 配置</span></h1><blockquote>
+<p>不同的 Tomcat 版本配置方法也不尽相同，本例使用的是7.0.52版本, 建议使用解压版本。</p>
+</blockquote>
+<p>（1）把下载到的 Tomcat 压缩包解压 2 份，假设分别放在 <em>D:\TomcatCluster\tomcat1</em> 和 <em>D:\TomcatCluster\tomcat2</em> 下</p>
+<blockquote>
+<p>以下配置以Tomcat1为例，至于 Tomcat2 使用相同的方法配置即可，不再赘述。</p>
+</blockquote>
+<p>（2）打开 <em>D:\TomcatCluster\tomcat1\conf\server.xml</em> 文件，找到下面呈现的这几行：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Server</span> <span class="attr">port</span>=<span class="string">"8005"</span> <span class="attr">shutdown</span>=<span class="string">"SHUTDOWN"</span>&gt;</span></span><br><span class="line">  ...........</span><br><span class="line">  <span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">redirectPort</span>=<span class="string">"8443"</span> /&gt;</span></span><br><span class="line">  ...........</span><br><span class="line">  <span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8009"</span> <span class="attr">protocol</span>=<span class="string">"AJP/1.3"</span> <span class="attr">redirectPort</span>=<span class="string">"8443"</span> /&gt;</span></span><br><span class="line">  ...........</span><br><span class="line">  <span class="tag">&lt;<span class="name">Engine</span> <span class="attr">name</span>=<span class="string">"Catalina"</span> <span class="attr">defaultHost</span>=<span class="string">"localhost"</span> <span class="attr">jvmRoute</span>=<span class="string">"tomcat1"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>第  7 行的代码, 将 8009 改成 Apache 配置第（1）步中的设置值 9091</p>
+<blockquote>
+<p>关键是 Apache 和 Tomcat 的配置一致，至于用什么端口号只要不被别的程序占用就行</p>
+</blockquote>
+</li>
+<li><p>本例中我们将 2 个 Tomcat 放在了同一台机器上，所以应让两个 Tomcat 使用不同的端口.</p>
+<p>例如：第 1 行 和 第 3 行 将 <code>8005</code> <code>8080</code> 在 tomcat1 的配置文件中设置为 <code>9011</code> <code>9081</code>， 而在 tomcat2 中配置为 <code>9012</code> <code>9082</code>.</p>
+<blockquote>
+<p>如果两个 Tomcat 没有部署在同一台机器上, 那这一步的配置可以不用做, 因为两个 Tomcat 不会端口冲突</p>
+</blockquote>
+</li>
+<li><p>注意添加第 9 行的  <code>jvmRoute=&quot;tomcat1&quot;</code>，这里的 tomcat1 可以认为是这个 tomcat 的名字，要与 Apache 配置第（1）步中的 route 后面的值对应. tomcat2 的配置类似.</p>
+</li>
+</ul>
+<p>​    </p>
+<p>通常我们还需要让不同的 Tomcat 共用同一个网站程序位置, 这样可以保证一个网站程序只有一个版本，便于维护。在某些情况下网站还可能接收用户上传的文件，如果多个 Tomcat 各自使用自己的路径来存放，那用户上传的文件就被到处乱丢了，不便于管理。试想，当用户要下载的文件的时候，还得先确定文件在哪个 Tomcat 那里，这不给自己添麻烦吗?    </p>
+<p>因此，我们做如下配置:</p>
+<p>（3）在 <em>D:\TomcatCluster\tomcat1\conf\server.xml</em> 文件中找到如下部分：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span> <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">  .......    </span><br><span class="line">  <span class="tag">&lt;<span class="name">Context</span> <span class="attr">path</span>=<span class="string">""</span> <span class="attr">docBase</span>=<span class="string">"D:/webroot/root"</span> <span class="attr">reloadable</span>=<span class="string">"true"</span>/&gt;</span>    </span><br><span class="line">  .......</span><br><span class="line"><span class="tag">&lt;/<span class="name">Host</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意第 3 行，告诉 Tomcat，网站程序的根目录在 <em>D:/webroot/root</em> 如果每个 Tomcat 都这样配置的话，那大家就共享同一个程序位置了。</li>
+<li><code>path</code> 的值不一定是 “”，根据情况，如果你网站的访问地址是 <code>http://www.xxx.com/yyy</code>，那这里应该是 <code>path = &quot;/yyy&quot;</code></li>
+</ul>
+<p>​    </p>
+<p>到此为止，如果你的两个 Tomcat 都已经配置好了，它们已经可以正确处理由 Apache 转发来的请求了。</p>
+<p>​    </p>
+<h1><a href="#session-tong-bu" class="header-anchor"></a><span id="session-tong-bu">Session 同步</span></h1><p>有一个关键问题亟待解决：</p>
+<p>通常我们会使用 Session 对象来保存一些会话信息, 例如：用户的登录状态.</p>
+<p>此时，因为 Apache 可能将来自同一个客户端的多次请求转发到不同的 Tomcat，而不同的两个 Tomcat 的 Session 并不共享(不在同一个存储空间). </p>
+<p>假若你的网站是使用 Session 来保存用户登录状态，那么就会出现用户登录后<em>登录状态信息</em>可能被保存在了 tomcat1 的 Session 中，而 Tomcat2 的 Session 中并未保存此信息, 此时若新的请求被转发到了 tomcat2, 则Tomcat2 并不知道客户已经登录了, 从而要求客户登录。</p>
+<blockquote>
+<p>当然，两个 Tomcat 的 Session 不同步导致的问题不止于此…</p>
+</blockquote>
+<p>​    </p>
+<p>怎么办? 两个方法：</p>
+<p><strong>方法1：</strong> </p>
+<p>让 Apache 将同一个客户端发来的请求总是转发给同一个 Tomcat，这样对于同一客户来说，它总是和同一个Tomcat 交互，所以也就不会存在上述问题了。 </p>
+<p>但是，试想，如果某一个客户一直和 Tomcat1 打交道，而 Tomcat1 好死不死就挂了呢? 那此客户的 Session 也就自然丢失了。</p>
+<blockquote>
+<p>这种方式 “部分” 解决了负载分配的问题，但始终使用的是单个 Tomcat 为特定的客户服务。</p>
+</blockquote>
+<blockquote>
+<p>按方法1的思路只需在 Apache 中改变一下配置即可，具体方法请查阅其它资料。</p>
+</blockquote>
+<p><strong>方法2：</strong></p>
+<p>让每个 Tomcat 都保存一个 Session 的复本，这样即使某个或某几个 Tomcat 挂了，只要不是全部挂了，那客户的 Session 信息仍不至于丢失。</p>
+<p>当然，这就需要解决一个问题：<strong>多个 Tomcat 之间的 Session 同步</strong></p>
+<p>​    </p>
+<p>OK，下面就来看如何实现 Session 同步……</p>
+<p>​     </p>
+<p>（4）在第 1 个Tomcat 的配置文件 <code>D:\TomcatCluster\tomcat1\conf\server.xml</code> 中找到 <code>&lt;Engine&gt; .... &lt;/Engine&gt;</code>部分，上面的步骤我们为<engine>节点添加了 <code>jvmRoute=&quot;tomcat1&quot;</code> 属性，现在在 <code>&lt;Engine&gt;</code>节点中插入代码，如下所示：</engine></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Engine</span> <span class="attr">name</span>=<span class="string">"Catalina"</span> <span class="attr">defaultHost</span>=<span class="string">"localhost"</span> <span class="attr">jvmRoute</span>=<span class="string">"tomcat1"</span>&gt;</span></span><br><span class="line">  .......     </span><br><span class="line">  <span class="tag">&lt;<span class="name">Cluster</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.ha.tcp.SimpleTcpCluster"</span> <span class="attr">channelSendOptions</span>=<span class="string">"6"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Manager</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.ha.session.BackupManager"</span></span></span><br><span class="line"><span class="tag">             <span class="attr">expireSessionsOnShutdown</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">             <span class="attr">notifyListenersOnReplication</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">             <span class="attr">mapSendOptions</span>=<span class="string">"6"</span>/&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">Channel</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.tribes.group.GroupChannel"</span>&gt;</span>      				</span><br><span class="line">      <span class="tag">&lt;<span class="name">Membership</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.tribes.membership.McastService"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">address</span>=<span class="string">"228.0.0.4"</span> </span></span><br><span class="line"><span class="tag">                  <span class="attr">port</span>=<span class="string">"45564"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">frequency</span>=<span class="string">"500"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">dropTime</span>=<span class="string">"3000"</span>/&gt;</span></span><br><span class="line">      </span><br><span class="line">      <span class="tag">&lt;<span class="name">Receiver</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.tribes.transport.nio.NioReceiver"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">address</span>=<span class="string">"auto"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">port</span>=<span class="string">"4001"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">selectorTimeout</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">maxThreads</span>=<span class="string">"6"</span>/&gt;</span></span><br><span class="line">      </span><br><span class="line">      <span class="tag">&lt;<span class="name">Sender</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.tribes.transport.ReplicationTransmitter"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Transport</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.tribes.transport.nio.PooledParallelSender"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">Sender</span>&gt;</span></span><br><span class="line">      </span><br><span class="line">      <span class="tag">&lt;<span class="name">Interceptor</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.tribes.group.interceptors.TcpFailureDetector"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Interceptor</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.tribes.group.interceptors.MessageDispatch15Interceptor"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Interceptor</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor"</span>/&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">Channel</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">Valve</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.ha.tcp.ReplicationValve"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">filter</span>=<span class="string">".*\.gif|.*\.js|.*\.jpeg|.*\.jpg|.*\.png|.*\.htm|.*\.html|.*\.css|.*\.txt"</span>/&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">Deployer</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.ha.deploy.FarmWarDeployer"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">tempDir</span>=<span class="string">"/tmp/war-temp/"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">deployDir</span>=<span class="string">"/tmp/war-deploy/"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">watchDir</span>=<span class="string">"/tmp/war-listen/"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">watchEnabled</span>=<span class="string">"false"</span>/&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">ClusterListener</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.ha.session.ClusterSessionListener"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Cluster</span>&gt;</span></span><br><span class="line">      ..............</span><br><span class="line"><span class="tag">&lt;/<span class="name">Engine</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;Cluster....&gt;.....&lt;/Cluster&gt;</code> 部分 ( 3 ~ 42 行 ) 是插入的内容，你可以把上述部分的代码复制并插入到你 <code>server.xml</code> 文件的 <code>&lt;Engine&gt;...&lt;/Engine&gt;</code>中</li>
+<li>第 18 行的端口号<code>4001</code> 对于同一台机器上的两个 Tomcat 应设置为不同值。( 例如: 可把 Tomcat2 设置为 4002 )</li>
+<li>其余地方无须更改</li>
+</ul>
+<p>上面这么一大段代码是告诉 Tomcat，你现在要以群集方式工作了，你的状态应该以广播的方式通知其他 Tomcat，至于细节暂时无须理会。</p>
+<p>​    </p>
+<p>（5）最后，千万记得在你的项目的 <code>web.xml</code> 文件的 <code>&lt;web-app ... &gt;...&lt;/web-app&gt;</code> 中插入 <code>&lt;distributable/&gt;</code>,  告诉 Web 容器，这个项目是工作在分布式模式下的。</p>
+<p>​    </p>
+<p>最后的最后…… 提醒那些对网站服务器进行了安全配置的同学，记得把上述第（4）步配置代码中第 18 行的端口 4001 开放，别被防火墙或安全策略挡住了，不然的话，各个 Tomcat 之间是无法通信的。</p>
+<blockquote>
+<p>按上述同样的方法配置第 2 个 Tomcat, 注意端口!</p>
+</blockquote>
+<p>​    </p>
+<hr>
+<p>​    </p>
+<p>华丽丽的分隔线之后，开始测试~</p>
+<p>（1）新建一个名为 <code>test.jsp</code> 的文件，把它放在：<code>D:/webroot/root</code> 文件夹下， 代码如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">"text/html; charset=GBK"</span> %&gt; </span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"java.util.*"</span> %&gt; </span><br><span class="line">&lt;html&gt;&lt;head&gt;&lt;title&gt;Cluster App Test&lt;/title&gt;&lt;/head&gt; </span><br><span class="line">&lt;body&gt; </span><br><span class="line">  Server Info:  </span><br><span class="line">  &lt;% </span><br><span class="line">  <span class="comment">// 输出当前Session的ID</span></span><br><span class="line">  out.println(<span class="string">"Session ID ＝ "</span> + session.getId() + <span class="string">"&lt;br/&gt;"</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 如果有新的键值对，则将其保存到 Session 属性     </span></span><br><span class="line">  String dataName = request.getParameter(<span class="string">"dataName"</span>);     </span><br><span class="line">  <span class="keyword">if</span> (dataName != <span class="keyword">null</span> &amp;&amp; dataName.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    String dataValue = request.getParameter(<span class="string">"dataValue"</span>);        </span><br><span class="line">    session.setAttribute(dataName, dataValue);     </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 列出当前Session中所有的键值对     </span></span><br><span class="line">  out.println(<span class="string">"&lt;h3&gt;Session 列表&lt;/h3&gt;"</span>);     </span><br><span class="line">  System.out.println(<span class="string">"============================"</span>);     </span><br><span class="line">  Enumeration e = session.getAttributeNames();     </span><br><span class="line">  <span class="keyword">while</span> (e.hasMoreElements()) &#123;        </span><br><span class="line">    String name = (String)e.nextElement();        </span><br><span class="line">    String value = session.getAttribute(name).toString();        </span><br><span class="line">    out.println( name + <span class="string">" = "</span> + value+<span class="string">"&lt;br/&gt;"</span>);        </span><br><span class="line">    System.out.println( name + <span class="string">" = "</span> + value);</span><br><span class="line">  &#125;</span><br><span class="line">  %&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;form action=<span class="string">"test.jsp"</span> method=<span class="string">"POST"</span>&gt;</span><br><span class="line">    键:&lt;input type=text size=<span class="number">20</span> name=<span class="string">"dataName"</span>/&gt;&lt;br/&gt;</span><br><span class="line">    值:&lt;input type=text size=<span class="number">20</span> name=<span class="string">"dataValue"</span>/&gt;&lt;br/&gt;    </span><br><span class="line">    &lt;input type=<span class="string">"submit"</span>/&gt;</span><br><span class="line">  &lt;/form&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个网页提供了一个表单，可以输入一个<em>键值对</em>，服务器端脚本把<em>键值对</em>保存在<em>Session</em>中，并列表输出当前所有已保存的键值对。</p>
+</blockquote>
+<p>​    </p>
+<p>（2）新建一个名为 <code>web.xml</code> 的文件，把它放在：<code>D:/webroot/root/WEB-INF</code> 文件夹下。 代码如下:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns</span>=<span class="string">"http://java.sun.com/xml/ns/javaee"</span> </span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:web</span>=<span class="string">"http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">"3.0"</span>&gt;</span>                 </span><br><span class="line">  .......</span><br><span class="line">  <span class="tag">&lt;<span class="name">distributable</span>/&gt;</span>        </span><br><span class="line">  .......</span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这其实是你网站项目的配置文件， 关键是第 8 行。</p>
+</blockquote>
+<p>​    </p>
+<p>OK，把 Apache 和 所有的 Tomcat 都启动起来吧……（ 若 Apaceh 在此前已经启动，那重启一下 ）</p>
+<p>在浏览器中打开 <code>http://localhost/test.jsp</code></p>
+<p>如果一切正常 ( 但愿 RP 没问题 )，应该可以看到：</p>
+<p>（1）无论刷新多少次，网页中显示的 Session ID 应该不会变，这说明无论 Apache 把你的请求转给了哪个 Tomcat，你的 Session 都被保持住了。 另外，在 Session ID 值的后缀部分可以看到你的第一次请求是由哪个 Tomcat 来处理的。</p>
+<p>（2）试着填一下<em>键值对</em>，提交，应该可以保存下来</p>
+<p>（3）只保留一个 Tomcat，把其它的全部停掉，再刷新页面，应该可以看到网页仍然可以打开，并且 Session 的值没有丢失</p>
+<p>（4）启动另一个 Tomcat，启动完成之后，把原先未停止的 Tomcat 关闭，应该可以看到网页仍然可以打开，并且 Session 的值没有丢失</p>
+<p>​    </p>
+<p>呵呵，这回爽了吧，只要还有一个 Tomcat 活着，那你的网站都可以正常访问，并且 Session 不会丢失。</p>
+<p>当然，如果有很多个 Tomcat 一起工作，那负载会被分配到不同的 Tomcat 上，实现负载均衡。</p>
+<p>​    </p>
+<p>谢谢观赏!   花絮更精彩……</p>
+<p>​    </p>
+<hr>
+<p>​    </p>
+<p>迫不及待地把你之前做好的项目部署上去玩集群了吧?</p>
+<p>呵呵，是不是发现你的项目弄上去后 Session 中存储的东西会丢啊? </p>
+<p>这回彻底崩溃了…… 为什么上面的例子正常，偏偏就自己的项目出问题…… 难道是 RP 问题 ?</p>
+<p>​    </p>
+<p>嘿嘿，Tomcat 7 的官方文档中关于集群配置有这样一段话，翻译过来大意是：</p>
+<p><strong>使用集群配置时，放进 Session 里的对象必须实现 java.io.Serializable 接口。</strong></p>
+<p>如若不然，Session 其实也没丢失，只是取出来的对象的属性值就会全部变成 <code>null</code> ……</p>
+<blockquote>
+<p>因为 Tomcat 在进行 Session 广播的时候会对 Session 中存储的对象进行序列化操作，别的 Tomcat 接收到之后再反序列化还原出原来的对象。若存储进 Session 的对象不能正确序列化，自然就不能正确的广播给别人。前面的测试之所以可以成功，是因为放进 Session 里的是 String，而 String 是实现了 Serializable 接口的。</p>
+</blockquote>
+<p>​    </p>
+<p>哈哈，这还不简单，我们都知道 java.io.Serializable 接口其实是个空接口，声明一下不就行了嘛！</p>
+<p>呵呵，举个例子，你的修改后的代码可能很像下述样子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">private</span> String id;   </span><br><span class="line">  <span class="keyword">private</span> String name;   </span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(String id)</span> </span>&#123; </span><br><span class="line">    <span class="keyword">this</span>.id = id; </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.id; </span><br><span class="line">  &#125;   </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123; </span><br><span class="line">    <span class="keyword">this</span>.name = name; </span><br><span class="line">  &#125;   </span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p>把用户信息 ( <code>userInfo</code> ) 存入 Session：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">  UserInfo userInfo = <span class="keyword">new</span> UserInfo();</span><br><span class="line">  userInfo.setId(<span class="string">"001"</span>);</span><br><span class="line">  userInfo.setName(<span class="string">"Zhang"</span>);</span><br><span class="line">  request.getSession().setAttribute(<span class="string">"userInfo"</span>, userInfo);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p>从 Session 中取出<code>userInfo</code>（通常下列代码不会跟上面的代码放在一个页面吧，呵呵~）：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">  UserInfo userInfo = request.getSession().getAttribute(<span class="string">"userInfo"</span>);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p>这行了吧，再试…… 晕…… 还是不对……</p>
+<p>仍然有问题，可以从 Session 中取出原先存储的 <code>userInfo</code> 对象（并不为 null )，但是似乎又不是原来那个,  <code>id</code>, <code>name</code> 的值变成 null 了……</p>
+<p>呃…… 再研读一下 JDK 的说明书，人家说了，即使实现了<code>Serializable</code>接口，但出于安全性考虑，序列化过程只对 <code>public</code> 属性进行处理，而那些 protected, private 的属性统统不理会.</p>
+<p>这回知道了吧，得把 <code>id</code> 和 <code>name</code> 变成 <code>public</code> 的…… 修改一下，再试，这回总行了吧……</p>
+<p>呵呵，如果 RP 真的没问题，应该 OK 了~</p>
+<blockquote>
+<p>也许你在想，如果把所有的属性都变成 <code>public</code> 不是有失封装性原则嘛……</p>
+<p>嘿! 谁让你全部变成 <code>public</code> 了，你可以只把 <code>id</code> 声明为 <code>public</code> 的嘛，如果需要<code>name</code>则根据<code>id</code>去数据库里取嘛，呵呵…… </p>
+<p>这里需要考虑<em>性能</em>和<em>安全</em>的平衡，自己考量吧……</p>
+</blockquote>
+<p>​    </p>
+<p>跟你说了花絮更精彩了吧，很多人估计是被最后这步坑死的，呵呵~</p>
+<p>​     </p>
+<p>再次谢谢观赏~  </p>
+<p>小二，上字幕!    </p>
+<p>​    </p>
+<blockquote>
+<p>如果一个接线员忙不过来，能不能再多雇几个呢？ </p>
+<p>当然可以，但是，多个接线员的关系应该是<em>树状层次</em>的关系，而非平级关系。也就是说，对外只有一个接线员，而这个接线员负责把请求转发给别的接线员，然后再转发……</p>
+<p>Why? 因为…… 网站用户访问某个网页时，请求的目的地是非常明确的，客户端发来的请求只会发送到某一个 IP 地址的某个端口上。 </p>
+<p>也就是说，对于客户，它只知道唯一的一个客服电话号码，而公司也只有一部对外的电话，所以，只能把接线员们架构成树状形式，由<em>顶层</em>接线员来接电话，然后再转接给别的接线员。</p>
+<p>怎么弄? 自己想…</p>
+</blockquote>
+
+        </div>
+        <p class="post-revise-info">
+            Revised on <span class="date">2019/05/11 04:32:39</span> by Bailey
+        </p>
+        
+        <!-- 上一篇/下一篇  -->
+        <hr/>
+        <ul class="post-paginator">
+            <li class="next">
+                
+                    <div class="nextSlogan">Next Post</div>
+                    <a href= "/2018/04/21/Cayenne入门指南/" title= "Cayenne 起步 (Version 3.1) [译]">
+                        Cayenne 起步 (Version 3.1) [译]
+                    </a>
+                
+            </li>
+            <li class="previous">
+                
+                    <div class="prevSlogan">Previous Post</div>
+                    <a href= "/2014/05/04/CSS入门精要-4/" title= "CSS入门精要 (四)">
+                        CSS入门精要 (四)
+                    </a>
+                
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  var toc = document.querySelector(".toc");
+  // 若有侧边目录, 则设置目录效果
+  if (toc) {
+    toc.onmouseover = function(){
+      toc.classList.remove("toc-shrink");
+    };
+    toc.onmouseout = function(){
+      toc.classList.add("toc-shrink");
+    };
+
+    // 延迟 5 秒后自动隐藏
+    window.setTimeout(function(){
+      toc.classList.add("toc-shrink");
+    }, 5000);
+
+    // 目录跟随滚动效果
+    var setTocPosition = function() {
+      //变量t是滚动条滚动时，距离顶部的距离
+      var t = document.documentElement.scrollTop||document.body.scrollTop;
+    
+      //当滚动到距离顶部200px时，返回顶部的锚点显示
+      if(t < 300){
+        toc.style.top = (300 - t) + 'px';
+      } else{          //恢复正常
+        toc.style.top = "20px";
+      }
+    }
+
+    window.onscroll = function(){
+        setTocPosition();
+    }
+    setTocPosition();
+  }
+</script>
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a> 
+        <p class="copyright text-muted">
+          Copyright By <a href="mailto:baileiz@163.com">Bailey.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<!-- <script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script> -->
+
+  </body>
+</html>
+

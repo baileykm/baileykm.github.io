@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Bailey">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Web-lighter 简介"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Bailey&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://baileykm.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Bailey&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Bailey's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-139890203-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+</head>
+
+  <body>
+    <!-- 单篇文章内容页面 -->
+<!-- Page Header -->
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Web-lighter 简介</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/baileykm">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:baileiz@163.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div id="article-content" class="col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Bailey</span>
+          
+          <!-- Date -->
+          <span class="date-time info">
+            On <span class="date">2018/06/01</span>
+            <span class="time">02:54:04</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Category <!-- 文章内容页面中的 Categories 部分 -->
+
+
+<a href="/categories/Web开发/">Web开发</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: <!-- 文章内容页中的 Tags 部分 -->
+
+
+<a class="tag" href="/tags/Web/">#Web</a> <a class="tag" href="/tags/Web-lighter/">#Web-lighter</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>web-lighter 是笔者实现的一个小型 Java Web 应用程序的服务端封装, 曾在多个项目中应用, 对于小型 Web 项目开发而言, 实践证明确实可以省不少事. 因此, 将其共享出来, 若有需要, 拿去用便是. </p>
+<a id="more"></a>
+<div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#web-lighter-neng-zuo-shi-me">web-lighter 能做什么?</a></li>
+<li><a href="#xian-lai-ge-li-zi">先来个例子</a></li>
+<li><a href="#an-zhuang-web-lighter">安装 Web-lighter</a></li>
+<li><a href="#web-lighter-shi-yong-fang-fa-gai-yao">Web-lighter 使用方法概要</a></li>
+<li><a href="#web-lighter-pei-zhi-yu-shi-yong-xiang-shu">Web-lighter 配置与使用详述</a><ul>
+<li><a href="#web-lighter-xml">web-lighter.xml</a></li>
+<li><a href="#request">@Request</a></li>
+<li><a href="#param">@Param</a></li>
+<li><a href="#inject">@Inject</a></li>
+<li><a href="#actionresult">ActionResult</a></li>
+<li><a href="#upload">@Upload</a></li>
+<li><a href="#download">@Download</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+</div>
+
+<p>取名 web-lighter 有 2 个意图:</p>
+<blockquote>
+<ol>
+<li>作为一个称谓, 便于文中叙述.</li>
+<li>此项目的初衷想为 Java Web 项目开发添把火, 力图让小型的 Web 项目开发变得更轻松一些, 故名web-lighter.</li>
+</ol>
+</blockquote>
+<p>web-lighter 项目源代码可至 <a href="https://github.com/baileykm/web-lighter" target="_blank" rel="noopener">https://github.com/baileykm/web-lighter</a> 下载.</p>
+<blockquote>
+<p>本文内容基于 web-lighter 1.1.0 版本</p>
+</blockquote>
+<h2><a href="#web-lighter-neng-zuo-shi-me" class="header-anchor"></a><span id="web-lighter-neng-zuo-shi-me">web-lighter 能做什么?</span></h2><ul>
+<li>分发 HTTP Request :  接收Http请求并分发给用户自定义的 <em>Action-Method</em> 进行处理, 并将处理结果发回前端</li>
+<li>HTTP Request 参数的自动解析与注入( 支持 text / json )</li>
+<li><em>Action</em> 类自动实例化与执行 ( <em>Action</em> 为用户自定义逻辑的封装 )</li>
+<li>基于Java注解 ( Annotation ) 的注入配置</li>
+<li>多文件上传支持</li>
+<li>文件下载支持 ( 可添加下载鉴权逻辑 )</li>
+</ul>
+<h2><a href="#xian-lai-ge-li-zi" class="header-anchor"></a><span id="xian-lai-ge-li-zi">先来个例子</span></h2><p>为了尽快能对 web-lighter 有一个初步的认识, 我们举个简单的例子, 了解一下 web-lighter 的基本用法, 以及它的基本功能.</p>
+<blockquote>
+<p>为了让例子变得尽可能地简单, 其间省略了部分安装与配置 web-lighter 的过程, 如果看完本例仍有兴趣继续尝试使用 web-lighter 请继续阅读本文后续内容, 否则, 直接关闭本页面便是.</p>
+</blockquote>
+<p>OK, 开始吧…</p>
+<ol>
+<li><p>使用你喜欢的 IDE 创建一个动态 Java Web 项目 (步骤略)</p>
+</li>
+<li><p>将 Web-lighter 的 Jar 文件及其依赖添加到项目构建路径 (参见下节 “Web-lighter 安装”, 支持 Maven)</p>
+</li>
+<li><p>创建一个 Java 类 (<code>ActionExample.java</code>), 代码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.bailey.web.lighter.action.ActionResult;</span><br><span class="line"><span class="keyword">import</span> com.bailey.web.lighter.action.ActionSupport;</span><br><span class="line"><span class="keyword">import</span> com.bailey.web.lighter.annotation.Param;</span><br><span class="line"><span class="keyword">import</span> com.bailey.web.lighter.annotation.Request;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActionExample</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span> </span>&#123;        <span class="comment">// 继承 ActionSupport, 后文称这样的类为 Action 类</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Request</span>(url = <span class="string">"/doSomeThing"</span>)                        <span class="comment">// Request注解标注此方法可以接收的 url, 后文称这样的方法为 Action 方法 (Action-Method)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ActionResult <span class="title">doSomeThing</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            @Param(name = <span class="string">"intParam"</span>)</span> Integer id,         <span class="comment">// 上行参数, 整型</span></span></span><br><span class="line"><span class="function">            @<span class="title">Param</span><span class="params">(name = <span class="string">"strParam"</span>)</span> String str,         <span class="comment">// 上行参数, 字符串类型</span></span></span><br><span class="line"><span class="function">            @<span class="title">Param</span><span class="params">(name = <span class="string">"voParam"</span>)</span> VO vo,               <span class="comment">// 上行参数, 值对象, 可用于接收前端传来的对象数据</span></span></span><br><span class="line"><span class="function">            @<span class="title">Param</span><span class="params">(name = <span class="string">"voArrParam"</span>)</span> List&lt;VO&gt; voArr    <span class="comment">// 上行参数, List&lt;VO&gt;, 可用于接收前端传来的数组数据</span></span></span><br><span class="line"><span class="function">    ) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"intParam = "</span> + id);</span><br><span class="line">            System.out.println(<span class="string">"strParam = "</span> + str);</span><br><span class="line">            System.out.println(<span class="string">"vo = &#123;id : "</span> + vo.getId() + <span class="string">", name : "</span> + vo.getName() + <span class="string">"&#125;"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; voArr.size(); i++) &#123;</span><br><span class="line">                System.out.println(<span class="string">"voArr["</span> + i + <span class="string">"] = &#123;id : "</span> + voArr.get(i).getId() + <span class="string">", name : "</span> + voArr.get(i).getName() + <span class="string">"&#125;"</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// ...	执行其它业务</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 成功, 直接将前端传来的voParam回传</span></span><br><span class="line">            <span class="keyword">return</span> ActionResult.success(vo);                  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">            <span class="comment">// 抛出异常时向前端返回错误信息</span></span><br><span class="line">            <span class="keyword">return</span> ActionResult.failure(<span class="string">"Something wrong"</span>);    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码中涉及的 VO 类可根据实际业务需要定义为一个普通的 <em>JavaBean</em> 类, 例如:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VO</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Integer id;</span><br><span class="line">  <span class="keyword">private</span> String  name;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123; <span class="keyword">this</span>.id = id;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> id;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123; <span class="keyword">this</span>.name = name;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getName</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> name;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建 HTML 页面 <code>exmaple.html</code> , 引入 <em>jQuery</em>, 并嵌入如下 <em>javascript</em> 脚本:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> params = &#123;</span><br><span class="line">  <span class="string">"intParam"</span>  : <span class="number">1</span>,</span><br><span class="line">  <span class="string">"strParam"</span>  : <span class="string">"This is a string."</span>,</span><br><span class="line">  <span class="string">"voParam"</span>   : &#123;</span><br><span class="line">    <span class="string">"id"</span>    : <span class="number">999</span>,</span><br><span class="line">    <span class="string">"name"</span>  : <span class="string">"Peter"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"voArrParam"</span>: [&#123;</span><br><span class="line">    <span class="string">"id"</span>    : <span class="number">10</span>,</span><br><span class="line">    <span class="string">"name"</span>  : <span class="string">"John"</span></span><br><span class="line">  &#125;,&#123;</span><br><span class="line">    <span class="string">"id"</span>    : <span class="number">20</span>,</span><br><span class="line">    <span class="string">"name"</span>  : <span class="string">"Joanna"</span></span><br><span class="line">  &#125;]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">  type : <span class="string">"post"</span>,</span><br><span class="line">  url : <span class="string">"wl/doSomeThing"</span>,           <span class="comment">// 注意 url 前缀 "wl"</span></span><br><span class="line">  contentType: <span class="string">"application/json"</span>,  <span class="comment">// 注意contentType取值</span></span><br><span class="line">  dataType : <span class="string">'json'</span>,</span><br><span class="line">  data : <span class="built_in">JSON</span>.stringify(params),    <span class="comment">// 将 js 对象转为 JSON 字符串上行</span></span><br><span class="line">  success : <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    alert(<span class="built_in">JSON</span>.stringify(data));    <span class="comment">// 输出服务器返回的信息</span></span><br><span class="line">  &#125;, </span><br><span class="line">  error : <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">'error!'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="5">
+<li><p>启动 Web 项目, 在浏览器中打开 <code>exmaple.html</code>, 如: 在地址栏中输入 </p>
+</li>
+<li><p>运行结果:</p>
+<ul>
+<li><p>服务器控制台输出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">intParam = 1</span><br><span class="line">strParam = This is a string.</span><br><span class="line">vo = &#123;id : 999, name : Peter&#125;</span><br><span class="line">voArr[0] = &#123;id : 10, name : John&#125;</span><br><span class="line">voArr[1] = &#123;id : 20, name : Joanna&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>前端浏览器输出:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"code"</span>:0,<span class="string">"result"</span>:&#123;<span class="string">"id"</span>:999,<span class="string">"name"</span>:<span class="string">"Peter"</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4><a href="#xiao-jie" class="header-anchor"></a><span id="xiao-jie">小结</span></h4><ul>
+<li><p>通过上例可以看到 web-lighter 可通过简单地继承 <code>com.bailey.web.lighter.action.ActionSupport</code> 并配合必要的注解即可将一个普通的 Java 类转化为可接收并处理前端请求的 <em>Action</em> 类.  这也是 web-lighter 的基本功能.</p>
+</li>
+<li><p>web-lighter 可将前端发来的数据作为 Action 方法的形参注入, 以便使用. (若上行数据为 <em>JSON</em> 格式则自动进行解析, 并注入)</p>
+</li>
+<li>web-lighter 可自动将服务器端需要反馈给前端的数据封装后返回前端 (通过在 <em>Action</em> 方法中返回 <em>ActionResult</em> 的实例 ). 若有必要将自动序列化为 <em>JSON</em> 格式字符串.</li>
+</ul>
+<hr>
+<blockquote>
+<p>如前所述, 上例仅简单展示了 web-lighter 的基本功能, 关于 web-lighter 的安装与详细使用方法, 请继续阅读后文.</p>
+</blockquote>
+<h2><a href="#an-zhuang-web-lighter" class="header-anchor"></a><span id="an-zhuang-web-lighter">安装 Web-lighter</span></h2><p>可使用 <em>maven</em> 方式安装 web-lighter, 或手动安装:</p>
+<ul>
+<li><strong>Maven 安装</strong><br>web-lighter  已发布至 <em>Maven Central Repository</em> ,  如果你的项目使用 <em>Maven</em> 则可将下面的代码复制到 <em>pom.xml</em> 文件中的 <code>&lt;dependencies&gt;...&lt;/dependencies&gt;</code> 一节即可.</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.baileykm<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>web-lighter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>手动安装</strong>:</p>
+<p>下载 <em>web-lighter.jar</em> 及第3方资源, 复制到 Web 项目的 <em>WEB-INF/lib</em> 下, 并将其添加至项目构建路径.  </p>
+<p>web-lighter 依赖于如下第3方资源:  </p>
+<p>javax.servlet-api-3.0.1.jar  </p>
+<p>commons-lang3-3.7.jar  </p>
+<p>commons-io-2.2.jar  </p>
+<p>commons-logging-1.2.jar  </p>
+<p>commons-fileupload-1.3.3.jar  </p>
+<p>gson-2.8.4.jar  </p>
+<p>UserAgentUtils-1.2.4.jar  </p>
+</li>
+</ul>
+<h2><a href="#web-lighter-shi-yong-fang-fa-gai-yao" class="header-anchor"></a><span id="web-lighter-shi-yong-fang-fa-gai-yao">Web-lighter 使用方法概要</span></h2><ol>
+<li>安装 web-lighter 及依赖资源</li>
+<li>定义 <em>Action</em> 类, 以封装你的业务逻辑. ( <em>Action</em> 类须继承 <code>com.bailey.web.lighter.action.ActionSupport</code> )</li>
+<li>在 <em>Action</em> 类中添加必要的 HTTP Request 处理方法 <em>( Action方法 )</em><br>3.1 在 <em>Action方法</em> 上添加 <code>@Request</code> 注解, 以标注该方法可以响应的特定的 HTTP 请求<br>3.2 为 <em>Action方法</em> 形参表中的参数添加 <code>@Param</code>注解 或  <code>@Inject</code>注解, 以说明参数值的来源<br>3.3 在 <em>Action方法</em> 体中编写你的业务处理代码, 并最终返回 <code>ActionResult</code>实例  </li>
+<li>若需要支持文件上传或下载, 可同时在 <em>Action方法</em> 上添加 <code>@Upload</code>和<code>@Download</code> 注解</li>
+</ol>
+<h2><a href="#web-lighter-pei-zhi-yu-shi-yong-xiang-shu" class="header-anchor"></a><span id="web-lighter-pei-zhi-yu-shi-yong-xiang-shu">Web-lighter 配置与使用详述</span></h2><h3><a href="#web-lighter-xml" class="header-anchor"></a><span id="web-lighter-xml">web-lighter.xml</span></h3><p>此文件为 web-lighter 的主配置文件, 可自定义关于 <em>web-lighter</em> 的一些通用配置.</p>
+<blockquote>
+<p>web-lighter.xml 配置文件并非必需, 也就是说, 若上述默认配置已满足你的需求, 则可省去 web-lighter.xml .</p>
+</blockquote>
+<p>web-lighter.xml 中可配置的信息包括:  </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>urlPrefix</td>
+<td>/wl</td>
+<td>String</td>
+<td><strong>url 前缀</strong><br>web-lighter 将按路径匹配方式拦截需要处理的请求, 即默认状态下, web-lighter 将拦截所有 url 以 “/wl” 开头的 HTTP 请求.<br> 因此, 编写前端代码时应注意为 url 加上前缀, 例如: <a href="http://localhost:8080/wl/doSomething" target="_blank" rel="noopener">http://localhost:8080/wl/doSomething</a> </td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>你可以直接创建一个 XML 文件或从 web-lighter_xxx.jar 中复制一份放到 <em>src</em> 根目录即可. </p>
+<p>web-lighter.xml 文件格式如下:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">urlPrefix</span>&gt;</span>/wl<span class="tag">&lt;/<span class="name">urlPrefix</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3><a href="#request" class="header-anchor"></a><span id="request">@Request</span></h3><p><code>@Request</code> 注解应用于 <em>Action</em> 方法上, 以标注该方法用于接收并处理 HTTP 请求  </p>
+<blockquote>
+<p><em>Action</em> 为用户自定义 HTTP 请求处理逻辑的封装, 应继承 <em>com.pr.web.lighter.action.ActionSupport</em>   </p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td>null</td>
+<td>String</td>
+<td>可接收并处理的请求 url<br>支持通配符和参数, 如:<br><code>/{param1}/*.action/{param2}</code><br>其中, <code>*</code> 代表匹配任意个任意字符, {param1} 表示此为参数占位, 其中的 param1为参数名<br><br><strong> 注意</strong><br>- web-lighter 使用路径匹配方式拦截前端请求, 默认情况下, 若请求的 url 匹配模式 “/wl/“ 时将被 web-lighter 拦截并处理. 若需要更改拦截匹配模式, 请在 web-lighter.xml 配置文件中进行设置.<br>- 前端访问路径记得添加路径前缀 ( 默认为”/wl” ), 如: <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a><strong style="color:red">/wl</strong>/doSomething.action<br>- 本注解的 url 参数无需添加路径前缀, 如: /doSomething, 运行时 web-lighter 将会匹配 /wl/doSomething<br>- 虽然 url 中支持类似 <em>RESTful Web</em> 风格的参数, 但 web-lighter 暂未完全支持 RESTful Web 的标准方法 </td>
+</tr>
+<tr>
+<td>format</td>
+<td><code>ParamFormat.json</code></td>
+<td><code>ParamFormat.json</code><br><code>ParamFormat.text</code></td>
+<td>HTTP 请求中参数的格式, 默认为 JSON 格式<br>Content-Type = “application/json” 时此参数无效 ( 始终被理解为JSON 格式数据)</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="#param" class="header-anchor"></a><span id="param">@Param</span></h3><p><code>@Param</code> 注解应用于  <em>Action</em> 方法的形参, 以说明该形参对应 HTTP 请求中的哪一个参数 ( 属性 ) </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>data</td>
+<td>String</td>
+<td>HTTP 请求中的参数名</td>
+</tr>
+</tbody>
+</table>
+<p>web-lighter 会自动从 HTTP 请求中获取参数值并在方法调用时自动注入.<br>若 HTTP 请求中参数为 <em>JSON</em> 格式, 同时 <em>@Request</em> 的 <em>format</em> 取值为 <code>ParamFormat.json</code> ( 默认值 ), 则将自动解析此 <em>JSON</em> 数据, 并封装为形参所需要的对象. </p>
+<p>特别地, 若 <em>@Request</em> 中 url 设置带有参数占位, 则调用 Action 方法时亦将同时注入从 HTTP 请求的 url 中解析得到的参数. </p>
+<p>例如: </p>
+<ul>
+<li><p><em>Action</em> 方法为:  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Request</span>(url=<span class="string">"/&#123;p1&#125;/doSomething/&#123;p2&#125;"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> ActionResult <span class="title">doSomething</span><span class="params">( </span></span></span><br><span class="line"><span class="function"><span class="params">  	@Param(name = <span class="string">"p1"</span>)</span> String str, </span></span><br><span class="line"><span class="function">  	@<span class="title">Param</span><span class="params">(name = <span class="string">"p2"</span>)</span> Integer id)) </span></span><br><span class="line"><span class="function"></span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>此时若 <em>HTTP</em> 请求的 <code>url</code> 为: <code>http://localhost:8080/test/doSomething/999</code>，则在 <code>doSomething</code> 方法内参数 <code>str</code> 和 <code>id</code> 的值将分别为 “test” 和 999</p>
+</li>
+</ul>
+<h3><a href="#inject" class="header-anchor"></a><span id="inject">@Inject</span></h3><p><code>@Inject</code> 注解应用于 <em>Action</em> 方法的形参.  此注解可用于在方法执行时, 将其它对象作为参数注入.<br>例如, 如下代码可在调用 doSomething 方法时自动实例化一个 Service 对象, 并注入.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ActionResult <span class="title">doSomething</span><span class="params">( @Inject Service service )</span> </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>Service</em>通常用于封装一些具体的业务功能, 而 <em>Action</em>主要负责接收前端请求, 实现业务调度.</p>
+<p>使用@Inject时要求 Service类可以通过<code>new Service()</code>或 <code>Service.getInstance()</code>的方式获得Service对象.</p>
+</blockquote>
+<h3><a href="#actionresult" class="header-anchor"></a><span id="actionresult">ActionResult</span></h3><p>每一个 <em>Action</em> 方法  (带<code>@Request</code>的方法) 均必须返回一个 <code>ActionResult</code> 对象, 其中封装了欲向前端回传的数据. <code>ActionResult</code> 对象将最终被序列化为 <em>JSON</em> 格式, 并返回前端.  </p>
+<p><code>ActionResult</code> 包含如下属性: </p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>数据类型</th>
+<th>含意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>int</td>
+<td>状态码, 标识业务处理结果. 默认情况下, 正确 ( 成功 ) 为 0, 错误 ( 失败 ) 为 -1</td>
+</tr>
+<tr>
+<td>result</td>
+<td>Object</td>
+<td>回传的业务数据. 若非 <code>String</code> 类型则自动序列化为 <em>JSON</em> 字符串</td>
+</tr>
+<tr>
+<td>message</td>
+<td>String</td>
+<td>附加消息, 用于将提示信息带回前端, 例如: 出错原因</td>
+</tr>
+<tr>
+<td>total</td>
+<td>Long</td>
+<td>全部记录数. 通常用于分页查询时返回符合条件的记录总数</td>
+</tr>
+</tbody>
+</table>
+<p>上述属性均为私有 ( private ) 属性, <code>ActionResult</code> 类定义了数个静态方法 ( static ), 用于返回 ActionResult 实例.  </p>
+<p><strong>例</strong>: 如下为 Action 类代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleAction</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Request</span>(url = <span class="string">"/doSomething"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ActionResult <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Map&lt;String, Object&gt;&gt; users = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Map&lt;String, Object&gt; user;</span><br><span class="line"></span><br><span class="line">        user = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        user.put(<span class="string">"id"</span>, <span class="number">1</span>);</span><br><span class="line">        user.put(<span class="string">"name"</span>, <span class="string">"Peter"</span>);</span><br><span class="line">        users.add(user);</span><br><span class="line"></span><br><span class="line">        user = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        user.put(<span class="string">"id"</span>, <span class="number">2</span>);</span><br><span class="line">        user.put(<span class="string">"name"</span>, <span class="string">"John"</span>);</span><br><span class="line">        users.add(user);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ActionResult.success(users, <span class="string">"It's Ok!"</span>, <span class="number">100L</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>前端访问 <a href="http://localhost:8080/wl/doSomething" target="_blank" rel="noopener">http://localhost:8080/wl/doSomething</a> 时将收到如下JSON 字符串: </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">    <span class="attr">"code"</span>: <span class="number">0</span>, </span><br><span class="line">    <span class="attr">"result"</span>: [&#123;</span><br><span class="line">        <span class="attr">"id"</span>: <span class="number">1</span>, </span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Peter"</span></span><br><span class="line">        &#125;, &#123;</span><br><span class="line">        <span class="attr">"id"</span>: <span class="number">2</span>, </span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"John"</span></span><br><span class="line">        &#125;],</span><br><span class="line">    <span class="attr">"message"</span>: <span class="string">"It's Ok!"</span>,</span><br><span class="line">    <span class="attr">"total"</span>: <span class="number">100</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><a href="#upload" class="header-anchor"></a><span id="upload">@Upload</span></h3><p><code>@Upload</code> 注解应用于 <em>Action</em> 方法上, 以标注该方法可支持文件上传 ( 单个 / 多个文件 )  </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uploadDir</td>
+<td>upload</td>
+<td>String</td>
+<td>上传文件的保存路径. 默认为网站根目录下的 upload 子目录</td>
+</tr>
+<tr>
+<td>nameRule</td>
+<td>*</td>
+<td>String</td>
+<td>文件在服务器端的命名规则<br>规则中的星号 ( “*“ ) 表示此部分使用 <em>UUID</em> 替换<br>如: “ tmp_* “ 表示使用 “ tmp_ “ + 32位UUID 作为文件名<br>文件扩展名始终与原文件一致</td>
+</tr>
+<tr>
+<td>maxFileSize</td>
+<td><code>1024 * 1024 * 40</code></td>
+<td>int</td>
+<td>单个文件的最大字节数. 默认40M</td>
+</tr>
+<tr>
+<td>maxRequestSize</td>
+<td><code>1024 * 1024 * 50</code></td>
+<td>int</td>
+<td>请求的最大字节数. 默认50M</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注意: HTML 中文件上传 form 的 enctype 属性应为 <code>multipart/form-data</code></p>
+</blockquote>
+<h3><a href="#download" class="header-anchor"></a><span id="download">@Download</span></h3><p><code>@Download</code> 注解应用于 <em>Action</em> 方法上, 以标注该方法用于支持前端文件下载</p>
+<ul>
+<li><p>可在 <em>Action</em> 方法中添加必要的逻辑, 以判定是否允许下载指定的资源.</p>
+</li>
+<li><p><em>Action</em> 处理方法应始终返回一个 <em>ActionResult</em> 实例. </p>
+</li>
+<li><p>若禁止下载指定资源, 应返回标记为”失败”的 <em>ActionResult</em> 实例, 如: </p>
+<p><code>return ActionResult.failure(&quot;您无权下载此资源&quot;);</code></p>
+</li>
+<li><p>若允许下载指定资源, 则应返回标记为”成功”的 <em>ActionResult</em> 实例, 同时将资源信息带回, 例如:  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">File file = <span class="keyword">new</span> File(<span class="string">"C:\\serverFile.docx"</span>);        <span class="comment">// 待下载的文件. 亦可是 InputStream </span></span><br><span class="line">String clientFileName = <span class="string">"你的文档.docx"</span>;             <span class="comment">// 客户端保存时的默认文件名</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回标记为"成功"的 ActionResult 实例</span></span><br><span class="line"><span class="comment">// DownloadFileInfo 对象用于封装待下载文件的信息</span></span><br><span class="line"><span class="comment">// 亦可直接使用输入流构造 DownloadFileInfo 对象</span></span><br><span class="line"><span class="keyword">return</span> ActionResult.success(<span class="keyword">new</span> DownloadFileInfo(file, clientFileName));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<p>关于 web-lighter 的介绍到这里就结束了, 叙述中有不妥之处欢迎指正. </p>
+<p>当然也欢迎提出宝贵意义或参与到本项目中来, 让我们一直努力将她变得更好.</p>
+
+        </div>
+        <p class="post-revise-info">
+            Revised on <span class="date">2019/05/11 11:56:47</span> by Bailey
+        </p>
+        
+        <!-- 上一篇/下一篇  -->
+        <hr/>
+        <ul class="post-paginator">
+            <li class="next">
+                
+                    <div class="nextSlogan">Next Post</div>
+                    <a href= "/2019/05/01/使用GitHub+Hexo搭建个人网站/" title= "使用 GitHub + Hexo 搭建个人博客">
+                        使用 GitHub + Hexo 搭建个人博客
+                    </a>
+                
+            </li>
+            <li class="previous">
+                
+                    <div class="prevSlogan">Previous Post</div>
+                    <a href= "/2018/05/08/CayenneModeler-数据库逆向工程/" title= "CayenneModeler 数据库逆向工程">
+                        CayenneModeler 数据库逆向工程
+                    </a>
+                
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  var toc = document.querySelector(".toc");
+  // 若有侧边目录, 则设置目录效果
+  if (toc) {
+    toc.onmouseover = function(){
+      toc.classList.remove("toc-shrink");
+    };
+    toc.onmouseout = function(){
+      toc.classList.add("toc-shrink");
+    };
+
+    // 延迟 5 秒后自动隐藏
+    window.setTimeout(function(){
+      toc.classList.add("toc-shrink");
+    }, 5000);
+
+    // 目录跟随滚动效果
+    var setTocPosition = function() {
+      //变量t是滚动条滚动时，距离顶部的距离
+      var t = document.documentElement.scrollTop||document.body.scrollTop;
+    
+      //当滚动到距离顶部200px时，返回顶部的锚点显示
+      if(t < 300){
+        toc.style.top = (300 - t) + 'px';
+      } else{          //恢复正常
+        toc.style.top = "20px";
+      }
+    }
+
+    window.onscroll = function(){
+        setTocPosition();
+    }
+    setTocPosition();
+  }
+</script>
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a> 
+        <p class="copyright text-muted">
+          Copyright By <a href="mailto:baileiz@163.com">Bailey.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<!-- <script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script> -->
+
+  </body>
+</html>
+

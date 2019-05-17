@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Bailey">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Java入门精要 (五)"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Bailey&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://baileykm.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Bailey&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Bailey's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-139890203-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+</head>
+
+  <body>
+    <!-- 单篇文章内容页面 -->
+<!-- Page Header -->
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Java入门精要 (五)</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/baileykm">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:baileiz@163.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div id="article-content" class="col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Bailey</span>
+          
+          <!-- Date -->
+          <span class="date-time info">
+            On <span class="date">2014/03/26</span>
+            <span class="time">01:50:22</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Category <!-- 文章内容页面中的 Categories 部分 -->
+
+
+<a href="/categories/入门教程/">入门教程</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: <!-- 文章内容页中的 Tags 部分 -->
+
+
+<a class="tag" href="/tags/Java/">#Java</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>本节关键词: 抽象类与抽象方法, 接口, 桥接模式, List, Map</p>
+<a id="more"></a>
+<div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#chou-xiang-lei-yu-chou-xiang-fang-fa">抽象类与抽象方法</a></li>
+<li><a href="#jie-kou">接口</a></li>
+<li><a href="#list-he-map">List 和 Map</a></li>
+</ul>
+<!-- tocstop -->
+</div>
+
+<p>经过前面的学习, 对于基于Java的面向对象编程可算是入门了. 希望你也自己写了一些小程序, 或者看了一些别人写的程序. 在实践的过程中或许遇到了一些之前没有接触过的语法, 例如: </p>
+<ul>
+<li>枚举 (enum) 的含意及使用方法; </li>
+<li>try … catch … finally … 这样的 “异常捕获” 语法;  </li>
+</ul>
+<p>但本系列教程主要关注基于Java语言的面向对象编程方法及思想, 因此在本教程中将不涉及这些基础语法, 希望读者自行补脑…… </p>
+<p>当然在后续的例子中我们会很自然地用到这些东西, 到时会有简单的注释, 动一动你聪明的小脑袋, 应该可以很容易看懂, 所以也不用急着专门去学习……</p>
+<p>这一节里, 我们将把之前的例子进一步扩展, 让它更 “现实” 一些, 同时, 在这个过程中我们将学习新的知识.</p>
+<p>​    </p>
+<h1><a href="#chou-xiang-lei-yu-chou-xiang-fang-fa" class="header-anchor"></a><span id="chou-xiang-lei-yu-chou-xiang-fang-fa">抽象类与抽象方法</span></h1><p>此前的例子中, 我们定义了两个类: <code>Pig</code> 和 <code>SmallPig</code>, 其中<code>Pig</code>类是<code>SmallPig</code>类的基类(父类), 而<code>SmallPig</code>类是<code>Pig</code>类的派生类(子类). </p>
+<p>可以这样说, 作为父类的 <code>Pig</code> 更为通用一些, 而<code>SmallPig</code> 相对具体化一些. 事实上, 派生的过程确实是一步步扩展和具体化的过程…… </p>
+<p>这里提醒一下, <code>Pig</code> 并非”大猪类”, 它是 <code>SmallPig</code> 类的父类, 是对 “猪” 相对 “普适” 的描述.</p>
+<p>​    </p>
+<p>好了, 既然还没有”大猪类” 那我们现在就定义一个好了……</p>
+<p>因为之前已经定义了 <code>Pig</code> 和 <code>SmallPig</code> 类, 那现在就只需要模仿 <code>SmallPig</code> 类来定义”大猪类”就好了. </p>
+<p>代码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bailey.study.animal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BigPig</span> <span class="keyword">extends</span> <span class="title">Pig</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">BigPig</span> <span class="params">(String name)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>(name, <span class="string">"未知"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">BigPig</span><span class="params">(String name, String sex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(name, sex);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果对于 “大猪” 没有更多需要进一步描述的, 那上述代码保持现状就好了. 否则, 你可以添加更多的属性和方法进行描述, 或通过 “覆盖” 对 <code>Pig</code> 类中已有的方法进行重新定义.</p>
+<p>​    </p>
+<p>继续…… </p>
+<p>目前为止, 我们的猪类有了一个 eat 方法, 可以正常进食了, 但总不能白吃吧, 吃完要长肉, 长到一定程度就应该宰了~ 呵呵, 好悲催的猪! 好邪恶的人类!</p>
+<p>因此, 为我们的猪添加一个存储当前体重的属性: <code>weight</code>. 因为无论 <code>BigPig</code> 还是 <code>SmallPig</code>都应该有体重, 因此, 我们把<code>weight</code>属性添加到了它们共同的父类 <code>Pig</code> 类中, 这样通过继承, <code>BigPig</code> 和 <code>SmallPig</code> 就自然地拥有了<code>weight</code> 属性了. 呵呵, 看到一点点传说中的代码复用了吧~</p>
+<p>修改后的代码如下 ( Pig.java ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bailey.study.animal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">class</span> <span class="title">Pig</span> </span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> weight;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setWeight</span><span class="params">(<span class="keyword">double</span> weight)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.weight = weight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getWeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> weight;</span><br><span class="line">    &#125;</span><br><span class="line">  ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码中, 为了节省篇幅, 突出重点, 原先已有的代码使用省略号代替了…</p>
+<p>注意: </p>
+<ul>
+<li><p><code>weight</code> 属性前使用了 <code>private</code> 修饰符, 防止”外界”随意地修改猪的体重 (包括<code>Pig</code>类的派生类). </p>
+</li>
+<li><p>另一方面, 我们又不能把<code>weight</code>封得太”死”, 总得留一个读写的途径. 因此, 我们还定义了<code>weight</code>属性的 <code>setter</code> 和 <code>getter</code> 方法.</p>
+</li>
+<li><p><code>weight</code>的 “读” 方法 ( <code>getWeight</code>() ) 使用了 <code>public</code> 修饰符, 以便 “外界” 可以相对自由地得到猪的体重</p>
+</li>
+<li><p><code>setWeight</code> ( … ) 方法使用了<code>private</code> 修饰符, 基于2个方面的考虑:</p>
+<p> (a) 把改写体重的控制权掌握在<code>Pig</code>类手中, 我们不想让 “外界” 随意改写体重值, 当然, <code>Pig</code>类的派生类也不行 (因为目前只有”吃”了才会长肉, 而”吃”的方法已经定义在了<code>Pig</code>类中, 无需留给<code>Pig</code>类的子孙后代改写体重的机会, 因此也没有使用<code>protected</code>修饰符 ); </p>
+<p> (b) <code>setWeight()</code> 因为是一个”函数”, 因此提供了更多的逻辑处理能力, 试想…… 如果今后我们要 “监视” 体重值, 以便通知饲养员”这头猪可以宰了”, 那么代码就可以添加在 <code>setWeight</code> 方法中了. </p>
+</li>
+</ul>
+<p>​    </p>
+<p>OK, 剩下的事情就是在猪吃东西的时候, 调用 <code>setWeight()</code> 方法让猪长点肉了……</p>
+<p>也许, 你已经想到了, 改写 <code>Pig</code> 类中的 <code>eat</code> 方法, 把代码攺成类似如下的样子 ( Pig.java ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(String food)</span> </span>&#123;</span><br><span class="line">  System.out.println(name + <span class="string">"吃了"</span> + food);</span><br><span class="line">  setWeight(weight * <span class="number">1.001</span>);    <span class="comment">// 每吃一次食物, 体重增长 0.1%</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是, 有这样一个现实情况: 大猪的生长速度显然不会有小猪快, 呵呵, 也就是说, 吃了相同数量的食物, 小猪的体重增长应该比大猪更多……</p>
+<p>因此… 上述代码中 <code>setWeight(weight * 1.001)</code> 这种<em>“硬编码”</em>形式显得太不灵活了…… </p>
+<p>于是… 我们把体重的增长系数 (1.001) 做一下抽象: 由一个方法来返回增长系数, 这样在 <code>BigPig</code> 和 <code>SmallPig</code> 类中我们只要覆盖这个方法就可以更为灵活地设定猪的体重增长系数. 代码改成如下 ( Pig.java ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(String food)</span> </span>&#123;</span><br><span class="line">  System.out.println(name + <span class="string">"吃了"</span> + food);</span><br><span class="line">  setWeight(weight * getGrowRatio());    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">double</span> <span class="title">getGrowRatio</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1.001</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>怎么样?  是不是感觉面向对象编程语言越来越好用了?</p>
+<p>呵呵, 但是… 相对于<code>BigPig</code> 和 <code>SmallPig</code>而言, <code>Pig</code>类是更为抽象的, 换句话说, <code>Pig</code>类并末具体化为大猪或是小猪, 我们这样 “武断” 地认为一头 “普适” 的猪 (<code>Pig</code>) 就该按 <em>0.1%</em> 的速度生长, 显然有点不妥……</p>
+<p>于是… 干脆把 <code>getGrowRatio()</code> 的函数体去掉得了, 因为我们在定义<code>Pig</code>类时根本不知道这头猪该有怎么的生长速度…</p>
+<p>于是… 代码变成这样子 ( Pig.java ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(String food)</span> </span>&#123;</span><br><span class="line">  System.out.println(name + <span class="string">"吃了"</span> + food);</span><br><span class="line">  setWeight(weight * getGrowRatio()); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">double</span> <span class="title">getGrowRatio</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p>OMG~ 这也行?! 呵呵, YES, Of Course YES!</p>
+<p>只是, 现在<code>getGrowRatio()</code>方法没有内容了, 也就是说, 它更”抽象”了, 必须在定义时添加 <code>abstract</code> 修饰符, 相应地, <code>Pig</code> 类因为拥有一个抽象的方法, 也被变成抽象的猪类了, 在<code>Pig</code>类定义时也应添加<code>abstract</code>修饰符. 正确的代码应如下 ( Pig.java ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bailey.study.animal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Pig</span> </span>&#123;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(String food)</span> </span>&#123;</span><br><span class="line">      System.out.println(name + <span class="string">"吃了"</span> + food);</span><br><span class="line">      setWeight(weight * getGrowRatio());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">getGrowRatio</span><span class="params">()</span></span>;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好了, 这就是传说中的 “<strong>抽象类</strong>“ 和 “<strong>抽象方法</strong>“.</p>
+<p>简单来说, “抽象方法” 就是未实现的方法 (没有函数体), “抽象类”就是含有抽象方法的类.</p>
+<p>正因为是抽象的, 所以 <strong>抽象类是不能实例化的</strong> , 即: 现在不能 <code>new Pig ()</code> 了. 其中的道理应该一想就明白… (想不明白就多想一会~)</p>
+<p>​    </p>
+<p>关于抽象类和抽象方法, 它们完成了如下几项重大的”进化”:</p>
+<ul>
+<li>提供了一种机制, <strong>让功能的实现 “推迟” 到了派生类</strong></li>
+<li>“继承” 机制在实现代码复用的同时, 还提供了父类给子类指明”发展方向”的途径, 这事实上可以上升到所谓的”架构”层次. 而抽象类和抽象方法的引入, 让这种”为子孙后代指明发展方向”的功能发挥得更为自然. 通俗来说, 父类要求子孙们必须具备某项功能, 但在定义父类时又暂时无法确定这项功能应该具体如何实现, 于是把”具体化”的工作交给了后代.</li>
+</ul>
+<p>​    </p>
+<h1><a href="#jie-kou" class="header-anchor"></a><span id="jie-kou">接口</span></h1><p>目前为止, 如果我们需要一头小猪, 那只要 <code>new SmallPig(...);</code> 小猪就出现了… 但是… 既然你把它 “生” 出来了, 就得喂它吧, 呵呵~ ( 好吧, 不应该是你把它生出来的! )</p>
+<p>也就是说, 如果猪儿们饿了, 应该可以通过调用类似 <code>String getFood() { ... }</code> 这样的方法来获得食物. ( 这猪好高级, 饿了还会主动要吃的, 呵呵~ ) </p>
+<p>那么, 这个方法定义在那个类里面呢? </p>
+<p>也许, 你已经想到了, 我们再来定义一个”饲养员”的类, 把 <code>getFood</code>() 方法定义在”饲养员”类里…… 但是, 可以提供食物的不止是饲养员吧, 比如… 猪妈妈应该可以给点奶吃… 再比如… 我们有一台高大上的”自动喂猪机”, 那它也应该可以提供食物… 换句话说, 提供食物的功能可以由不同的类来实现, 而这些类之间不一定有关系.</p>
+<p>再换句话说, 其实, 我们关心的只是有某个东西能提供一个 <code>getFood()</code> 方法, 当调用这个方法的时候, 可以得到食物, 谁管它是什么东西呢……</p>
+<p>​    </p>
+<p>说这么半天, 其实是想引入”<strong>接口</strong>“的概念.  </p>
+<p>术语化点说, <strong>接口 ( Interface ) 是对功能的抽象</strong>, 而功能在这里其实就是方法. </p>
+<p>这里抽象的好处在于可以把功能的 “描述” 和 “实现” 分离. </p>
+<p>“描述”可认为是方法(函数)的原型声明(函数头), 它告诉调用方, 方法名是什么? 需要什么样的参数? 会返回什么样的结果? </p>
+<p>而”实现”就是方法(函数)体, 它是这个功能的具体实现. </p>
+<p>对于上面的例子来说, “描述” 就是 <code>String getFood();</code> 而 <code>{...}</code> 就是”实现”部分, 关键的是, “实现”部分可以在不同的类 (饲养员/猪妈妈/自动喂猪机) 完成.</p>
+<p>​    </p>
+<p>如果我们把一个或多个功能描述(函数原型声明部分)集中起来写到一起, 那就可以定义成接口了…… 代码如下 ( IFoodProvider.java ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.edu.ynnu.study;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IFoodProvider</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getFood</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那功能实现部分写在那里呢? 也就是说, 如何实现这个接口呢?</p>
+<p>这就得有实现这个接口的类了… 比如: 自动喂猪机, 代码如下 ( PigFeedMechine.java ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bailey.study.mechine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PigFeedMechine</span> <span class="keyword">implements</span> <span class="title">IFoodProvider</span> </span>&#123;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span>                 <span class="comment">// 这是一个"注解", 告诉编译器, 下面这个方法做了一个覆盖 (语法上并非必须)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getFood</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"玉米"</span>;        <span class="comment">// 返回食物</span></span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当然, 你也可以模仿着定义出 “饲养员”, “猪妈妈”…</p>
+</blockquote>
+<p>​    </p>
+<p>怎么使用呢?</p>
+<p>我们可以在 <code>Pig</code> 类中添加一个 <code>setFoodProvider(IFoodProvider foodProvider)</code> 方法, 把某个实现了<code>IFoodProvider</code>接口的类的实例”注册”给猪, 当猪需要食物的时候, 只要调用接口的 <code>getFood()</code> 方法即可…… 看看下面的代码 ( Pig.java ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bailey.study.animal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Pig</span> </span>&#123;</span><br><span class="line">  ......</span><br><span class="line">  <span class="keyword">private</span> IFoodProvider foodProvider;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFoodProvider</span><span class="params">(IFoodProvider foodProvider)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.foodProvider = foodProvider;        <span class="comment">// 记录食物提供方</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">feelHungry</span><span class="params">()</span> </span>&#123;              <span class="comment">// 饿了…</span></span><br><span class="line">    <span class="keyword">if</span> (foodProvider != <span class="keyword">null</span>) &#123;</span><br><span class="line">      eat(foodProvider.getFood());           <span class="comment">// 把食物提供方返回的食物吃了</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      ...                                    <span class="comment">// 继续饿着吧~</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时, 若要调用 <code>setFoddProvider()</code> 方法, 为猪”注册”一个食物提供方, 只须传入实现了 <code>IFoodProvider</code> 的类的实例即可, 诸如:</p>
+<p><code>SmallPig sp = new SmallPig(...);</code><br><code>sp.setFoodProvider(new PigFeedMechine());</code></p>
+<p>​    </p>
+<p>上述代码中, 特别关注几个地方:</p>
+<ul>
+<li><p>第 7 行, <code>setFoodProvider</code> 方法所需要的参数只是一个实现了 <code>IFoodProvider</code> 接口的对象, 并非某个具体的对象(饲养员/自动喂猪机)</p>
+</li>
+<li><p>第 12 ~ 13 行, 当需要食物时, 使用的也只是接口 <code>IFoodProvider</code> 类型的变量 <code>foodProvider</code>, 并非某个具体的对象</p>
+</li>
+<li><p>总之, 对于 <code>Pig</code> 类而言, 我们无须关心是谁提供食物, 只关心有某个东西能够提供食物 ( 只要实现了  <code>IFoodProvider</code>即表明此类的实例可以提供食物 ). </p>
+<p>而对于那些实现 <code>IFoodProvider</code> 接口的类而言, 它们同样无须关心谁在使用它.</p>
+</li>
+<li><p>进一步说, 通过接口机制, 实现了<em>功能提供方 (饲养员/自动喂猪机…)</em> 和 <em>功能调用方 (猪)</em> 之间的<em>解耦合</em>, 这正是我们一直在追求的 “<em>低耦合</em>“.</p>
+</li>
+<li><p>在这里, 接口就象一座桥, 它把功能提供方和调用方连接起来了, 而这种连接又是相对松散的, 低耦合的, 灵活的. </p>
+</li>
+</ul>
+<p>​     </p>
+<p>相对而言:</p>
+<p><strong>抽象类实现了一个家族体系 (继承体系) 内的功能抽象, 而接口把功能抽象进一步地延伸到了不同的家族中.</strong></p>
+<p>​    </p>
+<h1><a href="#list-he-map" class="header-anchor"></a><span id="list-he-map">List 和 Map</span></h1><p>既然讲到接口, 那么我们就顺带提一下在Java中非常常用的两个接口: <code>List</code> 和 <code>Map</code> ,  这两个接口均定义在 <code>java.util</code> 包中.</p>
+<ul>
+<li><p>实现 <code>List</code> 接口的类很多, 其中最常用的应是 <code>java.util.ArrayList</code> .</p>
+<p> <code>List</code> 用来存储一组顺序数据, 而并不限定数据具体类型. 参看下面的代码, 也许可以有点感觉 </p>
+<blockquote>
+<p>代码很好猜, 如果看不懂就查英汉词典, 就不写注释了):</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">List list = <span class="keyword">new</span> ArrayList();</span><br><span class="line">list.add(<span class="string">"a"</span>);</span><br><span class="line">list.add(<span class="string">"b"</span>);</span><br><span class="line">list.add(<span class="string">"c"</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, size = list.size(); i &lt; size; i++) &#123;</span><br><span class="line">  System.out.println(list.get(i));</span><br><span class="line">&#125;</span><br><span class="line">list.remove(<span class="number">0</span>);</span><br><span class="line">list.remove(<span class="string">"c"</span>);</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<ul>
+<li><p>同样, 实现 <code>Map</code> 接口的类也很多, 其中 <code>java.util.HashMap</code> 较常用. </p>
+<p><code>Map</code> 用来存储 “<em>键-值对</em>“, 它也同样不限定存储的元素类型. 参看下面的代码:</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map map = <span class="keyword">new</span> HashMap();</span><br><span class="line">map.put(<span class="string">"sp1"</span>, <span class="keyword">new</span> SmallPig(<span class="string">"小花"</span>, Sex.公));</span><br><span class="line">map.put(<span class="string">"sp2"</span>, <span class="keyword">new</span> SmallPig(<span class="string">"小黄"</span>, Sex.母));</span><br><span class="line">map.put(<span class="string">"sp3"</span>, <span class="keyword">new</span> SmallPig(<span class="string">"小黑"</span>, Sex.公));</span><br><span class="line">System.out.println( ((SmallPig) map.get(<span class="string">"sp1"</span>)).getName() );</span><br><span class="line">map.remove(<span class="string">"sp1"</span>);</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p>也许你会注意到上面的代码如果放到 <code>Eclipse</code> 里, 有出现 “警告” ( warning, 划黄色波浪线 ). </p>
+<p>为什么呢? </p>
+<p>通俗来说, 因为 <code>List</code> 或 <code>Map</code> 并不限制放入其中的元素类型, 但是这样可能对程序员而言似乎有些 “纵容”, 万一程序员一个失手, 本该放头猪进去, 却一不小心放了一头牛, 那 <code>List</code> 和 <code>Map</code> 其实是没有意见的, 在语法上没有任何问题, 但是在逻辑上就错了. 为了避免这种情况的发生, 更好的做法是, 在声明和实例化的时候就明确一下要放入的是什么类型的东西, 这样编译器就可以帮你检验放入的数据是否合法了. </p>
+<p>上述代改写如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">Map&lt;String, SmallPig&gt; map = <span class="keyword">new</span> HashMap&lt;String, SmallPig&gt;();</span><br></pre></td></tr></table></figure>
+<p>当然, 既然已经明确了放入<code>map</code>的 “键-值对” 中的”键”是 <code>String</code> 类型的, 而”值”是 <code>SmallPig</code> 类的, 那么前面的代码中就无须强制转换了, 即可以删除 <code>(SmallPig)</code> 部分:</p>
+<p>System.out.println( (<span style="color:#aaa;"><del>(SmallPig)</del></span> map.get(“sp1”) ).getName() );</p>
+<p>上面的阐述只是为了便于理解, 严格的定义和概念, 请查阅关于 <strong>泛型</strong> 的资料.</p>
+<p>​    </p>
+<hr>
+<p>OK, 就到这里, 本节我们学习了<em>抽象类</em>和<em>接口</em>, 另外也捎带了解了一下<em>泛型</em>.</p>
+<p>从现在开始, 我们应该逐渐从只关心怎么把功能实现, 转变到如果把程序写得更好 ( 健壮, 结构清晰, 有条理, 易读, 易维护……), 也就是往所谓 “架构” 层面去思考和设计……</p>
+
+        </div>
+        <p class="post-revise-info">
+            Revised on <span class="date">2019/05/11 04:29:50</span> by Bailey
+        </p>
+        
+        <!-- 上一篇/下一篇  -->
+        <hr/>
+        <ul class="post-paginator">
+            <li class="next">
+                
+                    <div class="nextSlogan">Next Post</div>
+                    <a href= "/2014/05/03/CSS入门精要-1/" title= "CSS入门精要 (一)">
+                        CSS入门精要 (一)
+                    </a>
+                
+            </li>
+            <li class="previous">
+                
+                    <div class="prevSlogan">Previous Post</div>
+                    <a href= "/2014/03/26/Java入门精要-4/" title= "Java入门精要 (四)">
+                        Java入门精要 (四)
+                    </a>
+                
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  var toc = document.querySelector(".toc");
+  // 若有侧边目录, 则设置目录效果
+  if (toc) {
+    toc.onmouseover = function(){
+      toc.classList.remove("toc-shrink");
+    };
+    toc.onmouseout = function(){
+      toc.classList.add("toc-shrink");
+    };
+
+    // 延迟 5 秒后自动隐藏
+    window.setTimeout(function(){
+      toc.classList.add("toc-shrink");
+    }, 5000);
+
+    // 目录跟随滚动效果
+    var setTocPosition = function() {
+      //变量t是滚动条滚动时，距离顶部的距离
+      var t = document.documentElement.scrollTop||document.body.scrollTop;
+    
+      //当滚动到距离顶部200px时，返回顶部的锚点显示
+      if(t < 300){
+        toc.style.top = (300 - t) + 'px';
+      } else{          //恢复正常
+        toc.style.top = "20px";
+      }
+    }
+
+    window.onscroll = function(){
+        setTocPosition();
+    }
+    setTocPosition();
+  }
+</script>
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a> 
+        <p class="copyright text-muted">
+          Copyright By <a href="mailto:baileiz@163.com">Bailey.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<!-- <script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script> -->
+
+  </body>
+</html>
+

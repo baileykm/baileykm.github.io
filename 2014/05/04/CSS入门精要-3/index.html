@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Bailey">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="CSS入门精要 (三)"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Bailey&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://baileykm.github.io"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Bailey&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Bailey's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-139890203-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+</head>
+
+  <body>
+    <!-- 单篇文章内容页面 -->
+<!-- Page Header -->
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">CSS入门精要 (三)</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/baileykm">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:baileiz@163.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div id="article-content" class="col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Bailey</span>
+          
+          <!-- Date -->
+          <span class="date-time info">
+            On <span class="date">2014/05/04</span>
+            <span class="time">00:02:07</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Category <!-- 文章内容页面中的 Categories 部分 -->
+
+
+<a href="/categories/入门教程/">入门教程</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: <!-- 文章内容页中的 Tags 部分 -->
+
+
+<a class="tag" href="/tags/Web/">#Web</a> <a class="tag" href="/tags/CSS/">#CSS</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>本节介绍 CSS 选择符的使用. </p>
+<p>在实际开发中, 我们只会偶尔在某些特殊情况下直接将样式表嵌在标签的 style 属性里 (就像前几节的做法), 因为这样做有诸多的弊端 (长大了你就会懂的) . 本节将讨论一种更好的样式表写法.</p>
+<a id="more"></a>
+<div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#4-css-xuan-ze-fu">4. CSS选择符</a><ul>
+<li><a href="#4-1-biao-qian-ming-xuan-ze-fu">4.1 标签名选择符</a></li>
+<li><a href="#4-2-id-xuan-ze-fu">4.2 ID选择符</a></li>
+<li><a href="#4-3-lei-xuan-ze-fu">4.3 类选择符</a></li>
+<li><a href="#4-4-wei-lei">4.4 伪类</a></li>
+<li><a href="#4-5-shu-xing-xuan-ze-fu">4.5 属性选择符</a></li>
+<li><a href="#4-6-zu-he">4.6 组合</a></li>
+</ul>
+</li>
+<li><a href="#wai-lian-yang-shi-biao">外联样式表</a></li>
+</ul>
+<!-- tocstop -->
+</div>
+
+<blockquote>
+<p>之所以把这部分内容放在第（三）部分，迟迟不讲，主要考虑到代码直观性，也尽量让初学者循序渐进，避免一开始就接触一大堆新的概念，徒增学习难度。</p>
+</blockquote>
+<h1><a href="#4-css-xuan-ze-fu" class="header-anchor"></a><span id="4-css-xuan-ze-fu">4. CSS选择符</span></h1><p>考虑这样一个问题，如果网页中有数十个段落 <code>&lt;p&gt;</code>，所有段落的文字都需要显示为红色，按此前的写法, 那岂不是要在所有<code>&lt;p&gt;</code>标签里都写 <code>style=&quot;color:red&quot;</code>，这不累死个人了吗? 更崩溃的是，如果你的老板叫你把所有段落文字都改成绿色，估计你脸也绿了吧~。</p>
+<p>能不能像提取公因式一样，把这些重复的代码放到一个位置，统一描述? 这样既省力，而且当老板叫你把所有段落文字都改成绿色的时候就只需要改一个地方的代码，也不至于崩溃了吧！</p>
+<p>答案是：YES !</p>
+<p>那……把这些重复的样式描述代码提取到哪里（放哪里）呢? 有两种做法：</p>
+<p>(1) 放在HTML文档里, 使用一对<code>&lt;style&gt;&lt;/style&gt;</code>标签装起来</p>
+<p>(2) 干脆放在一个独立的外部文件里</p>
+<blockquote>
+<ul>
+<li><p>对于之前我们把样式写在标签的style属性的做法，如：<code>&lt;p style=&quot;color:red&quot;&gt;&lt;/p&gt;</code>，叫做<em>内嵌样式表</em>，作用于一个具体的标签。</p>
+</li>
+<li><p>把样式表写在HTML文档里, 使用一对<code>&lt;style&gt;&lt;/style&gt;</code>标签装起来的做法叫做<em>内联样式表</em>，作用于当前网页。</p>
+</li>
+<li><p>放在独立文件中的做法叫做<em>外联样式表</em>，可作用于多个网页。</p>
+</li>
+</ul>
+</blockquote>
+<p>​    </p>
+<p>说了这么半天，到底怎么做，LOOK！</p>
+<p><img src="data:img/jpg;base64,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"></p>
+<p>别着急试！之所以放个图片，而不是直接放代码，就是怕你复制了去试。</p>
+<p>难道没发现，这样写的话浏览器岂不很迷惑，你到底是想让段落文字显示为红色，还是让span里的文字显示为红色，亦或是别的要求。</p>
+<p>是的，既然我们把样式描述提到了一个公共的位置，而不是直接写在标签里，那就得有个机制告诉浏览器，每个样式是修饰哪个元素的。这就是我们这一节要讨论的内容: <strong>CSS选择符</strong>。</p>
+<blockquote>
+<p>有些资料上翻译为CSS选择器，我们就不再纠结到底该叫什么了，本文统一叫 <em>CSS选择符</em></p>
+</blockquote>
+<p>如果我们想仅让上图中的段落1和段落2显示为红色，正确的代码应该如下：</p>
+<p><strong>例4.1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;学习CSS&lt;/title&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot; &gt;</span><br><span class="line">        p &#123;color : red;&#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;  </span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;p&gt;段落1&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;段落2&lt;/p&gt;</span><br><span class="line">    &lt;span&gt;span里的内容&lt;/span&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>例4.1 中， <code>p {color : red;}</code> 说明网页中所有的<code>&lt;p&gt;</code>标记中的文字均显示为红色，除此之外保持默认样式。</p>
+<p>语法: <code>选择符 { 样式描述1; 样式描述2; ...}</code></p>
+<p>可以看到，选择符的作用就是从HTML文档中挑出要进行修饰的那些元素，而{ }中的部分为样式说明，这和嵌入式样式表中的用法相同。</p>
+<hr>
+<p>下面我们来讨论常用的选择符…</p>
+<h2><a href="#4-1-biao-qian-ming-xuan-ze-fu" class="header-anchor"></a><span id="4-1-biao-qian-ming-xuan-ze-fu">4.1 标签名选择符</span></h2><p>如例4.1所示，可以使用标签名来选出指定名称的元素(标签)，如：<code>p</code>、<code>div</code>、<code>img</code>、<code>a</code>等，甚至还包括 html 标签。（快实验吧~）</p>
+<p>这里要隆重介绍一个特别的选择符 — <span style="color:#dd524d;">“*” ，它可以代表任意标签</span>。好好用它，可以省不少事！</p>
+<p>比如，我们若需要将整个网页中所有的文字字号设置为12px，那可以写成：</p>
+<p>​    * { font-size : 12px; }</p>
+<p>是不是很省事?</p>
+<p>​     </p>
+<h2><a href="#4-2-id-xuan-ze-fu" class="header-anchor"></a><span id="4-2-id-xuan-ze-fu">4.2 ID选择符</span></h2><p>我们可以为标签指定一个ID，如：&lt;p <span style="color:#dd524d;">id=”p1”</span>&gt;&lt;/p&gt;，这样在内联样式表或外联样式表中即可使用 <span style="color:#dd524d;">#p1</span> 选中该元素。注意ID值前面的”#”。</p>
+<p>例4.2：</p>
+<table>
+<thead>
+<tr>
+<th><strong>样式表</strong></th>
+<th><strong>HTML</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span style="color:#dd524d;">#p1</span> {color : red;}</td>
+<td>&lt;p <span style="color:#dd524d;">id=”p1”</span>&gt;段落1&lt;/p&gt;<br>&lt;p&gt;段落2&lt;/p&gt;</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>结果: 只有”段落1”为红色文字  </p>
+</blockquote>
+<blockquote>
+<p>注意，在一个网页中，ID应该唯一，即不应出现多个元素相同ID。</p>
+</blockquote>
+<p>​     </p>
+<h2><a href="#4-3-lei-xuan-ze-fu" class="header-anchor"></a><span id="4-3-lei-xuan-ze-fu">4.3 类选择符</span></h2><p>例4.3：</p>
+<table>
+<thead>
+<tr>
+<th><strong>样式表</strong></th>
+<th><strong>HTML</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span style="color:red;">.classA</span> {color : red;}<br><span style="color:green;">.classB</span> {color : green;}</td>
+<td>&lt;p <span style="color:red;">class=”classA”</span>&gt;段落1&lt;/p&gt;<br>&lt;p <span style="color:green;">class=”classB”</span>&gt;段落2&lt;/p&gt;<br>&lt;p <span style="color:red;">class=”classA”</span>&gt;段落3&lt;/p&gt;<br>&lt;span <span style="color:green;">class=”green”</span>&gt;SPAN&lt;/span&gt;</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>结果：”段落1”和”段落3”为红色，”段落2”和”SPAN”为绿色</p>
+</blockquote>
+<p>我们可以把HTML标签分为多个类别（类名自己定义），然后在标签中使用<code>class</code>属性说明该标签属于哪个分类</p>
+<blockquote>
+<ul>
+<li>注意样式表中，类名最前面有个句点”.”</li>
+<li>一个 class 属性中可以有多个样式类名, 使用空格分隔即可, 如: <code>class=&quot;classA classB&quot;</code></li>
+</ul>
+</blockquote>
+<p>​     </p>
+<h2><a href="#4-4-wei-lei" class="header-anchor"></a><span id="4-4-wei-lei">4.4 伪类</span></h2><p>对于诸如超链接 <code>&lt;a&gt;</code> 这样的标签，根据状态不同，它可能显示不同的显示外观。例如下面4个图分别是超链接处于普通链接状态（link）、鼠标处于其上方（hover）、鼠标按住（active）和已访问过（visited）4个不同状态</p>
+<p>我们可以如下例更改其外观：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">样式表:</span><br><span class="line">a:link &#123; color : black; text-decoration:none;&#125;</span><br><span class="line">a:hover &#123; color : red; text-decoration:underline;&#125;</span><br><span class="line">a:active &#123; color : green; &#125;</span><br><span class="line">a:visited &#123; color : blue; &#125;</span><br><span class="line"></span><br><span class="line">HTML:</span><br><span class="line">&lt;a href=&quot;http://www.cctv.com&quot;&gt;超链接&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">结果:</span><br><span class="line">自己试试吧……</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>使用伪类可以指定的是元素在不同状态或上下文环境下的样式</li>
+<li><p>伪类需要与别的选择符组合使用，如上例中与 <code>a</code> 选择符组合<code>a:hover</code>。</p>
+</li>
+<li><p>还有更多的伪类可以使用，如: <code>:first-child</code>、<code>:last-child</code>、<code>:before</code>、<code>:after</code> …, 用好伪类可以让我们在做选择元素时更灵活, 请自行查阅别的资料。</p>
+</li>
+</ul>
+</blockquote>
+<p>​     </p>
+<h2><a href="#4-5-shu-xing-xuan-ze-fu" class="header-anchor"></a><span id="4-5-shu-xing-xuan-ze-fu">4.5 属性选择符</span></h2><p>所谓属性选择器是根据元素标签中的属性来进行选择，直接看例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">样式表:</span><br><span class="line">a[title]&#123; color: red;&#125;</span><br><span class="line">a[href=&quot;http://www.cctv.com&quot;]&#123;color: green;&#125;</span><br><span class="line">a[href=&quot;http://www.cctv.com&quot;][title=&quot;cctv&quot;]&#123;color: blue;&#125;</span><br><span class="line"></span><br><span class="line">HTML:</span><br><span class="line">&lt;a href=&quot;http://www.163.com&quot; title=&quot;163&quot;&gt;超链接1&lt;/a&gt;</span><br><span class="line">&lt;a href=&quot;http://www.cctv.com&quot;&gt;超链接2&lt;/a&gt;</span><br><span class="line">&lt;a href=&quot;http://www.cctv.com&quot; title=&quot;中央电视台&quot;&gt;超链接3&lt;/a&gt;</span><br><span class="line">&lt;a href=&quot;http://www.cctv.com&quot; title=&quot;cctv&quot;&gt;超链接4&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">结果:</span><br><span class="line">超链接1为红色，超链接2、3为绿色，超链接4为蓝色</span><br></pre></td></tr></table></figure>
+<p>例子中可以看到，使用”[]”可以定义属性选择器。</p>
+<blockquote>
+<ul>
+<li>若”[]”中只有属性名（如第1行）则表示元素存在该属性即匹配</li>
+<li>若”[]”中既有属性名，又有值（如第2行），则表示元素必须存在该属性，且值为指定值。此处”属性值”支持子串匹配（具体是怎样的，请查看其它资料）。</li>
+<li>若有多个”[]”，表示多个属性选择必须同时匹配，如第3行。</li>
+</ul>
+</blockquote>
+<p>​     </p>
+<h2><a href="#4-6-zu-he" class="header-anchor"></a><span id="4-6-zu-he">4.6 组合</span></h2><p>前述几种基本选择符还可以组合使用，根据组合形式不同，表示不同的选择方式。常用组合方式有如下几种：</p>
+<p>(1) 直接结合：例如: <code>p.classA</code>表示选择<code>&lt;p&gt;</code>标签中 <code>class=&quot;classA&quot;</code> 的元素。</p>
+<p>(2) 逗号分隔：表示并列关系。例如： <code>p, span</code> 表示选择 <code>&lt;p&gt;</code> 和 <code>&lt;span&gt;</code></p>
+<p>(3) 空格分隔：表示选择后代。例如： <code>p span</code> 表示选择 <code>&lt;p&gt;</code> 的后代中的 <code>&lt;span&gt;</code></p>
+<p>(4) “&gt;”分隔：表示选择 “直接儿子”。例如：<code>p &gt; span</code> 表示选择 <code>&lt;p&gt;</code> 的直接儿子中的 <code>&lt;span&gt;</code> 。（不明白后代和直接儿子有什么区别? 看后面的例子就明白了）</p>
+<p>(5) “+”分隔：表示选择相邻的兄弟元素。例如：<code>p + span</code>表示选择 <code>&lt;p&gt;</code> 的兄弟元素中其后紧邻的 <code>&lt;span&gt;</code>。（ 什么是兄弟? 看后面的例子！）</p>
+<p><strong>仔细实验下表中的例子, 其中红色标注的文字表示在浏览器中显示时此文字为红色：</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th><strong>样式表</strong></th>
+<th><strong>HTML</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>p.classA {color : red;}</td>
+<td>&lt;p&gt;段落1&lt;/p&gt;<br>&lt;span&gt;标签&lt;/span&gt;<br>&lt;p class=”classA”&gt;<span style="color:red;">段落1</span>&lt;/p&gt;</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>p, span {color : red;}</td>
+<td>&lt;p&gt;<span style="color:red;">段落</span>&lt;/p&gt;<br>&lt;span&gt;<span style="color:red;">标签</span>&lt;/span&gt;<br>&lt;div&gt;DIV里的文字&lt;/div&gt;</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>p span {color : red;}</td>
+<td>&lt;span&gt;标签&lt;/span&gt;<br>&lt;p&gt;&lt;span&gt;<span style="color:red;">标签</span>&lt;/span&gt;&lt;/p&gt;<br>&lt;p&gt;&lt;a&gt;&lt;span&gt;<span style="color:red;">标签</span>&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>p &gt; span {color : red;}</td>
+<td>&lt;span&gt;标签&lt;/span&gt;<br>&lt;p&gt;&lt;span&gt;<span style="color:red;">标签</span>&lt;/span&gt;&lt;/p&gt;<br>&lt;p&gt;&lt;a&gt;&lt;span&gt;标签&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>li + li {color : red;}</td>
+<td>&lt;ul&gt;<br>&lt;li&gt;第1项&lt;/li&gt;<br>&lt;li&gt;<span style="color:red;">第2项</span>&lt;/li&gt;<br>&lt;li&gt;<span style="color:red;">第3项</span>&lt;/li&gt;<br>&lt;/ul&gt;</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>比较上表中第3、4项的结果，现在知道后代与直接儿子的区别了吧！<em>后代包括子子孙孙，无论多少代。而直接儿子指的是第1代，呵呵~</em></p>
+<p>研究第5项应该明白什么是兄弟了吧，嘿嘿~</p>
+</blockquote>
+<p><strong>重要的事情说三遍, 多实践! 多实践! 多实践!</strong> </p>
+<p>​     </p>
+<h1><a href="#wai-lian-yang-shi-biao" class="header-anchor"></a><span id="wai-lian-yang-shi-biao">外联样式表</span></h1><p>经过多次实验，现在你手头上应该至少有一个含有内联样式表的HTML文档了吧。现在我们来新建一个文本文件，并把已有的内联样式表代码（不含<code>&lt;style&gt;</code>和<code>&lt;/style&gt;</code>）剪切到新建的文本文件中，保存文件到HTML文档同一文件夹下（文件名叫<em>test.css</em>吧！注意文件扩展名为<em>.css</em>）</p>
+<p>最后，在HTML文档的<code>&lt;head&gt;&lt;/head&gt;</code>标签中写入下面行代码:</p>
+<p><code>&lt;link href=&quot;test.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</code></p>
+<p>测试一下，打开HTML文档，是不是效果与使用内联样式表一样?</p>
+<p>这就是<strong>外联样式表</strong>，自己总结一下，把操作步骤记下来…</p>
+<p>其中，<code>link</code>标签中的<code>href</code>属性指明了外联样式表文件的<em>相对路径</em>。实际项目实践中，我们通常会把样式表文件放在一个独立的文件夹中，这样便于管理。此时，<code>href</code>属性那里相应调整一下就可以了。</p>
+<p>显然，使用外联样式表可以令HTML文档更简洁，从逻辑上来说也更合理（HTML文档描述内容是什么， CSS文件描述元素什么样）。<em>所以，大力推荐使用外联样式表！</em></p>
+<hr>
+<p>​    </p>
+<p>好了，至此关于<em>CSS</em>的介绍就结束了，关键还需要多加实践，注意总结和积累，研究一下别人写的代码也是一个不错的学习方法。</p>
+<p>下一节 <a href="../CSS入门精要-4/">CSS入门精要 (四)</a> 中给出了一个简单的综合示例，如果看完了前面的讲述还不知道如何入手实战，可以继续往下阅读.</p>
+
+        </div>
+        <p class="post-revise-info">
+            Revised on <span class="date">2019/05/11 04:31:58</span> by Bailey
+        </p>
+        
+        <!-- 上一篇/下一篇  -->
+        <hr/>
+        <ul class="post-paginator">
+            <li class="next">
+                
+                    <div class="nextSlogan">Next Post</div>
+                    <a href= "/2014/05/04/CSS入门精要-4/" title= "CSS入门精要 (四)">
+                        CSS入门精要 (四)
+                    </a>
+                
+            </li>
+            <li class="previous">
+                
+                    <div class="prevSlogan">Previous Post</div>
+                    <a href= "/2014/05/04/CSS入门精要-2/" title= "CSS入门精要 (二)">
+                        CSS入门精要 (二)
+                    </a>
+                
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  var toc = document.querySelector(".toc");
+  // 若有侧边目录, 则设置目录效果
+  if (toc) {
+    toc.onmouseover = function(){
+      toc.classList.remove("toc-shrink");
+    };
+    toc.onmouseout = function(){
+      toc.classList.add("toc-shrink");
+    };
+
+    // 延迟 5 秒后自动隐藏
+    window.setTimeout(function(){
+      toc.classList.add("toc-shrink");
+    }, 5000);
+
+    // 目录跟随滚动效果
+    var setTocPosition = function() {
+      //变量t是滚动条滚动时，距离顶部的距离
+      var t = document.documentElement.scrollTop||document.body.scrollTop;
+    
+      //当滚动到距离顶部200px时，返回顶部的锚点显示
+      if(t < 300){
+        toc.style.top = (300 - t) + 'px';
+      } else{          //恢复正常
+        toc.style.top = "20px";
+      }
+    }
+
+    window.onscroll = function(){
+        setTocPosition();
+    }
+    setTocPosition();
+  }
+</script>
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a> 
+        <p class="copyright text-muted">
+          Copyright By <a href="mailto:baileiz@163.com">Bailey.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<!-- <script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script> -->
+
+  </body>
+</html>
+
