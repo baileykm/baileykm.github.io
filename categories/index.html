@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+    <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/search.js"></script>
   <!-- Html Head Tag-->
   <head>
   <meta charset="UTF-8">
@@ -8,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="Bailey">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="categories"/>
+  <meta property="og:title" content="Categories"/>
   <meta property="og:description" content="" />
   <meta property="og:site_name" content="Bailey&#39;s Blog"/>
   <meta property="og:type" content="article" />
@@ -45,7 +47,7 @@
 </head>
 
   <body>
-    <!-- 单篇文章内容页面 -->
+    <!-- Categories Header -->
 <!-- Page Header -->
 
 <header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
@@ -53,8 +55,8 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">categories</p>
-          <p class="subtitle"></p>
+          <p class="title">Bailey&#39;s Blog</p>
+          <p class="subtitle">Categories [5]</p>
         </div>
         <div class="site-menu with-background-image">
           <ul>
@@ -71,6 +73,22 @@
                 <a href="/archives">
                   
                   Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories">
+                  
+                  Categories
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags">
+                  
+                  Tags
                   
                 </a>
               </li>
@@ -98,83 +116,47 @@
   </div>
 </header>
 
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div id="article-content" class="col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By Bailey</span>
-          
-          <!-- Date -->
-          <span class="date-time info">
-            On <span class="date">2018/04/21</span>
-            <span class="time">02:10:12</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
+<!-- Categories List -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="categories-page">
         
-        <!-- Post Main Content -->
-        <div class="post-content">
-          
-        </div>
-        <p class="post-revise-info">
-            Revised on <span class="date">2018/04/21 02:10:12</span> by Bailey
-        </p>
+          <a href="/categories/杂项/" class="item">
+            杂项<sup>[2]</sup>
+          </a>
         
-        <!-- 上一篇/下一篇  -->
-        <hr/>
-        <ul class="post-paginator">
-            <li class="next">
-                
-            </li>
-            <li class="previous">
-                
-            </li>
-        </ul>
+          <a href="/categories/入门教程/" class="item">
+            入门教程<sup>[16]</sup>
+          </a>
+        
+          <a href="/categories/Web开发/" class="item">
+            Web开发<sup>[1]</sup>
+          </a>
+        
+          <a href="/categories/实例教程/" class="item">
+            实例教程<sup>[3]</sup>
+          </a>
+        
+          <a href="/categories/编程思想/" class="item">
+            编程思想<sup>[1]</sup>
+          </a>
+        
       </div>
     </div>
   </div>
-</article>
-
-<script>
-  var toc = document.querySelector(".toc");
-  // 若有侧边目录, 则设置目录效果
-  if (toc) {
-    toc.onmouseover = function(){
-      toc.classList.remove("toc-shrink");
-    };
-    toc.onmouseout = function(){
-      toc.classList.add("toc-shrink");
-    };
-
-    // 延迟 5 秒后自动隐藏
-    window.setTimeout(function(){
-      toc.classList.add("toc-shrink");
-    }, 5000);
-
-    // 目录跟随滚动效果
-    var setTocPosition = function() {
-      //变量t是滚动条滚动时，距离顶部的距离
-      var t = document.documentElement.scrollTop||document.body.scrollTop;
-    
-      //当滚动到距离顶部200px时，返回顶部的锚点显示
-      if(t < 300){
-        toc.style.top = (300 - t) + 'px';
-      } else{          //恢复正常
-        toc.style.top = "20px";
-      }
-    }
-
-    window.onscroll = function(){
-        setTocPosition();
-    }
-    setTocPosition();
-  }
-</script>
-
+</div>
+<!-- Pagination -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-10 col-md-10 col-md-offset-1">
+      <ul class="pagination">
+        
+          
+      </ul>
+    </div>
+  </div>
+</div>
 
 
     <!-- Footer -->

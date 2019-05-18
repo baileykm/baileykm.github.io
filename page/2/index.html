@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+    <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/search.js"></script>
   <!-- Html Head Tag-->
   <head>
   <meta charset="UTF-8">
@@ -75,6 +77,22 @@
               </li>
             
               <li>
+                <a href="/categories">
+                  
+                  Categories
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags">
+                  
+                  Tags
+                  
+                </a>
+              </li>
+            
+              <li>
                 <a href="https://github.com/baileykm">
                   
                   Github
@@ -97,6 +115,22 @@
   </div>
 </header>
 
+
+<form class="site-search-form">
+    <div class="input-group">
+      <input type="text" id="local-search-input" class="form-control local-search local-search-input-cls" />
+      <span id="site-search-form-icon" class="input-group-addon" style="cursor: pointer;">Search</span>
+    </div>
+    <script>
+        $('#site-search-form-icon').click(function(){
+           $('.site-search-form').toggleClass('show');
+        });
+    </script>
+</form>
+<div id="local-search-result" class="local-search-result-cls"></div>
+<script>getSearchFile();</script>
+
+
 <!-- Home Page Post List -->
 <div class="container">
   <div class="row">
@@ -114,7 +148,6 @@
       <div class="categories">
         
           <!-- 文章内容页面中的 Categories 部分 -->
-
 
 <a href="/categories/入门教程/">入门教程</a>
 
@@ -152,7 +185,6 @@
         
           <!-- 文章内容页面中的 Categories 部分 -->
 
-
 <a href="/categories/入门教程/">入门教程</a>
 
         
@@ -189,7 +221,6 @@
         
           <!-- 文章内容页面中的 Categories 部分 -->
 
-
 <a href="/categories/入门教程/">入门教程</a>
 
         
@@ -224,7 +255,6 @@
       <div class="categories">
         
           <!-- 文章内容页面中的 Categories 部分 -->
-
 
 <a href="/categories/入门教程/">入门教程</a>
 
@@ -262,7 +292,6 @@
         
           <!-- 文章内容页面中的 Categories 部分 -->
 
-
 <a href="/categories/入门教程/">入门教程</a>
 
         
@@ -297,7 +326,6 @@
       <div class="categories">
         
           <!-- 文章内容页面中的 Categories 部分 -->
-
 
 <a href="/categories/入门教程/">入门教程</a>
 
@@ -335,7 +363,6 @@
         
           <!-- 文章内容页面中的 Categories 部分 -->
 
-
 <a href="/categories/入门教程/">入门教程</a>
 
         
@@ -371,7 +398,6 @@
         
           <!-- 文章内容页面中的 Categories 部分 -->
 
-
 <a href="/categories/入门教程/">入门教程</a>
 
         
@@ -406,7 +432,6 @@
       <div class="categories">
         
           <!-- 文章内容页面中的 Categories 部分 -->
-
 
 <a href="/categories/入门教程/">入门教程</a>
 
@@ -444,7 +469,6 @@
       <div class="categories">
         
           <!-- 文章内容页面中的 Categories 部分 -->
-
 
 <a href="/categories/入门教程/">入门教程</a>
 
