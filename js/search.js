@@ -16,10 +16,11 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 // 02110-1301 USA
 // 
-
+var searchXmlLoaded = false;
 var searchFunc = function (path, search_id, content_id) {
   // 0x00. environment initialization
   'use strict';
+  if (searchXmlLoaded) return;
   var BTN = "<i id='local-search-close'>×</i>";
   var $input = document.getElementById(search_id);
   var $resultContent = document.getElementById(content_id);
@@ -29,6 +30,8 @@ var searchFunc = function (path, search_id, content_id) {
     url: path,
     dataType: "xml",
     success: function (xmlResponse) {
+      searchXmlLoaded = true;
+
       // 0x02. parse xml file
       var datas = $("entry", xmlResponse).map(function () {
         return {
