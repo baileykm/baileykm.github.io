@@ -855,7 +855,7 @@ h6 {
   max-height: 124px;
   overflow: hidden;
 }
-.local-search-result-cls ul li em.search-keyword {
+.local-search-result-cls ul li span.search-keyword {
   color: #e58c7c;
 }
 .local-search-plugin .local-search-input-cls {
